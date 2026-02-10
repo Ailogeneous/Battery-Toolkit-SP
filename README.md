@@ -1,130 +1,240 @@
-<p align="center">
- <img alt="Battery Toolkit logo" src="Resources/LogoCaption.png" width=500 align="center">
-</p>
+<div align="center">
 
-<p align="center">Control the platform power state of your Apple Silicon Mac.</p>
+<img src="https://raw.githubusercontent.com/Ailogeneous/Battery-Toolkit-SP/main/Resources/LogoCaption.png" alt="Battery Toolkit logo" width="500">
 
-<p align="center"><a href="#features">Features</a> &bull; <a href="#install">Install</a> &bull; <a href="#usage">Usage</a> &bull; <a href="#uninstall"> Uninstall </a> &bull;<a href="#limitations"> Limitations </a> &bull; <a href="#technical-details"> Technical Details </a> &bull; <a href="#donate"> Donate </a></p>
+**A Swift Package that provides Apple Silicon Mac battery charging control logic.**
+
+[Capabilities](#capabilities) • [Limitations](#limitations) • [Using BatteryToolkit](#using-batterytoolkit) • [Copy (SMAppService helper)](#copy-smappservice-helper)
+
+</div>
 
 -----
 
-# Features
+# About
 
-## Limits battery charge to an upper limit
+This is a Swift Package version of the original [Battery-Toolkit](https://github.com/mhaeuser/Battery-Toolkit/) project. It uses SMAppService (not SMJobBless) and removes the UI so you can provide your own. This repository is now SwiftPM‑only (no Xcode project file).
 
-Modern batteries deteriorate more when always kept at full charge. For this reason, Apple introduced the “Optimized Charging“ feature for all their portable devices, including Macs. However, its limit cannot be changed, and you cannot force charging to be put on hold. Battery Toolkit allows specifying a hard limit past which battery charging will be turned off. For safety reasons, this limit cannot be lower than 50&nbsp;%.
+# Capabilities
 
-## Allows battery charge to drain to a lower limit
+`BatteryToolkit` provides the core logic to manage the power state of Apple Silicon Macs. You can integrate features such as:
 
-Even when connected to power, your Mac's battery may slowly lose battery charge for various reasons. Short battery charging bursts can further deteriorate batteries. For this reason, Battery Toolkit allows specifying a limit only below which battery charging will be turned on. For safety reasons, this limit cannot be lower than 20&nbsp;%.
+## Limiting battery charge to an upper limit
 
-**Note:** This setting is not honoured for cold boots or reboots, because Apple Silicon Macs reset their platform state in these cases. As battery charging will already be ongoing when Battery Toolkit starts, it lets charging proceed to the upper limit to not cause further short bursts across reboots.
+Modern batteries deteriorate more when always kept at full charge. Apple’s “Optimized Charging” is not configurable. `BatteryToolkit` allows specifying a hard limit past which charging is turned off. For safety reasons, this limit cannot be lower than 50%.
 
-## Allows you to disable the power adapter
+## Allowing battery charge to drain to a lower limit
 
-If you want to discharge the battery of your Mac, e.g., to recalibrate it, you can turn off the power adapter without actually unplugging it. You can also have Battery Toolkit disable sleeping when the power adapter is disabled.
+`BatteryToolkit` allows specifying a limit below which charging is turned on. For safety reasons, this limit cannot be lower than 20%.
 
-**Note:** Your Mac may go to sleep immediately after enabling the power adapter again. This is a software bug in macOS and cannot easily be worked around.
+**Note:** This setting is not honoured for cold boots or reboots, because Apple Silicon Macs reset their platform state in these cases. As battery charging will already be ongoing when a client using `BatteryToolkit` starts, it lets charging proceed to the upper limit to avoid short bursts across reboots.
 
-|<img alt="Power Settings" src="Resources/PowerSettings.png" width=607>|
-|:--:| 
-| **Fig. 1**. *Power Settings* |
+## Disabling the power adapter
 
-## Grants you manual control
+You can turn off the power adapter without unplugging it (for example, to discharge the battery). You can also integrate logic to disable sleeping when the adapter is disabled.
 
-The Battery Toolkit "Commands" menu and its menu bar extra allow you to issue various commands related to the power state of your Mac. These include:
+**Note:** Your Mac may go to sleep immediately after enabling the power adapter again. This is a macOS bug and cannot easily be worked around.
+
+## Manual control
+
+Commands include:
 * Enabling and disabling the power adapter
 * Requesting a full charge
 * Requesting a charge to the specified upper limit
 * Stopping charging immediately
 * Pausing all background activity
 
-|<img alt="Menu Bar Extra" src="Resources/MenuBarExtra.png" width=283>|
-|:----------|
-| **Fig. 2**. *Menu Bar Extra* |
-
-# Install
-
-> [!IMPORTANT]
-> Battery Toolkit currently only supports Apple Silicon Macs [#15](https://github.com/mhaeuser/Battery-Toolkit/issues/15)
-
-### Manual Install
-1. Go to the GitHub [releases](https://github.com/mhaeuser/Battery-Toolkit/releases/latest) page
-2. Download the latest non-dSYM build (i.e., `Battery-Toolkit-X.Y.zip`)
-3. Unzip the archive
-4. Drag `Battery Toolkit.app` into your Applications folder
-
-### Install via Homebrew :beer:
-1. Install [Homebrew](https://brew.sh) if you haven't already
-2. Open Terminal and run `brew tap mhaeuser/mhaeuser`
-3. Run `brew install battery-toolkit`
-
-You may want to add the `--no-quarantine` flag onto the end of the install command to bypass Gatekeeper more conveniently, but beware the potential security risks of doing so.
-
-Otherwise, follow the steps mentioned below.
-
-### Opening the App
-
-> [!IMPORTANT]
-> This step is necessary, because the app has not been notarized by Apple due to the membership fees of the Apple Developer Program. "Apple could not verify 'Battery Toolkit.app' is free of malware" refers to the [lack of notarizaion](https://support.apple.com/en-us/102445), not to any anomalies detected.
-
-On macOS 14 Sonoma or below:
-1. Right click `Battery Toolkit.app`
-2. Click "Open"
-3. Click "Open" in the dialog box
-
-On macOS 15 Sequoia or above:
-1. Try to open the app, it will tell you it's blocked
-2. Go to `System Settings > Privacy & Security` and scroll to the bottom
-3. Click "Open Anyway" to allow Battery Toolkit to open
-4. Click "Open Anyway" on the next dialog box and authenticate
-5. Open Battery Toolkit again from Applications folder
-
-# Usage
-
-> [!CAUTION]
-> To ensure there is no chance of interference, please turn “Optimized Charging” **off** when Battery Toolkit is in use. <br>
->  Go to macOS System Settings > Battery > the (i) next to Battery Health > Optimized Battery Charging > toggle off
-
-1. Open Battery Toolkit from your Applications folder
-2. The menu bar will change to show the app menus, and a menu bar extra will should be visible
-3. Configure the settings through either method (see **Fig. 2, 3, 4**)
-
-|<img alt="Menu Bar Main" src="Resources/MenuBarMain.png" width=316>|<img alt="Menu Bar Extra" src="Resources/MenuBarCommands.png" width=248>|
-|:----------|:----------|
-| **Fig. 3**. *Main Menu* | **Fig. 4**. *Menu Bar Commands* |
-
-If you prefer, you can quit the GUI to hide the menu bar extra and Battery Toolkit will keep running in the background.
-If you want to change any settings, simply re-open the app.
-
-# Uninstall
-
-1. Focus Battery Toolkit
-2. Open the main Battery Toolkit menu in the menu bar (see **Fig. 3**)
-3. Choose "Disable Background Activity"
-4. Move the app to the Trash and empty it
-
 # Limitations
 
-Battery Toolkit disables sleep while it is charging, because it has to actively disable charging once reaching the maximum. Sleep is re-enabled once charging is stopped for any reason, e.g., reaching the maximum charge level, manual cancellation, or unplugging the MacBook.
+* **Sleep management:** When actively managing charging to an upper limit, a client may need to disable sleep to prevent the system from entering a state where charging control is lost. Sleep can be re-enabled once charging is stopped.
+* **Shutdown state:** Control over the charge state is not possible when the machine is shut down. If the charger remains plugged in while the Mac is off, the battery will charge to 100%.
+* **Power adapter and sleep:** When the power adapter is disabled, sleep should generally also be disabled. Otherwise, exiting Clamshell mode may cause the machine to sleep immediately.
 
-Apps, including Battery Toolkit, cannot control the charge state when the machine is shut down. If the charger remains plugged in while the Mac is off, the battery will charge to 100&nbsp;%.
+# Using BatteryToolkit
 
-Note that sleep should usually be disabled when the power adapter is disabled, as this will exit Clamshell mode and the machine will sleep immediately if the lid is closed. Refer to the toggle in the Settings dialog (see **Fig. 1**).
+> [!IMPORTANT]
+> `BatteryToolkit` currently only supports Apple Silicon Macs ([#15](https://github.com/mhaeuser/Battery-Toolkit/issues/15))
 
-# Technical Details
+## Add the package
 
-* Based on IOPowerManagement events to minimize resource usage, especially when not connected to power
-* Support for macOS Ventura daemons and login items for a more reliable experience
+1. In your Xcode project, go to `File > Add Packages...`.
+2. Paste the repo URL: `https://github.com/Ailogeneous/Battery-Toolkit-SP`.
+3. Add the package to the targets that need battery control logic (app, helper, or both).
 
-## Security
-* Privileged operations are authenticated by the daemon
-* Privileged daemon exposes only a minimal protocol via XPC
-* XPC communication uses the latest macOS codesign features
+## Quick start
+
+1. Add the package to your app and helper targets.
+2. Create a helper target (see “Helper target setup”).
+3. Configure App Group entitlements for both targets (see “App Group setup”).
+4. Set the required UserDefaults values in your app at launch.
+
+## Helper target setup
+
+Create a minimal helper target that links BatteryToolkit. This helper should be a macOS command‑line tool or app that runs the daemon entrypoint.
+
+1. In Xcode, create a new target:
+   - macOS “Command Line Tool” (recommended)
+   - Product Name: your helper bundle ID suffix (e.g. `TetheredHelper`)
+2. Add `BatteryToolkit` package to the helper target’s dependencies.
+3. Add a `main.swift` file to the helper target with:
+
+```swift
+import BatteryToolkit
+
+BTPreprocessor.configure(appGroupSuiteName: "group.your.app")
+
+// Start the daemon process.
+BTDaemon.main()
+```
+
+4. Add a launchd plist to your app bundle (used by SMAppService):
+   - Filename must match the helper bundle ID (e.g. `com.example.app.helper.plist`)
+   - The `Label` and `MachServices` must match the daemon connection name.
+   - It must be embedded at: `YourApp.app/Contents/Library/LaunchServices/`
+
+Example launchd plist:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.example.app.helper</string>
+  <key>MachServices</key>
+  <dict>
+    <key>TEAMID.com.example.app.helper</key>
+    <true/>
+  </dict>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <false/>
+</dict>
+</plist>
+```
+
+## App Group setup
+
+You must enable an App Group so the app and helper can share UserDefaults.
+
+1. In Xcode, select your app target.
+2. Go to “Signing & Capabilities”.
+3. Add “App Groups”.
+4. Create or select an App Group ID, e.g. `group.com.example.app`.
+5. Repeat steps 1–4 for the helper target using the same App Group ID.
+
+Use that App Group ID with `BTPreprocessor.configure(appGroupSuiteName:)` in both app and helper at process startup (app: `applicationDidFinishLaunching`, helper: `main.swift`).
+
+## Runtime config (UserDefaults + App Group)
+
+`BatteryToolkit` reads its identifiers from a shared `UserDefaults` suite (App Group). This allows the main app to set values at launch, and the daemon to read the same values at runtime.
+
+### Required keys (UserDefaults)
+
+Set these in the shared App Group suite:
+
+* `BT_APP_ID` (your app bundle identifier)
+* `BT_DAEMON_ID` (your daemon bundle identifier)
+* `BT_DAEMON_CONN` (your launchd Mach service name)
+* `BT_CODESIGN_CN` (the certificate Common Name used to sign app + helper)
+
+- See "Finding BTPreprocessor Values" below on where to find these IDs.
+
+### Configure the suite
+
+Call this **at process startup** (before any BatteryToolkit usage):
+
+```swift
+BTPreprocessor.configure(appGroupSuiteName: "group.your.app")
+```
+
+### Set values (from the app)
+
+```swift
+BTPreprocessor.setValues(
+    appId: "com.example.app",
+    daemonId: "com.example.app.helper",
+    daemonConn: "TEAMID.com.example.app.helper",
+    codesignCN: "Apple Development: Your Name (TEAMID)"
+)
+```
+
+If any required key is missing, BatteryToolkit will fail with an explicit error.
+
+> [!IMPORTANT]
+> Both the App and Helper targets must include the same App Group entitlement, or shared UserDefaults will not work.
+
+### Finding BTPreprocessor Values (manual)
+
+Check these sources for ID constants:
+* `BT_APP_ID`: your app `Info.plist` `CFBundleIdentifier`
+* `BT_DAEMON_ID`: helper `Info.plist` `CFBundleIdentifier`
+* `BT_DAEMON_CONN`: launchd plist `MachServices` key
+* `BT_TEAM_ID`: run `codesign -dv --verbose=4 /path/MyApp.app` or  Xcode signing settings
+* `BT_CODESIGN_CN`: run `codesign -dv --verbose=4 /path/MyApp.app` and use the first `Authority=` line (it looks like `Authority=Apple Development: Your Name (TEAMID)`).
+
+## App-side registration (SMAppService)
+
+Use this in your app target to register/unregister the helper. The `plistName` must match the launchd plist filename (without extension) that you embed in your app bundle.
+
+```swift
+import ServiceManagement
+
+BTPreprocessor.configure(appGroupSuiteName: "group.your.app")
+BTPreprocessor.setValues(
+    appId: "com.example.app",
+    daemonId: "com.example.app.helper",
+    daemonConn: "TEAMID.com.example.app.helper",
+    codesignCN: "Apple Development: Your Name (TEAMID)"
+)
+
+let service = SMAppService.daemon(plistName: "\(BTPreprocessor.daemonId).plist")
+try await service.register()
+// Later, to remove it:
+// try await service.unregister()
+```
+
+## App-side interaction
+
+Use the app client to request authorization and call into the helper. These helpers are intentionally light wrappers around XPC calls.
+
+```swift
+import BatteryToolkit
+
+// Convenience facade (optional)
+let status = await BTActions.startDaemon()
+if status == .requiresApproval {
+    try await BTActions.approveDaemon(timeout: 6)
+}
+
+// Direct client usage
+let authData = try await BTAppXPCClient.getManageAuthorization()
+try await BTDaemonXPCClient.disableCharging()
+
+let state = try await BTDaemonXPCClient.getState()
+
+// Update settings
+try await BTDaemonXPCClient.setSettings(settings: [
+    BTSettingsInfo.Keys.minCharge: NSNumber(value: 70),
+    BTSettingsInfo.Keys.maxCharge: NSNumber(value: 80),
+    BTSettingsInfo.Keys.adapterSleep: NSNumber(value: false),
+    BTSettingsInfo.Keys.magSafeSync: NSNumber(value: false),
+])
+```
+
+## Helper-side validation
+
+The helper validates `authData` per privileged call with `AuthorizationCopyRights`. It also validates client identity with audit token and code signing checks (`BTXPCValidation`).
+
+## Wiring checklist
+
+* Your app’s `NSXPCConnection(machServiceName:options:)` must match the helper’s Mach service name (`BTDaemonConn`).
+* The helper launchd plist `Label` and `MachServices` must match `BTDaemonConn`.
+* The helper `Info.plist` `SMAuthorizedClients` must match your app’s code signing identity.
+* Both app and helper must use the same App Group suite and set the four `BT_*` keys in shared UserDefaults.
 
 # Credits
-* Icon based on [reference icon by Streamline](https://seekicon.com/free-icon/rechargable-battery_1)
-* README overhauled by [rogue](https://github.com/realrogue)
+*   Icon based on [reference icon by Streamline](https://seekicon.com/free-icon/rechargable-battery_1)
 
 # Donate
-For various reasons, I will not accept personal donations. However, if you would like to support my work with the [Kinderschutzbund Kaiserslautern-Kusel](https://www.kinderschutzbund-kaiserslautern.de/) child protection association, you may donate [here](https://www.kinderschutzbund-kaiserslautern.de/helfen-sie-mit/spenden/).
+Message from Battery Toolkit Owner: For various reasons, I will not accept personal donations. However, if you would like to support my work with the [Kinderschutzbund Kaiserslautern-Kusel](https://www.kinderschutzbund-kaiserslautern.de/) child protection association, you may donate [here](https://www.kinderschutzbund-kaiserslautern.de/helfen-sie-mit/spenden/).

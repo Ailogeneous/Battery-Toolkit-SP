@@ -1,2 +1,7 @@
-Battery Toolkit.xcodeproj/xcuserdata/
-Battery Toolkit.xcodeproj/project.xcworkspace/xcuserdata/
+.DS_Store
+.swiftpm/
+.build/
+
+# Xcode user data (if a workspace is generated locally)
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/

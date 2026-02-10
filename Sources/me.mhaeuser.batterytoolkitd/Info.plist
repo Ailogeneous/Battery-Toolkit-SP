@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BTAppID</key>
+	<string>$(BT_APP_ID)</string>
+	<key>BTDaemonConn</key>
+	<string>$(BT_DAEMON_CONN)</string>
+	<key>BTDaemonID</key>
+	<string>$(BT_DAEMON_ID)</string>
+	<key>BTCodesignCN</key>
+	<string>$(BT_CODESIGN_CN)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>LSMachServices</key>
+	<dict>
+		<key>$(BT_DAEMON_CONN)</key>
+		<true/>
+	</dict>
+	<key>SMAuthorizedClients</key>
+	<array>
+		<string>identifier "$(BT_APP_ID)" and anchor apple generic and certificate leaf[subject.CN] = "$(BT_CODESIGN_CN)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
+	</array>
+	<key>SMAssociatedBundleIdentifiers</key>
+	<array>
+		<string>me.mhaeuser.BatteryToolkit</string>
+	</array>
+</dict>
+</plist>
