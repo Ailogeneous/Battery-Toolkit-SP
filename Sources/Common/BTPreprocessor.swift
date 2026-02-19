@@ -4,45 +4,50 @@
 //
 
 import Foundation
+import os.log
 
 public enum BTPreprocessor {
-    private static var suiteName: String?
-
+    @available(*, deprecated, message: "No longer required. BT_* values are read from Info.plist.")
     public static func configure(appGroupSuiteName: String) {
-        self.suiteName = appGroupSuiteName
+        _ = appGroupSuiteName
     }
 
+    @available(*, deprecated, message: "No longer required. Define BT_* values in Info.plist.")
     public static func setValues(
         appId: String,
         daemonId: String,
         daemonConn: String,
         codesignCN: String
     ) {
-        let defaults = self.defaults()
-        defaults.set(appId, forKey: "BT_APP_ID")
-        defaults.set(daemonId, forKey: "BT_DAEMON_ID")
-        defaults.set(daemonConn, forKey: "BT_DAEMON_CONN")
-        defaults.set(codesignCN, forKey: "BT_CODESIGN_CN")
-    }
-
-    private static func defaults() -> UserDefaults {
-        guard let suiteName = self.suiteName else {
-            preconditionFailure(
-                "BTPreprocessor not configured. Call BTPreprocessor.configure(appGroupSuiteName:) before use."
-            )
-        }
-        guard let defaults = UserDefaults(suiteName: suiteName) else {
-            preconditionFailure("Unable to access UserDefaults suite: \(suiteName)")
-        }
-        return defaults
+        _ = appId
+        _ = daemonId
+        _ = daemonConn
+        _ = codesignCN
     }
 
     private static func string(key: String) -> String {
-        let defaults = self.defaults()
-        guard let value = defaults.string(forKey: key), !value.isEmpty else {
-            preconditionFailure("Missing UserDefaults key: \(key)")
+        if let info = Bundle.main.infoDictionary,
+           let value = info[key] as? String,
+           !value.isEmpty {
+            return value
         }
-        return value
+        if let execURL = Bundle.main.executableURL {
+            let appInfoURL = execURL
+                .deletingLastPathComponent() // MacOS
+                .deletingLastPathComponent() // Contents
+                .appendingPathComponent("Info.plist")
+            if let appInfo = NSDictionary(contentsOf: appInfoURL),
+               let value = appInfo[key] as? String,
+               !value.isEmpty {
+                return value
+            }
+        }
+        if let envValue = ProcessInfo.processInfo.environment[key],
+           !envValue.isEmpty {
+            return envValue
+        }
+        os_log("Missing configuration value for key: %{public}@", key)
+        return ""
     }
 
     public static var appId: String {

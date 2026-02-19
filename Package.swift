@@ -25,12 +25,14 @@ let package = Package(
             path: "Sources",
             exclude: [
                 "Modules",
-                "me.mhaeuser.batterytoolkitd"
+                "me.mhaeuser.batterytoolkitd/Info.plist",
+                "me.mhaeuser.batterytoolkitd/me.mhaeuser.batterytoolkitd.plist"
             ],
             sources: [
                 "BatteryToolkit",
                 "Common",
-                "Libraries"
+                "Libraries",
+                "me.mhaeuser.batterytoolkitd"
             ],
             linkerSettings: [
                 .linkedFramework("IOKit"),

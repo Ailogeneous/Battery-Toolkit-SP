@@ -12,6 +12,7 @@ internal enum BTSettings {
     private(set) static var maxCharge = BTSettingsInfo.Defaults.maxCharge
     private(set) static var adapterSleep = BTSettingsInfo.Defaults.adapterSleep
     private(set) static var magSafeSync = BTSettingsInfo.Defaults.magSafeSync
+    private(set) static var magSafeInvertedIndicator = BTSettingsInfo.Defaults.magSafeInvertedIndicator
 
     static func readDefaults() {
         self.adapterSleep = UserDefaults.standard.bool(
@@ -19,6 +20,9 @@ internal enum BTSettings {
         )
         self.magSafeSync = UserDefaults.standard.bool(
             forKey: BTSettingsInfo.Keys.magSafeSync
+        )
+        self.magSafeInvertedIndicator = UserDefaults.standard.bool(
+            forKey: BTSettingsInfo.Keys.magSafeInvertedIndicator
         )
 
         let minCharge = UserDefaults.standard.integer(
@@ -50,6 +54,9 @@ internal enum BTSettings {
             forKey: BTSettingsInfo.Keys.magSafeSync
         )
         UserDefaults.standard.removeObject(
+            forKey: BTSettingsInfo.Keys.magSafeInvertedIndicator
+        )
+        UserDefaults.standard.removeObject(
             forKey: BTSettingsInfo.Keys.minCharge
         )
         UserDefaults.standard.removeObject(
@@ -64,6 +71,7 @@ internal enum BTSettings {
         let maxCharge = NSNumber(value: self.maxCharge)
         let adapterSleep = NSNumber(value: self.adapterSleep)
         let magSafeSync = NSNumber(value: self.magSafeSync)
+        let magSafeInvertedIndicator = NSNumber(value: self.magSafeInvertedIndicator)
         var settings: [String: NSObject & Sendable] = [
             BTSettingsInfo.Keys.minCharge: minCharge,
             BTSettingsInfo.Keys.maxCharge: maxCharge,
@@ -73,6 +81,8 @@ internal enum BTSettings {
         if SMCComm.MagSafe.supported {
             settings.updateValue(magSafeSync,
                 forKey: BTSettingsInfo.Keys.magSafeSync)
+            settings.updateValue(magSafeInvertedIndicator,
+                forKey: BTSettingsInfo.Keys.magSafeInvertedIndicator)
         }
 
         return settings
@@ -112,6 +122,13 @@ internal enum BTSettings {
             BTSettingsInfo.Defaults.magSafeSync
 
         self.setMagSafeSync(enabled: magSafeSync)
+
+        let magSafeInvertedNum =
+            settings[BTSettingsInfo.Keys.magSafeInvertedIndicator] as? NSNumber
+        let magSafeInverted = magSafeInvertedNum?.boolValue ??
+            BTSettingsInfo.Defaults.magSafeInvertedIndicator
+
+        self.setMagSafeInvertedIndicator(enabled: magSafeInverted)
 
         self.writeDefaults()
 
@@ -160,6 +177,15 @@ internal enum BTSettings {
         BTPowerState.magSafeSyncSettingToggled()
     }
 
+    private static func setMagSafeInvertedIndicator(enabled: Bool) {
+        guard self.magSafeInvertedIndicator != enabled else {
+            return
+        }
+
+        self.magSafeInvertedIndicator = enabled
+        BTPowerState.magSafeSyncSettingToggled()
+    }
+
     private static func writeDefaults() {
         assert(
             BTSettingsInfo.chargeLimitsValid(
@@ -184,10 +210,15 @@ internal enum BTSettings {
             self.magSafeSync,
             forKey: BTSettingsInfo.Keys.magSafeSync
         )
+        UserDefaults.standard.set(
+            self.magSafeInvertedIndicator,
+            forKey: BTSettingsInfo.Keys.magSafeInvertedIndicator
+        )
         //
         // As NSUserDefaults are not automatically synchronized without
         // NSApplication, do so manually.
         //
         _ = CFPreferencesAppSynchronize(kCFPreferencesCurrentApplication)
     }
+
 }

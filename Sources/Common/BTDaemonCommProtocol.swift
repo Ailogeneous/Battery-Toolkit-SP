@@ -16,6 +16,9 @@ public enum BTDaemonCommCommand: UInt8 {
     case isSupported
     case pauseActivity
     case resumeActivity
+    case setPowerMode
+    case setMagSafeIndicator
+    case setPMSet
 }
 
 @objc public protocol BTDaemonCommProtocol {
@@ -40,6 +43,27 @@ public enum BTDaemonCommCommand: UInt8 {
     func setSettings(
         authData: Data,
         settings: [String: NSObject & Sendable],
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    )
+
+    func setPowerMode(
+        authData: Data,
+        scope: UInt8,
+        mode: UInt8,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    )
+
+    func setMagSafeIndicator(
+        authData: Data,
+        mode: UInt8,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    )
+
+    func setPMSet(
+        authData: Data,
+        setting: UInt8,
+        value: Int,
+        scope: UInt8,
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     )
 }

@@ -26,5 +26,12 @@ public enum BTStateInfo {
         public static let progress = "Progress"
         public static let chargingMode = "Mode"
         public static let maxCharge = "MaxCharge"
+        public static let batteryPercent = "BatteryPercent"
+        public static let isCharging = "IsCharging"
+        public static let isACConnected = "IsACConnected"
+        public static let batteryTemperature = "BatteryTemperature"
+        public static let powerModeAll = "PowerModeAll"
+        public static let powerModeBattery = "PowerModeBattery"
+        public static let powerModeCharger = "PowerModeCharger"
     }
 }

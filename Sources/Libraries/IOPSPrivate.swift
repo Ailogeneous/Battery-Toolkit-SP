@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
+import Foundation
 import IOKit
 import notify
 import os.log
@@ -33,6 +34,45 @@ public enum IOPSPrivate {
         }
 
         return (packedBatteryBits & kPSTimeRemainingNotifyExternalBit) != 0
+    }
+
+    static func GetBatteryTemperatureCelsius() -> Double? {
+        let service = IOServiceGetMatchingService(
+            kIOMasterPortDefault,
+            IOServiceMatching("AppleSmartBattery")
+        )
+        guard service != IO_OBJECT_NULL else {
+            return nil
+        }
+        defer {
+            IOObjectRelease(service)
+        }
+
+        guard let value = IORegistryEntryCreateCFProperty(
+            service,
+            "Temperature" as CFString,
+            kCFAllocatorDefault,
+            0
+        )?.takeRetainedValue() else {
+            return nil
+        }
+
+        let rawValue: Double
+        if let number = value as? NSNumber {
+            rawValue = number.doubleValue
+        } else if let string = value as? String, let parsed = Double(string) {
+            rawValue = parsed
+        } else {
+            return nil
+        }
+
+        // AppleSmartBattery reports temperature in deci-Kelvin.
+        let celsius = (rawValue / 10.0) - 273.15
+        guard celsius.isFinite else {
+            return nil
+        }
+
+        return celsius
     }
     
     private static func GetPackedBatteryBits() -> UInt64? {

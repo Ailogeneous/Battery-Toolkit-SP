@@ -9,6 +9,19 @@ import os.log
 @BTBackgroundActor
 public enum BTDaemonXPCClient {
     private static var connect: NSXPCConnection? = nil
+    private static var eventSink: EventSink? = nil
+
+    private final class EventSink: NSObject, BTDaemonEventsProtocol {
+        let handler: @Sendable ([String: NSObject & Sendable]) -> Void
+
+        init(handler: @escaping @Sendable ([String: NSObject & Sendable]) -> Void) {
+            self.handler = handler
+        }
+
+        func stateDidChange(_ state: [String: NSObject & Sendable]) {
+            self.handler(state)
+        }
+    }
 
     public static func disconnectDaemon() {
         guard let connect = self.connect else {
@@ -17,6 +30,24 @@ public enum BTDaemonXPCClient {
 
         self.connect = nil
         connect.invalidate()
+    }
+
+    public static func startEventStream(
+        handler: @escaping @Sendable ([String: NSObject & Sendable]) -> Void
+    ) {
+        os_log("BTDaemonXPCClient startEventStream")
+        self.eventSink = EventSink(handler: handler)
+        if self.connect != nil {
+            self.disconnectDaemon()
+        }
+        _ = self.connectDaemon()
+    }
+
+    public static func stopEventStream() {
+        self.eventSink = nil
+        if self.connect != nil {
+            self.disconnectDaemon()
+        }
     }
 
     public static func getUniqueId() async throws -> Data {
@@ -118,6 +149,19 @@ public enum BTDaemonXPCClient {
         }
     }
 
+    public static func setMagSafeIndicator(mode: BTMagSafeIndicatorMode) async throws {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
+            self.executeDaemonManageRetry(continuation: continuation) { daemon in
+                daemon.setMagSafeIndicator(
+                    authData: authData,
+                    mode: mode.rawValue,
+                    reply: self.continuationStatusHandler(continuation: continuation)
+                )
+            }
+        }
+    }
+
     public static func getSettings() async throws -> [String: NSObject & Sendable] {
         try await withCheckedThrowingContinuation { continuation in
             self.executeDaemonRetry(continuation: continuation) { daemon in
@@ -135,6 +179,36 @@ public enum BTDaemonXPCClient {
                 daemon.setSettings(
                     authData: authData,
                     settings: settings,
+                    reply: self.continuationStatusHandler(continuation: continuation)
+                )
+            }
+        }
+    }
+
+
+    public static func setPMSet(setting: BTPMSetSetting, value: Int, scope: BTPowerModeScope) async throws {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
+            self.executeDaemonManageRetry(continuation: continuation) { daemon in
+                daemon.setPMSet(
+                    authData: authData,
+                    setting: setting.rawValue,
+                    value: value,
+                    scope: scope.rawValue,
+                    reply: self.continuationStatusHandler(continuation: continuation)
+                )
+            }
+        }
+    }
+
+    public static func setPowerMode(scope: BTPowerModeScope, mode: UInt8) async throws {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
+            self.executeDaemonManageRetry(continuation: continuation) { daemon in
+                daemon.setPowerMode(
+                    authData: authData,
+                    scope: scope.rawValue,
+                    mode: mode,
                     reply: self.continuationStatusHandler(continuation: continuation)
                 )
             }
@@ -198,6 +272,12 @@ public enum BTDaemonXPCClient {
         connect.remoteObjectInterface = NSXPCInterface(
             with: BTDaemonCommProtocol.self
         )
+        if let eventSink = self.eventSink {
+            connect.exportedInterface = NSXPCInterface(
+                with: BTDaemonEventsProtocol.self
+            )
+            connect.exportedObject = eventSink
+        }
 
         BTXPCValidation.protectDaemon(connection: connect)
 

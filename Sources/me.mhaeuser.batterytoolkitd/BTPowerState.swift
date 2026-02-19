@@ -92,12 +92,22 @@ internal enum BTPowerState {
         assert(BTSettings.magSafeSync)
         assert(!self.powerDisabled)
 
-        if percent == 100 {
-            _ = SMCComm.MagSafe.setGreen()
+        if percent >= BTSettings.maxCharge {
+            let success = BTSettings.magSafeInvertedIndicator
+                ? SMCComm.MagSafe.setOrange()
+                : SMCComm.MagSafe.setGreen()
+            os_log("MagSafe sync: green (percent=%{public}u max=%{public}u chargingDisabled=%{public}@ success=%{public}@)", percent, BTSettings.maxCharge, self.chargingDisabled.description, success.description)
+            NSLog("MagSafe sync: green (percent=%u max=%u chargingDisabled=%@ success=%@)", percent, BTSettings.maxCharge, self.chargingDisabled.description, success.description)
         } else if self.chargingDisabled {
-            _ = SMCComm.MagSafe.setOrange()
+            let success = SMCComm.MagSafe.setOrange()
+            os_log("MagSafe sync: orange (percent=%{public}u max=%{public}u chargingDisabled=%{public}@ success=%{public}@)", percent, BTSettings.maxCharge, self.chargingDisabled.description, success.description)
+            NSLog("MagSafe sync: orange (percent=%u max=%u chargingDisabled=%@ success=%@)", percent, BTSettings.maxCharge, self.chargingDisabled.description, success.description)
         } else {
-            _ = SMCComm.MagSafe.setOrangeSlowBlink()
+            let success = BTSettings.magSafeInvertedIndicator
+                ? SMCComm.MagSafe.setGreen()
+                : SMCComm.MagSafe.setOrange()
+            os_log("MagSafe sync: orangeCharging (percent=%{public}u max=%{public}u chargingDisabled=%{public}@ success=%{public}@)", percent, BTSettings.maxCharge, self.chargingDisabled.description, success.description)
+            NSLog("MagSafe sync: orangeCharging (percent=%u max=%u chargingDisabled=%@ success=%@)", percent, BTSettings.maxCharge, self.chargingDisabled.description, success.description)
         }
     }
 
@@ -207,6 +217,32 @@ internal enum BTPowerState {
         self.restoreAdapterSleep()
 
         return true
+    }
+
+
+    static func setMagSafeIndicator(mode: BTMagSafeIndicatorMode) -> Bool {
+        switch mode {
+        case .sync:
+            guard BTSettings.magSafeSync else {
+                return SMCComm.MagSafe.setSystem()
+            }
+            self.syncMagSafeState()
+            return true
+        case .system:
+            return SMCComm.MagSafe.setSystem()
+        case .off:
+            return SMCComm.MagSafe.setOff()
+        case .green:
+            return SMCComm.MagSafe.setGreen()
+        case .orange:
+            return SMCComm.MagSafe.setOrange()
+        case .orangeSlowBlink:
+            return SMCComm.MagSafe.setOrangeSlowBlink()
+        case .orangeFastBlink:
+            return SMCComm.MagSafe.setOrangeFastBlink()
+        case .orangeBlinkOff:
+            return SMCComm.MagSafe.setOrangeBlinkOff()
+        }
     }
 
     static func isChargingDisabled() -> Bool {

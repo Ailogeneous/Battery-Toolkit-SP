@@ -7,9 +7,8 @@ import Foundation
 import os.log
 import IOKit.pwr_mgt
 
-@main
 @MainActor
-internal enum BTDaemon {
+public enum BTDaemon {
     private(set) static var supported = false
     private static var enabled = false
 
@@ -23,19 +22,29 @@ internal enum BTDaemon {
     }
 
     static func getState() -> [String: NSObject & Sendable] {
-        guard enabled else {
-            return [BTStateInfo.Keys.enabled: NSNumber(value: 0)]
-        }
-
         let chargingDisabled = BTPowerState.isChargingDisabled()
-        let connected = BTPowerEvents.unlimitedPower
+        let connected = enabled ? BTPowerEvents.unlimitedPower : IOPSPrivate.DrawingUnlimitedPower()
         let powerDisabled = BTPowerState.isPowerAdapterDisabled()
-        let progress = BTPowerEvents.getChargingProgress()
-        let mode = BTPowerEvents.chargingMode
+        let progress = enabled ? BTPowerEvents.getChargingProgress() : BTStateInfo.ChargingProgress.full
+        let mode = enabled ? BTPowerEvents.chargingMode : BTStateInfo.ChargingMode.standard
         let maxCharge = BTSettings.maxCharge
 
-        return [
-            BTStateInfo.Keys.enabled: NSNumber(value: 1),
+        var batteryPercent: NSNumber? = nil
+        var isCharging: NSNumber? = nil
+        var isACConnected: NSNumber? = nil
+
+        if let (percent, charging, _) = IOPSPrivate.GetPercentRemaining() {
+            batteryPercent = NSNumber(value: Double(percent))
+            isCharging = NSNumber(value: charging)
+            isACConnected = NSNumber(value: connected)
+        }
+
+        if BTSettings.magSafeSync {
+            BTPowerState.syncMagSafeState()
+        }
+
+        var state: [String: NSObject & Sendable] = [
+            BTStateInfo.Keys.enabled: NSNumber(value: enabled ? 1 : 0),
             BTStateInfo.Keys.powerDisabled: NSNumber(value: powerDisabled),
             BTStateInfo.Keys.connected: NSNumber(value: connected),
             BTStateInfo.Keys
@@ -44,6 +53,26 @@ internal enum BTDaemon {
             BTStateInfo.Keys.chargingMode: NSNumber(value: mode.rawValue),
             BTStateInfo.Keys.maxCharge: NSNumber(value: maxCharge)
         ]
+
+        let powerModes = BTPowerMode.readCurrent()
+        if let value = powerModes.all {
+            state[BTStateInfo.Keys.powerModeAll] = NSNumber(value: value)
+        }
+        if let value = powerModes.battery {
+            state[BTStateInfo.Keys.powerModeBattery] = NSNumber(value: value)
+        }
+        if let value = powerModes.charger {
+            state[BTStateInfo.Keys.powerModeCharger] = NSNumber(value: value)
+        }
+
+        if let batteryPercent { state[BTStateInfo.Keys.batteryPercent] = batteryPercent }
+        if let isCharging { state[BTStateInfo.Keys.isCharging] = isCharging }
+        if let isACConnected { state[BTStateInfo.Keys.isACConnected] = isACConnected }
+        if let temperatureC = IOPSPrivate.GetBatteryTemperatureCelsius() {
+            state[BTStateInfo.Keys.batteryTemperature] = NSNumber(value: temperatureC)
+        }
+
+        return state
     }
     
     private static func start() throws {
@@ -97,7 +126,14 @@ internal enum BTDaemon {
         BTPowerEvents.stop()
     }
 
-    private static func main() {
+    public nonisolated static func run() {
+        Task { @MainActor in
+            self.runMain()
+        }
+        dispatchMain()
+    }
+
+    private static func runMain() {
         //
         // Cache the unique ID immediately, as this is not safe against
         // modifications of the daemon on-disk. This ID must not be used for
@@ -106,7 +142,9 @@ internal enum BTDaemon {
         self.uniqueId = CSIdentification.getUniqueIdSelf()
 
         BTSettings.readDefaults()
-        
+
+        // Host application owns pmset policy decisions and can trigger
+        // enforcement explicitly via settings/actions when desired.
         GlobalSleep.restoreOnStart()
 
         do {
@@ -153,7 +191,5 @@ internal enum BTDaemon {
         }
 
         BTDaemonXPCServer.start()
-
-        dispatchMain()
     }
 }

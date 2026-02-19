@@ -3,37 +3,30 @@
   SPDX-License-Identifier: BSD-3-Clause
 */
 
+#import <Foundation/NSBundle.h>
+#import <Foundation/NSDictionary.h>
 #import <Foundation/NSString.h>
-#import <Foundation/NSUserDefaults.h>
 #import <Foundation/NSException.h>
 
 #include "BTPreprocessor.h"
 
-static NSString *BTPreprocessorSuiteName = nil;
-
 void BTPreprocessorConfigure(NSString * _Nonnull suiteName) {
-    BTPreprocessorSuiteName = [suiteName copy];
+    (void)suiteName;
 }
 
 static NSString *BTPreprocessorValue(NSString * _Nonnull key) {
-    if (!BTPreprocessorSuiteName) {
-        [NSException raise:NSInternalInconsistencyException
-                    format:@"BTPreprocessor not configured. Call BTPreprocessorConfigure() before use."];
+    // Prefer Info.plist keys (app or helper bundle)
+    NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
+    if (info) {
+        NSString *plistValue = [info objectForKey:key];
+        if (plistValue && plistValue.length > 0) {
+            return plistValue;
+        }
     }
 
-    NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:BTPreprocessorSuiteName];
-    if (!defaults) {
-        [NSException raise:NSInternalInconsistencyException
-                    format:@"Unable to access UserDefaults suite: %@", BTPreprocessorSuiteName];
-    }
-
-    NSString *value = [defaults stringForKey:key];
-    if (!value || value.length == 0) {
-        [NSException raise:NSInternalInconsistencyException
-                    format:@"Missing UserDefaults key: %@", key];
-    }
-
-    return value;
+    [NSException raise:NSInternalInconsistencyException
+                format:@"Missing configuration value for key: %@", key];
+    return @"";
 }
 
 NSString * _Nonnull BTPreprocessorAppID(void) {

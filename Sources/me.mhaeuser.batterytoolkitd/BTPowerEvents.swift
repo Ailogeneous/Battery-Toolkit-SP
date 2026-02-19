@@ -96,6 +96,7 @@ internal enum BTPowerEvents {
         }
 
         _ = self.handleChargeHysteresis()
+        BTEventHub.notifyStateChanged()
     }
 
     static func chargeToLimit() -> Bool {
@@ -144,6 +145,7 @@ internal enum BTPowerEvents {
         }
 
         self.handleLimitedPower()
+        BTEventHub.notifyStateChanged()
     }
 
     private static func percentChangeHandler(token _: Int32) {
@@ -156,6 +158,7 @@ internal enum BTPowerEvents {
         }
 
         _ = self.handleChargeHysteresis()
+        BTEventHub.notifyStateChanged()
     }
 
     private static func registerLimitedPowerHandler() -> Bool {

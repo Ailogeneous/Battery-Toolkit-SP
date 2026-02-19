@@ -11,6 +11,7 @@ public enum BTSettingsInfo {
         public static let maxCharge: UInt8 = 80
         public static let adapterSleep = false
         public static let magSafeSync = false
+        public static let magSafeInvertedIndicator = false
     }
 
     public enum Bounds {
@@ -23,6 +24,7 @@ public enum BTSettingsInfo {
         public static let maxCharge = "MaxCharge"
         public static let adapterSleep = "AdapterSleep"
         public static let magSafeSync = "MagSafeSync"
+        public static let magSafeInvertedIndicator = "MagSafeInvertedIndicator"
     }
 
     public static func chargeLimitsValid(

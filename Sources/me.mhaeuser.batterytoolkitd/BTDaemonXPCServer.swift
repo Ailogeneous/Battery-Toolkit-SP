@@ -38,7 +38,25 @@ private extension BTDaemonXPCServer {
 
             newConnection.exportedInterface = NSXPCInterface(with: BTDaemonCommProtocol.self)
             newConnection.exportedObject = BTDaemonXPCServer.daemonComm
+            newConnection.remoteObjectInterface = NSXPCInterface(with: BTDaemonEventsProtocol.self)
 
+            newConnection.invalidationHandler = { [weak newConnection] in
+                guard let connection = newConnection else { return }
+                Task { @MainActor in
+                    BTEventHub.unregister(connection: connection)
+                }
+            }
+            newConnection.interruptionHandler = { [weak newConnection] in
+                guard let connection = newConnection else { return }
+                Task { @MainActor in
+                    BTEventHub.unregister(connection: connection)
+                }
+            }
+
+            Task { @MainActor in
+                BTEventHub.register(connection: newConnection)
+                BTEventHub.notifyStateChanged()
+            }
             newConnection.resume()
 
             return true

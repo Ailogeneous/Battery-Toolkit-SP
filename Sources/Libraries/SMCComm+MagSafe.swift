@@ -3,6 +3,9 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
+import Foundation
+import os.log
+
 public extension SMCComm {
     @MainActor
     enum MagSafe {
@@ -59,9 +62,18 @@ private extension SMCComm.MagSafe {
 
     private static func setColor(color: UInt8) -> Bool {
         guard self.supported else {
+            os_log("MagSafe setColor skipped (unsupported), color=%{public}u", color)
+            NSLog("MagSafe setColor skipped (unsupported), color=%u", color)
             return false
         }
 
-        return SMCComm.writeKey(key: self.Keys.ACLC.key, bytes: [color])
+        let success = SMCComm.writeKey(key: self.Keys.ACLC.key, bytes: [color])
+        os_log(
+            "MagSafe setColor color=%{public}u success=%{public}@",
+            color,
+            success.description
+        )
+        NSLog("MagSafe setColor color=%u success=%@", color, success.description)
+        return success
     }
 }

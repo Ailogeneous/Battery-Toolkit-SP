@@ -10,7 +10,7 @@
 
 __BEGIN_DECLS
 
-/// Configure the App Group suite name used to read shared UserDefaults.
+/// Legacy no-op retained for API compatibility.
 void BTPreprocessorConfigure(NSString * _Nonnull suiteName);
 
 /// The Battery Toolkit bundle identifier.
