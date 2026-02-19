@@ -1,6 +1,8 @@
-<div align="center">
+[logo]: Resources/logo.png
 
-<img src="https://raw.githubusercontent.com/Ailogeneous/Battery-Toolkit-SP/main/Resources/LogoCaption.png" alt="Battery Toolkit logo" width="500">
+![Logo][logo]
+
+<div align="center">
 
 **A Swift Package that provides Apple Silicon Mac battery charging control logic.**
 
