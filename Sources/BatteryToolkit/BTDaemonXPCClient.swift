@@ -76,7 +76,7 @@ public enum BTDaemonXPCClient {
     }
 
     public static func disablePowerAdapter() async throws {
-        let authData = try await BTAppXPCClient.getManageAuthorization()
+        let authData = try await self.getManageAuthorizationForCall()
         try await withCheckedThrowingContinuation { continuation in
             self.runExecute(
                 continuation: continuation,
@@ -117,7 +117,7 @@ public enum BTDaemonXPCClient {
     }
 
     public static func disableCharging() async throws {
-        let authData = try await BTAppXPCClient.getManageAuthorization()
+        let authData = try await self.getManageAuthorizationForCall()
         try await withCheckedThrowingContinuation { continuation in
             self.runExecute(
                 continuation: continuation,
@@ -128,7 +128,7 @@ public enum BTDaemonXPCClient {
     }
 
     public static func pauseActivity() async throws {
-        let authData = try await BTAppXPCClient.getManageAuthorization()
+        let authData = try await self.getManageAuthorizationForCall()
         try await withCheckedThrowingContinuation { continuation in
             self.runExecute(
                 continuation: continuation,
@@ -139,7 +139,7 @@ public enum BTDaemonXPCClient {
     }
 
     public static func resumeActivity() async throws {
-        let authData = try await BTAppXPCClient.getManageAuthorization()
+        let authData = try await self.getManageAuthorizationForCall()
         try await withCheckedThrowingContinuation { continuation in
             self.runExecute(
                 continuation: continuation,
@@ -150,7 +150,7 @@ public enum BTDaemonXPCClient {
     }
 
     public static func setMagSafeIndicator(mode: BTMagSafeIndicatorMode) async throws {
-        let authData = try await BTAppXPCClient.getManageAuthorization()
+        let authData = try await self.getManageAuthorizationForCall()
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
             self.executeDaemonManageRetry(continuation: continuation) { daemon in
                 daemon.setMagSafeIndicator(
@@ -173,7 +173,7 @@ public enum BTDaemonXPCClient {
     }
 
     public static func setSettings(settings: [String: NSObject & Sendable]) async throws {
-        let authData = try await BTAppXPCClient.getManageAuthorization()
+        let authData = try await self.getManageAuthorizationForCall()
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
             self.executeDaemonManageRetry(continuation: continuation) { daemon in
                 daemon.setSettings(
@@ -187,7 +187,7 @@ public enum BTDaemonXPCClient {
 
 
     public static func setPMSet(setting: BTPMSetSetting, value: Int, scope: BTPowerModeScope) async throws {
-        let authData = try await BTAppXPCClient.getManageAuthorization()
+        let authData = try await self.getManageAuthorizationForCall()
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
             self.executeDaemonManageRetry(continuation: continuation) { daemon in
                 daemon.setPMSet(
@@ -202,7 +202,7 @@ public enum BTDaemonXPCClient {
     }
 
     public static func setPowerMode(scope: BTPowerModeScope, mode: UInt8) async throws {
-        let authData = try await BTAppXPCClient.getManageAuthorization()
+        let authData = try await self.getManageAuthorizationForCall()
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
             self.executeDaemonManageRetry(continuation: continuation) { daemon in
                 daemon.setPowerMode(
@@ -257,6 +257,19 @@ public enum BTDaemonXPCClient {
                 return
             }
             continuation.resume()
+        }
+    }
+
+    private static func getManageAuthorizationForCall() async throws -> Data {
+        do {
+            return try await BTAppXPCClient.getManageAuthorization()
+        } catch {
+            #if DEBUG
+                os_log("DEBUG manage auth fallback in client: %{public}@", String(describing: error))
+                return Data()
+            #else
+                throw error
+            #endif
         }
     }
     
