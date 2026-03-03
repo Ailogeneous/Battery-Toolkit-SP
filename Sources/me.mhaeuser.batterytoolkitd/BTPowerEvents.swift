@@ -336,18 +336,20 @@ internal enum BTPowerEvents {
     }
 
     private static func enableBelowLimitMode(limit: UInt8) -> Bool {
-        //
-        // When the percent loop is inactive, this currently means that the
-        // device is not connected to power. In this case, do not enable
-        // charging to not disable sleep. The charging mode will be handled by
-        // power source handler when power is connected.
-        //
-        guard self.percentCreated else {
-            return true
+        guard let (percent, _, connected) = IOPSPrivate.GetPercentRemaining() else {
+            return false
         }
 
-        guard let (percent, _, _) = IOPSPrivate.GetPercentRemaining() else {
-            return false
+        //
+        // When the percent loop is inactive, charging can still be latched
+        // off from a previous state. If external power is currently attached,
+        // fail-open and re-enable charging so recovery commands are effective.
+        //
+        if !self.percentCreated {
+            if connected && percent < limit {
+                return BTPowerState.enableCharging(percent: percent)
+            }
+            return true
         }
 
         if percent < limit {
