@@ -140,18 +140,20 @@ public enum BTXPCValidation {
     }
 
     private static func requirementsTextFromId(identifier: String) -> String {
-        let debugText = "identifier \"" + identifier + "\"" +
+        let baseText = "identifier \"" + identifier + "\"" +
             " and anchor apple generic" +
-            " and certificate leaf[subject.CN] = \"" + BTPreprocessor.codesignCN + "\"" +
             " and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */" +
             " and !(entitlement[\"com.apple.security.cs.allow-dyld-environment-variables\"] /* exists */)" +
             " and !(entitlement[\"com.apple.security.cs.disable-library-validation\"] /* exists */)" +
             " and !(entitlement[\"com.apple.security.cs.allow-unsigned-executable-memory\"] /* exists */)" +
             " and !(entitlement[\"com.apple.security.cs.allow-jit\"] /* exists */)"
         #if DEBUG
-            return debugText
+            // In debug builds, avoid pinning leaf subject CN because Xcode/dev cert
+            // rotation can change it across rebuilds and break local XPC auth.
+            return baseText
         #else
-            return debugText +
+            return baseText +
+                " and certificate leaf[subject.CN] = \"" + BTPreprocessor.codesignCN + "\"" +
                 " and !(entitlement[\"com.apple.security.get-task-allow\"] /* exists */)"
         #endif
     }
