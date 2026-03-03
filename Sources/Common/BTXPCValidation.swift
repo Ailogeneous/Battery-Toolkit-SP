@@ -70,6 +70,12 @@ public enum BTXPCValidation {
     }
 
     private static func verifyCsStatus(code: SecCode) -> Bool {
+#if DEBUG
+        // In local debug builds, dynamic CS status bits vary under Xcode attach,
+        // incremental rebuilds, and developer signing. Identity/entitlement
+        // validation is still enforced via requirement strings.
+        return true
+#else
         var signInfo: CFDictionary? = nil
         let infoStatus = SecCodeCopySigningInformationDynamic(
             code,
@@ -137,6 +143,7 @@ public enum BTXPCValidation {
         }
 
         return true
+#endif
     }
 
     private static func requirementsTextFromId(identifier: String) -> String {
