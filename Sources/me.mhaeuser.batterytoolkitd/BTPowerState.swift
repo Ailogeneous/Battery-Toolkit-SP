@@ -23,8 +23,6 @@ internal enum BTPowerState {
     private static let chargeStagnationInterval: TimeInterval = 15 * 60
     private static let chargeProgressStepPercent: UInt8 = 1
     private static let thermalStopCelsius: Double = 37.0
-    // Temporary kill switch for assertion-loop experiments while debugging paused charging behavior.
-    private static let chargingSleepAssertionPolicyEnabled = false
 
     static func initState() {
         let chargingDisabled = SMCComm.Power.isChargingDisabled()
@@ -274,12 +272,6 @@ internal enum BTPowerState {
     }
 
     private static func syncChargingSleepAssertionPolicy(currentPercent: UInt8? = nil) {
-        guard self.chargingSleepAssertionPolicyEnabled else {
-            self.releaseChargingSleepAssertion()
-            self.resetChargeStagnationWindow()
-            return
-        }
-
         if self.chargingDisabled {
             self.releaseChargingSleepAssertion()
             self.resetChargeStagnationWindow()
