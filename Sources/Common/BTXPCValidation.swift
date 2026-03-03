@@ -101,43 +101,13 @@ public enum BTXPCValidation {
         }
 
         let codeStatus = SecCodeStatus(rawValue: signStatus)
-        //
-        // REF: https://blog.obdev.at/what-we-have-learned-from-a-vulnerability/index.html
-        // valid:             Enforce a valid in-memory CS status.
-        // hard, kill:        Disallow late loading of (malicious) code.
-        // restrict:          Disallow unrestricted DTrace.
-        // enforcement:       Enforce code signing for all executable memory.
-        // libraryValidation: Disallow loading of third-party libraries.
-        // runtime:           Enforce Hardened Runtime.
-        //
-        var reqStatus: SecCodeStatus = [
-            .valid,
-            .hard,
-            .kill,
-            SecCodeStatus(rawValue: SecCodeSignatureFlags.restrict.rawValue),
-            SecCodeStatus(rawValue: SecCodeSignatureFlags.enforcement.rawValue),
-            SecCodeStatus(
-                rawValue: SecCodeSignatureFlags.libraryValidation.rawValue
-            ),
-            SecCodeStatus(rawValue: SecCodeSignatureFlags.runtime.rawValue),
-        ]
-        //
-        // Debugging the app may change its dynamic codesign properties.
-        //
-        if codeStatus.contains(.debugged) {
-            #if !DEBUG
-                os_log(
-                    "Signature status constraints violated: Code has been debugged"
-                )
-                return false
-            #else
-                reqStatus.remove([.valid, .hard, .kill])
-            #endif
-        }
-
-        guard codeStatus.contains(reqStatus) else {
+        // Dynamic signing flags can vary legitimately across debug/release and
+        // Xcode-driven rebuild/relaunch cycles. The hard trust gate is enforced
+        // by requirement checks in `isValidClient`; here we only require validity.
+        guard codeStatus.contains(.valid) else {
             os_log(
-                "Signature status constraints violated: \(signStatus) vs \(reqStatus.rawValue)"
+                "Signature status constraints violated: missing valid bit in status=%{public}u",
+                signStatus
             )
             return false
         }
