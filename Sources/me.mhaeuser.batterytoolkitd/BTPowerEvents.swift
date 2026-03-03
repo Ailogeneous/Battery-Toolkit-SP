@@ -16,6 +16,7 @@ internal enum BTPowerEvents {
 
     private static var powerCreated = false
     private static var percentCreated = false
+    private static var assertionPolicyWatchdog: DispatchSourceTimer?
 
     static func start() throws {
         let smcSuccess = SMCComm.start()
@@ -203,6 +204,7 @@ internal enum BTPowerEvents {
             guard self.percentCreated else {
                 return false
             }
+            self.startAssertionPolicyWatchdog()
         }
 
         let percent = self.handleChargeHysteresis()
@@ -234,6 +236,7 @@ internal enum BTPowerEvents {
         }
 
         BTDispatcher.unregisterPercentChangeNotification()
+        self.stopAssertionPolicyWatchdog()
         self.percentCreated = false
     }
 
@@ -263,6 +266,8 @@ internal enum BTPowerEvents {
         } else if percent < BTSettings.minCharge {
             _ = BTPowerState.enableCharging(percent: percent)
         }
+
+        BTPowerState.reevaluateChargingSleepAssertionPolicy()
 
         return percent
     }
@@ -345,6 +350,24 @@ internal enum BTPowerEvents {
             return BTPowerState.enableCharging(percent: percent)
         }
 
+        BTPowerState.reevaluateChargingSleepAssertionPolicy()
         return true
+    }
+
+    private static func startAssertionPolicyWatchdog() {
+        self.stopAssertionPolicyWatchdog()
+
+        let timer = DispatchSource.makeTimerSource(queue: DispatchQueue.main)
+        timer.schedule(deadline: .now() + 60, repeating: 60)
+        timer.setEventHandler {
+            BTPowerState.reevaluateChargingSleepAssertionPolicy()
+        }
+        timer.resume()
+        self.assertionPolicyWatchdog = timer
+    }
+
+    private static func stopAssertionPolicyWatchdog() {
+        self.assertionPolicyWatchdog?.cancel()
+        self.assertionPolicyWatchdog = nil
     }
 }

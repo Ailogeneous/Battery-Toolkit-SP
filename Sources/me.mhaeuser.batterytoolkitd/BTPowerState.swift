@@ -10,16 +10,17 @@ import os.log
 internal enum BTPowerState {
     private static var chargingDisabled = false
     private static var powerDisabled = false
+    private static var chargeSleepAssertionHeld = false
+    private static var chargeStagnationStartAt: Date?
+    private static var chargeStagnationStartPercent: UInt8?
+    private static let chargeStagnationInterval: TimeInterval = 15 * 60
+    private static let chargeProgressStepPercent: UInt8 = 1
+    private static let thermalStopCelsius: Double = 40.0
 
     static func initState() {
         let chargingDisabled = SMCComm.Power.isChargingDisabled()
         self.chargingDisabled = chargingDisabled
-        if !chargingDisabled {
-            //
-            // Sleep must always be disabled when charging is enabled.
-            //
-            GlobalSleep.disable()
-        }
+        self.syncChargingSleepAssertionPolicy()
 
         let powerDisabled = SMCComm.Power.isPowerAdapterDisabled()
         self.powerDisabled = powerDisabled
@@ -45,13 +46,8 @@ internal enum BTPowerState {
         let chargingDisabled = SMCComm.Power.isChargingDisabled()
         if chargingDisabled != self.chargingDisabled {
             self.chargingDisabled = chargingDisabled
-
-            if chargingDisabled {
-                GlobalSleep.restore()
-            } else {
-                GlobalSleep.disable()
-            }
         }
+        self.syncChargingSleepAssertionPolicy()
 
         let powerDisabled = SMCComm.Power.isPowerAdapterDisabled()
         if powerDisabled != self.powerDisabled {
@@ -147,7 +143,7 @@ internal enum BTPowerState {
             BTPowerState.syncMagSafeStatePowerEnabled(percent: percent)
         }
 
-        GlobalSleep.restore()
+        self.syncChargingSleepAssertionPolicy(currentPercent: percent)
 
         return true
     }
@@ -163,9 +159,8 @@ internal enum BTPowerState {
             return false
         }
 
-        GlobalSleep.disable()
-
         self.chargingDisabled = false
+        self.syncChargingSleepAssertionPolicy(currentPercent: percent)
 
         if BTSettings.magSafeSync {
             BTPowerState.syncMagSafeStatePowerEnabled(percent: percent)
@@ -253,6 +248,10 @@ internal enum BTPowerState {
         return self.powerDisabled
     }
 
+    static func reevaluateChargingSleepAssertionPolicy() {
+        self.syncChargingSleepAssertionPolicy()
+    }
+
     private static func disableAdapterSleep() {
         if !BTSettings.adapterSleep {
             GlobalSleep.disable()
@@ -263,5 +262,79 @@ internal enum BTPowerState {
         if !BTSettings.adapterSleep {
             GlobalSleep.restore()
         }
+    }
+
+    private static func syncChargingSleepAssertionPolicy(currentPercent: UInt8? = nil) {
+        if self.chargingDisabled {
+            self.releaseChargingSleepAssertion()
+            self.resetChargeStagnationWindow()
+            return
+        }
+
+        let percent = currentPercent ?? self.getPercentRemaining().0
+        let shouldDisableSleep = self.shouldDisableSleepForCharging(currentPercent: percent)
+
+        if shouldDisableSleep {
+            self.holdChargingSleepAssertion()
+        } else {
+            self.releaseChargingSleepAssertion()
+        }
+    }
+
+    private static func shouldDisableSleepForCharging(currentPercent: UInt8) -> Bool {
+        if let clamshellClosed = IOPSPrivate.IsClamshellClosed(), clamshellClosed {
+            self.resetChargeStagnationWindow()
+            return false
+        }
+
+        if let batteryTempC = IOPSPrivate.GetBatteryTemperatureCelsius(), batteryTempC >= self.thermalStopCelsius {
+            self.resetChargeStagnationWindow()
+            return false
+        }
+
+        let now = Date()
+        if self.chargeStagnationStartAt == nil || self.chargeStagnationStartPercent == nil {
+            self.chargeStagnationStartAt = now
+            self.chargeStagnationStartPercent = currentPercent
+            return true
+        }
+
+        let startPercent = self.chargeStagnationStartPercent ?? currentPercent
+        if currentPercent >= startPercent &+ self.chargeProgressStepPercent {
+            self.chargeStagnationStartAt = now
+            self.chargeStagnationStartPercent = currentPercent
+            return true
+        }
+
+        guard let startAt = self.chargeStagnationStartAt else {
+            return true
+        }
+        if now.timeIntervalSince(startAt) >= self.chargeStagnationInterval {
+            self.resetChargeStagnationWindow()
+            return false
+        }
+
+        return true
+    }
+
+    private static func holdChargingSleepAssertion() {
+        guard !self.chargeSleepAssertionHeld else {
+            return
+        }
+        GlobalSleep.disable()
+        self.chargeSleepAssertionHeld = true
+    }
+
+    private static func releaseChargingSleepAssertion() {
+        guard self.chargeSleepAssertionHeld else {
+            return
+        }
+        GlobalSleep.restore()
+        self.chargeSleepAssertionHeld = false
+    }
+
+    private static func resetChargeStagnationWindow() {
+        self.chargeStagnationStartAt = nil
+        self.chargeStagnationStartPercent = nil
     }
 }

@@ -74,6 +74,36 @@ public enum IOPSPrivate {
 
         return celsius
     }
+
+    static func IsClamshellClosed() -> Bool? {
+        let service = IOServiceGetMatchingService(
+            kIOMasterPortDefault,
+            IOServiceMatching("IOPMrootDomain")
+        )
+        guard service != IO_OBJECT_NULL else {
+            return nil
+        }
+        defer {
+            IOObjectRelease(service)
+        }
+
+        guard let value = IORegistryEntryCreateCFProperty(
+            service,
+            "AppleClamshellState" as CFString,
+            kCFAllocatorDefault,
+            0
+        )?.takeRetainedValue() else {
+            return nil
+        }
+
+        if let boolValue = value as? Bool {
+            return boolValue
+        }
+        if let numberValue = value as? NSNumber {
+            return numberValue.boolValue
+        }
+        return nil
+    }
     
     private static func GetPackedBatteryBits() -> UInt64? {
         var token: Int32 = 0
