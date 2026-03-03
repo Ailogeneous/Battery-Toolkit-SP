@@ -296,10 +296,14 @@ internal enum BTPowerEvents {
         } else {
             self.unregisterPercentChangedHandler()
             //
-            // Disable charging to not have micro-charges happening when
-            // connecting to power.
+            // Fail open in limited-power states. Forcing disable here can
+            // latch a paused charging state across transitions (sleep/wake,
+            // lid close/open, adapter reconnect) and leave AC attached but not
+            // charging. Hysteresis will still enforce limits when percent loop
+            // is active on unlimited power.
             //
-            _ = BTPowerEvents.disableCharging()
+            let (percent, _, _) = BTPowerState.getPercentRemaining()
+            _ = BTPowerState.enableCharging(percent: percent)
         }
     }
 
