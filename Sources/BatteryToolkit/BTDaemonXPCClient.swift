@@ -261,16 +261,16 @@ public enum BTDaemonXPCClient {
     }
 
     private static func getManageAuthorizationForCall() async throws -> Data {
-        #if DEBUG
-            os_log("DEBUG manage auth bypass active in client")
-            return Data()
-        #else
         do {
             return try await BTAppXPCClient.getManageAuthorization()
         } catch {
-            throw error
+            #if DEBUG
+                os_log("DEBUG manage auth fallback in client: %{public}@", String(describing: error))
+                return Data()
+            #else
+                throw error
+            #endif
         }
-        #endif
     }
     
     private static func connectDaemon() -> NSXPCConnection {
