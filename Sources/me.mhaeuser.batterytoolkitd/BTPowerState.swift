@@ -8,9 +8,16 @@ import os.log
 
 @MainActor
 internal enum BTPowerState {
+    private struct PowerModeSnapshot {
+        let all: Int?
+        let battery: Int?
+        let charger: Int?
+    }
+
     private static var chargingDisabled = false
     private static var powerDisabled = false
     private static var chargeSleepAssertionHeld = false
+    private static var chargeSleepPowerModeSnapshot: PowerModeSnapshot?
     private static var chargeStagnationStartAt: Date?
     private static var chargeStagnationStartPercent: UInt8?
     private static let chargeStagnationInterval: TimeInterval = 15 * 60
@@ -321,6 +328,7 @@ internal enum BTPowerState {
         guard !self.chargeSleepAssertionHeld else {
             return
         }
+        self.captureAndForceLowPowerModeForAssertion()
         GlobalSleep.disable()
         self.chargeSleepAssertionHeld = true
     }
@@ -330,11 +338,44 @@ internal enum BTPowerState {
             return
         }
         GlobalSleep.restore()
+        self.restorePowerModeAfterAssertion()
         self.chargeSleepAssertionHeld = false
     }
 
     private static func resetChargeStagnationWindow() {
         self.chargeStagnationStartAt = nil
         self.chargeStagnationStartPercent = nil
+    }
+
+    private static func captureAndForceLowPowerModeForAssertion() {
+        guard self.chargeSleepPowerModeSnapshot == nil else {
+            return
+        }
+
+        let current = BTPowerMode.readCurrent()
+        self.chargeSleepPowerModeSnapshot = PowerModeSnapshot(
+            all: current.all,
+            battery: current.battery,
+            charger: current.charger
+        )
+
+        _ = BTPowerMode.set(scope: .all, mode: 1)
+    }
+
+    private static func restorePowerModeAfterAssertion() {
+        guard let snapshot = self.chargeSleepPowerModeSnapshot else {
+            return
+        }
+        self.chargeSleepPowerModeSnapshot = nil
+
+        if let all = snapshot.all {
+            _ = BTPowerMode.set(scope: .all, mode: UInt8(max(0, min(2, all))))
+        }
+        if let battery = snapshot.battery {
+            _ = BTPowerMode.set(scope: .battery, mode: UInt8(max(0, min(2, battery))))
+        }
+        if let charger = snapshot.charger {
+            _ = BTPowerMode.set(scope: .charger, mode: UInt8(max(0, min(2, charger))))
+        }
     }
 }
