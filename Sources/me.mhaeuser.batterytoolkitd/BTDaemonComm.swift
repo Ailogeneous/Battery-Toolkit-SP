@@ -325,8 +325,18 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
     }
 
     private func checkRight(authData: Data?, rightName: String) -> Bool {
-        _ = authData
-        _ = rightName
+#if DEBUG
         return true
+#else
+        let simpleAuth = SimpleAuth.fromData(authData: authData)
+        guard let simpleAuth else {
+            return false
+        }
+
+        return SimpleAuth.checkRight(
+            simpleAuth: simpleAuth,
+            rightName: rightName
+        )
+#endif
     }
 }

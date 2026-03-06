@@ -65,7 +65,8 @@ public enum SimpleAuth {
         rightName: String,
         templateName: String,
         comment: String,
-        timeout: Int
+        timeout: Int,
+        requesterIdentifier: String? = nil
     ) -> OSStatus {
         let simpleAuth = self.empty()
         guard let simpleAuth else {
@@ -86,6 +87,10 @@ public enum SimpleAuth {
 
         adminRightDef[kAuthorizationComment as CFString] = comment as CFString
         adminRightDef["timeout" as CFString] = timeout as CFNumber
+        if let requesterIdentifier, !requesterIdentifier.isEmpty {
+            adminRightDef["identifier" as CFString] = requesterIdentifier as CFString
+            adminRightDef.removeValue(forKey: "requirement" as CFString)
+        }
 
         return AuthorizationRightSet(
             simpleAuth.authRef,

@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import CoreGraphics
 import IOKit.ps
 import os.log
 
@@ -16,6 +17,8 @@ internal enum BTPowerEvents {
 
     private static var powerCreated = false
     private static var percentCreated = false
+    private static var displayReconfigurationRegistered = false
+    private static var assertionPolicyWatchdog: DispatchSourceTimer?
 
     static func start() throws {
         let smcSuccess = SMCComm.start()
@@ -35,6 +38,8 @@ internal enum BTPowerEvents {
             SMCComm.stop()
             throw BTError.unknown
         }
+
+        self.registerDisplayReconfigurationHandler()
     }
 
     private static func restoreState() {
@@ -63,6 +68,7 @@ internal enum BTPowerEvents {
     static func stop() {
         assert(self.powerCreated)
 
+        self.unregisterDisplayReconfigurationHandler()
         self.unregisterLimitedPowerHandler()
         self.unregisterPercentChangedHandler()
         self.restoreState()
@@ -203,6 +209,7 @@ internal enum BTPowerEvents {
             guard self.percentCreated else {
                 return false
             }
+            self.startAssertionPolicyWatchdog()
         }
 
         let percent = self.handleChargeHysteresis()
@@ -234,6 +241,7 @@ internal enum BTPowerEvents {
         }
 
         BTDispatcher.unregisterPercentChangeNotification()
+        self.stopAssertionPolicyWatchdog()
         self.percentCreated = false
     }
 
@@ -264,6 +272,8 @@ internal enum BTPowerEvents {
             _ = BTPowerState.enableCharging(percent: percent)
         }
 
+        BTPowerState.reevaluateChargingSleepAssertionPolicy()
+
         return percent
     }
 
@@ -291,10 +301,14 @@ internal enum BTPowerEvents {
         } else {
             self.unregisterPercentChangedHandler()
             //
-            // Disable charging to not have micro-charges happening when
-            // connecting to power.
+            // Fail open in limited-power states. Forcing disable here can
+            // latch a paused charging state across transitions (sleep/wake,
+            // lid close/open, adapter reconnect) and leave AC attached but not
+            // charging. Hysteresis will still enforce limits when percent loop
+            // is active on unlimited power.
             //
-            _ = BTPowerEvents.disableCharging()
+            let (percent, _, _) = BTPowerState.getPercentRemaining()
+            _ = BTPowerState.enableCharging(percent: percent)
         }
     }
 
@@ -326,25 +340,86 @@ internal enum BTPowerEvents {
         }
     }
 
-    private static func enableBelowLimitMode(limit: UInt8) -> Bool {
-        //
-        // When the percent loop is inactive, this currently means that the
-        // device is not connected to power. In this case, do not enable
-        // charging to not disable sleep. The charging mode will be handled by
-        // power source handler when power is connected.
-        //
-        guard self.percentCreated else {
-            return true
+    private static func registerDisplayReconfigurationHandler() {
+        guard !self.displayReconfigurationRegistered else {
+            return
         }
 
-        guard let (percent, _, _) = IOPSPrivate.GetPercentRemaining() else {
+        let result = CGDisplayRegisterReconfigurationCallback(
+            btDisplayReconfigurationCallback,
+            nil
+        )
+        guard result == .success else {
+            os_log("Failed to register display reconfiguration callback")
+            return
+        }
+
+        self.displayReconfigurationRegistered = true
+    }
+
+    private static func unregisterDisplayReconfigurationHandler() {
+        guard self.displayReconfigurationRegistered else {
+            return
+        }
+
+        CGDisplayRemoveReconfigurationCallback(
+            btDisplayReconfigurationCallback,
+            nil
+        )
+        self.displayReconfigurationRegistered = false
+    }
+
+    fileprivate static func displayReconfigurationChanged() {
+        BTPowerState.reevaluateChargingSleepAssertionPolicy()
+        BTEventHub.notifyStateChanged()
+    }
+
+    private static func enableBelowLimitMode(limit: UInt8) -> Bool {
+        guard let (percent, _, connected) = IOPSPrivate.GetPercentRemaining() else {
             return false
+        }
+
+        //
+        // When the percent loop is inactive, charging can still be latched
+        // off from a previous state. If external power is currently attached,
+        // fail-open and re-enable charging so recovery commands are effective.
+        //
+        if !self.percentCreated {
+            if connected && percent < limit {
+                return BTPowerState.enableCharging(percent: percent)
+            }
+            return true
         }
 
         if percent < limit {
             return BTPowerState.enableCharging(percent: percent)
         }
 
+        BTPowerState.reevaluateChargingSleepAssertionPolicy()
         return true
+    }
+
+    private static func startAssertionPolicyWatchdog() {
+        self.stopAssertionPolicyWatchdog()
+
+        let timer = DispatchSource.makeTimerSource(queue: DispatchQueue.main)
+        timer.schedule(deadline: .now() + 60, repeating: 60)
+        timer.setEventHandler {
+            BTPowerState.reevaluateChargingSleepAssertionPolicy()
+        }
+        timer.resume()
+        self.assertionPolicyWatchdog = timer
+    }
+
+    private static func stopAssertionPolicyWatchdog() {
+        self.assertionPolicyWatchdog?.cancel()
+        self.assertionPolicyWatchdog = nil
+    }
+}
+
+private let btDisplayReconfigurationCallback: CGDisplayReconfigurationCallBack = {
+    _, _, _ in
+    DispatchQueue.main.async {
+        BTPowerEvents.displayReconfigurationChanged()
     }
 }

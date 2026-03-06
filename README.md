@@ -4,96 +4,82 @@
 
 <div align="center">
 
-**A Swift Package that provides Apple Silicon Mac battery charging control logic.**
+**A Swift Package for Apple Silicon battery charging control with an SMAppService daemon.**
 
-[Capabilities](#capabilities) • [Limitations](#limitations) • [Using BatteryToolkit](#using-batterytoolkit) • [Copy (SMAppService helper)](#copy-smappservice-helper)
+[Capabilities](#capabilities) • [Setup](#setup) • [Examples](#examples) • [Troubleshooting](#troubleshooting)
 
 </div>
 
------
+---
 
-# About
+## About
 
-This is a Swift Package version of the original [Battery-Toolkit](https://github.com/mhaeuser/Battery-Toolkit/) project. It uses SMAppService (not SMJobBless) and removes the UI so you can provide your own. This repository is now SwiftPM‑only (no Xcode project file).
+`Battery-Toolkit-SP` is a SwiftPM package fork of [Battery-Toolkit](https://github.com/mhaeuser/Battery-Toolkit/) adapted for app-owned UI and daemon orchestration.
 
-# Capabilities
+- Uses `SMAppService` (not `SMJobBless`).
+- Supports Apple Silicon Macs.
+- Uses `BT_*` values from each target's `Info.plist`.
+- App Group/shared `UserDefaults` setup is **not required**.
 
-`BatteryToolkit` provides the core logic to manage the power state of Apple Silicon Macs. You can integrate features such as:
+## Capabilities
 
-## Limiting battery charge to an upper limit
+- Charge limit window management (`minCharge`, `maxCharge`)
+- Explicit charging actions (`chargeToLimit`, `chargeToFull`, `disableCharging`)
+- Adapter control (`disablePowerAdapter`, `enablePowerAdapter`)
+- Pause/resume daemon activity
+- Daemon state fetch + live event streaming
+- macOS power mode switching (`pmset powermode`)
+- `pmset` value updates (`hibernatemode`, `standby`, delays, threshold)
+- MagSafe indicator control modes
+- Battery temperature included in daemon state
 
-Modern batteries deteriorate more when always kept at full charge. Apple’s “Optimized Charging” is not configurable. `BatteryToolkit` allows specifying a hard limit past which charging is turned off. For safety reasons, this limit cannot be lower than 50%.
+## Setup
 
-## Allowing battery charge to drain to a lower limit
+### 1. Add Package
 
-`BatteryToolkit` allows specifying a limit below which charging is turned on. For safety reasons, this limit cannot be lower than 20%.
+1. Xcode → `File > Add Packages...`
+2. URL: `https://github.com/Ailogeneous/Battery-Toolkit-SP`
+3. Add package to app target and helper target.
 
-**Note:** This setting is not honoured for cold boots or reboots, because Apple Silicon Macs reset their platform state in these cases. As battery charging will already be ongoing when a client using `BatteryToolkit` starts, it lets charging proceed to the upper limit to avoid short bursts across reboots.
+### 2. Runtime Config (`Info.plist`)
 
-## Disabling the power adapter
+Define these keys in both app and helper `Info.plist`:
 
-You can turn off the power adapter without unplugging it (for example, to discharge the battery). You can also integrate logic to disable sleeping when the adapter is disabled.
+- `BT_APP_ID`
+- `BT_DAEMON_ID`
+- `BT_DAEMON_CONN`
+- `BT_CODESIGN_CN`
 
-**Note:** Your Mac may go to sleep immediately after enabling the power adapter again. This is a macOS bug and cannot easily be worked around.
+Example:
 
-## Manual control
+```xml
+<key>BT_APP_ID</key>
+<string>com.example.MyApp</string>
+<key>BT_DAEMON_ID</key>
+<string>com.example.MyApp.helper</string>
+<key>BT_DAEMON_CONN</key>
+<string>com.example.MyApp.helper</string>
+<key>BT_CODESIGN_CN</key>
+<string>Apple Development: Your Name (TEAMID)</string>
+```
 
-Commands include:
-* Enabling and disabling the power adapter
-* Requesting a full charge
-* Requesting a charge to the specified upper limit
-* Stopping charging immediately
-* Pausing all background activity
+### 3. Helper Target
 
-# Limitations
-
-* **Sleep management:** When actively managing charging to an upper limit, a client may need to disable sleep to prevent the system from entering a state where charging control is lost. Sleep can be re-enabled once charging is stopped.
-* **Shutdown state:** Control over the charge state is not possible when the machine is shut down. If the charger remains plugged in while the Mac is off, the battery will charge to 100%.
-* **Power adapter and sleep:** When the power adapter is disabled, sleep should generally also be disabled. Otherwise, exiting Clamshell mode may cause the machine to sleep immediately.
-
-# Using BatteryToolkit
-
-> [!IMPORTANT]
-> `BatteryToolkit` currently only supports Apple Silicon Macs ([#15](https://github.com/mhaeuser/Battery-Toolkit/issues/15))
-
-## Add the package
-
-1. In your Xcode project, go to `File > Add Packages...`.
-2. Paste the repo URL: `https://github.com/Ailogeneous/Battery-Toolkit-SP`.
-3. Add the package to the targets that need battery control logic (app, helper, or both).
-
-## Quick start
-
-1. Add the package to your app and helper targets.
-2. Create a helper target (see “Helper target setup”).
-3. Configure App Group entitlements for both targets (see “App Group setup”).
-4. Set the required UserDefaults values in your app at launch.
-
-## Helper target setup
-
-Create a minimal helper target that links BatteryToolkit. This helper should be a macOS command‑line tool or app that runs the daemon entrypoint.
-
-1. In Xcode, create a new target:
-   - macOS “Command Line Tool” (recommended)
-   - Product Name: your helper bundle ID suffix (e.g. `TetheredHelper`)
-2. Add `BatteryToolkit` package to the helper target’s dependencies.
-3. Add a `main.swift` file to the helper target with:
+Use a helper target entrypoint:
 
 ```swift
 import BatteryToolkit
 
-BTPreprocessor.configure(appGroupSuiteName: "group.your.app")
-
-// Start the daemon process.
-BTDaemon.main()
+BTDaemon.run()
 ```
 
-4. Add a launchd plist to your app bundle (used by SMAppService):
-   - Filename must match the helper bundle ID (e.g. `com.example.app.helper.plist`)
-   - The `Label` and `MachServices` must match the daemon connection name.
-   - It must be embedded at: `YourApp.app/Contents/Library/LaunchServices/`
+### 4. launchd plist (for `SMAppService.daemon`)
 
-Example launchd plist:
+Embed plist in app bundle at:
+
+- `YourApp.app/Contents/Library/LaunchDaemons/<BT_DAEMON_ID>.plist`
+
+Minimal example:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -101,12 +87,22 @@ Example launchd plist:
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>com.example.app.helper</string>
+  <string>com.example.MyApp.helper</string>
+
+  <key>BundleProgram</key>
+  <string>Contents/MacOS/MyHelperExecutable</string>
+
+  <key>AssociatedBundleIdentifiers</key>
+  <array>
+    <string>com.example.MyApp</string>
+  </array>
+
   <key>MachServices</key>
   <dict>
-    <key>TEAMID.com.example.app.helper</key>
+    <key>com.example.MyApp.helper</key>
     <true/>
   </dict>
+
   <key>RunAtLoad</key>
   <true/>
   <key>KeepAlive</key>
@@ -115,128 +111,139 @@ Example launchd plist:
 </plist>
 ```
 
-## App Group setup
+### 5. App Target Copy Phases
 
-You must enable an App Group so the app and helper can share UserDefaults.
+Configure two Copy Files phases in app target:
 
-1. In Xcode, select your app target.
-2. Go to “Signing & Capabilities”.
-3. Add “App Groups”.
-4. Create or select an App Group ID, e.g. `group.com.example.app`.
-5. Repeat steps 1–4 for the helper target using the same App Group ID.
+1. `Copy Helper Binary`
+- Destination: `Executables`
+- Subpath: *(empty)*
+- Add helper product binary
+- Enable `Code Sign On Copy`
 
-Use that App Group ID with `BTPreprocessor.configure(appGroupSuiteName:)` in both app and helper at process startup (app: `applicationDidFinishLaunching`, helper: `main.swift`).
+2. `Copy Launchd Plist`
+- Destination: `Contents/Library/LaunchDaemons`
+- Add `<BT_DAEMON_ID>.plist`
+- Enable `Code Sign On Copy`
 
-## Runtime config (UserDefaults + App Group)
-
-`BatteryToolkit` reads its identifiers from a shared `UserDefaults` suite (App Group). This allows the main app to set values at launch, and the daemon to read the same values at runtime.
-
-### Required keys (UserDefaults)
-
-Set these in the shared App Group suite:
-
-* `BT_APP_ID` (your app bundle identifier)
-* `BT_DAEMON_ID` (your daemon bundle identifier)
-* `BT_DAEMON_CONN` (your launchd Mach service name)
-* `BT_CODESIGN_CN` (the certificate Common Name used to sign app + helper)
-
-- See "Finding BTPreprocessor Values" below on where to find these IDs.
-
-### Configure the suite
-
-Call this **at process startup** (before any BatteryToolkit usage):
-
-```swift
-BTPreprocessor.configure(appGroupSuiteName: "group.your.app")
-```
-
-### Set values (from the app)
-
-```swift
-BTPreprocessor.setValues(
-    appId: "com.example.app",
-    daemonId: "com.example.app.helper",
-    daemonConn: "TEAMID.com.example.app.helper",
-    codesignCN: "Apple Development: Your Name (TEAMID)"
-)
-```
-
-If any required key is missing, BatteryToolkit will fail with an explicit error.
-
-> [!IMPORTANT]
-> Both the App and Helper targets must include the same App Group entitlement, or shared UserDefaults will not work.
-
-### Finding BTPreprocessor Values (manual)
-
-Check these sources for ID constants:
-* `BT_APP_ID`: your app `Info.plist` `CFBundleIdentifier`
-* `BT_DAEMON_ID`: helper `Info.plist` `CFBundleIdentifier`
-* `BT_DAEMON_CONN`: launchd plist `MachServices` key
-* `BT_TEAM_ID`: run `codesign -dv --verbose=4 /path/MyApp.app` or  Xcode signing settings
-* `BT_CODESIGN_CN`: run `codesign -dv --verbose=4 /path/MyApp.app` and use the first `Authority=` line (it looks like `Authority=Apple Development: Your Name (TEAMID)`).
-
-## App-side registration (SMAppService)
-
-Use this in your app target to register/unregister the helper. The `plistName` must match the launchd plist filename (without extension) that you embed in your app bundle.
-
-```swift
-import ServiceManagement
-
-BTPreprocessor.configure(appGroupSuiteName: "group.your.app")
-BTPreprocessor.setValues(
-    appId: "com.example.app",
-    daemonId: "com.example.app.helper",
-    daemonConn: "TEAMID.com.example.app.helper",
-    codesignCN: "Apple Development: Your Name (TEAMID)"
-)
-
-let service = SMAppService.daemon(plistName: "\(BTPreprocessor.daemonId).plist")
-try await service.register()
-// Later, to remove it:
-// try await service.unregister()
-```
-
-## App-side interaction
-
-Use the app client to request authorization and call into the helper. These helpers are intentionally light wrappers around XPC calls.
+### 6. Register / Approve Daemon
 
 ```swift
 import BatteryToolkit
 
-// Convenience facade (optional)
 let status = await BTActions.startDaemon()
 if status == .requiresApproval {
     try await BTActions.approveDaemon(timeout: 6)
 }
+```
 
-// Direct client usage
-let authData = try await BTAppXPCClient.getManageAuthorization()
-try await BTDaemonXPCClient.disableCharging()
+## Examples
 
-let state = try await BTDaemonXPCClient.getState()
+### Get State + Settings
 
-// Update settings
-try await BTDaemonXPCClient.setSettings(settings: [
-    BTSettingsInfo.Keys.minCharge: NSNumber(value: 70),
-    BTSettingsInfo.Keys.maxCharge: NSNumber(value: 80),
+```swift
+import BatteryToolkit
+
+let state = try await BTActions.getState()
+let settings = try await BTActions.getSettings()
+
+try await BTActions.setSettings(settings: [
+    BTSettingsInfo.Keys.minCharge: NSNumber(value: 75),
+    BTSettingsInfo.Keys.maxCharge: NSNumber(value: 90),
     BTSettingsInfo.Keys.adapterSleep: NSNumber(value: false),
-    BTSettingsInfo.Keys.magSafeSync: NSNumber(value: false),
+    BTSettingsInfo.Keys.magSafeSync: NSNumber(value: true)
 ])
 ```
 
-## Helper-side validation
+### Charging Control
 
-The helper validates `authData` per privileged call with `AuthorizationCopyRights`. It also validates client identity with audit token and code signing checks (`BTXPCValidation`).
+```swift
+try await BTActions.chargeToLimit()
+try await BTActions.chargeToFull()
+try await BTActions.disableCharging()
+try await BTActions.disablePowerAdapter()
+try await BTActions.enablePowerAdapter()
+```
 
-## Wiring checklist
+### Power Mode Control
 
-* Your app’s `NSXPCConnection(machServiceName:options:)` must match the helper’s Mach service name (`BTDaemonConn`).
-* The helper launchd plist `Label` and `MachServices` must match `BTDaemonConn`.
-* The helper `Info.plist` `SMAuthorizedClients` must match your app’s code signing identity.
-* Both app and helper must use the same App Group suite and set the four `BT_*` keys in shared UserDefaults.
+```swift
+// mode: 0 = low, 1 = automatic, 2 = high
+try await BTActions.setPowerMode(scope: .all, mode: 1)
+try await BTActions.setPowerMode(scope: .battery, mode: 0)
+try await BTActions.setPowerMode(scope: .charger, mode: 2)
+```
 
-# Credits
-*   Icon based on [reference icon by Streamline](https://seekicon.com/free-icon/rechargable-battery_1)
+### PMSet Values
 
-# Donate
-Message from Battery Toolkit Owner: For various reasons, I will not accept personal donations. However, if you would like to support my work with the [Kinderschutzbund Kaiserslautern-Kusel](https://www.kinderschutzbund-kaiserslautern.de/) child protection association, you may donate [here](https://www.kinderschutzbund-kaiserslautern.de/helfen-sie-mit/spenden/).
+```swift
+// hibernatemode: common values 0 (none), 3 (safe sleep), 25 (hibernate)
+try await BTActions.setPMSetHibernatemode(3, scope: .all)
+
+// standby: 0 (off), 1 (on)
+try await BTActions.setPMSetStandby(1, scope: .all)
+
+// delays are seconds
+try await BTActions.setPMSetStandbyDelayLow(10800, scope: .all)   // 3h
+try await BTActions.setPMSetStandbyDelayHigh(86400, scope: .all)  // 24h
+
+// highstandbythreshold is battery %
+try await BTActions.setPMSetHighStandbyThreshold(50, scope: .all)
+```
+
+### MagSafe Indicator
+
+```swift
+try await BTActions.setMagSafeIndicator(mode: .sync)
+try await BTActions.setMagSafeIndicator(mode: .green)
+try await BTActions.setMagSafeIndicator(mode: .orange)
+try await BTActions.setMagSafeIndicator(mode: .orangeSlowBlink)
+```
+
+Available modes:
+
+- `.sync`, `.system`, `.off`
+- `.green`, `.orange`
+- `.orangeSlowBlink`, `.orangeFastBlink`, `.orangeBlinkOff`
+
+### Event Stream
+
+```swift
+import Combine
+import BatteryToolkit
+
+BTDaemonEventCenter.start()
+
+let cancellable = BTDaemonEventCenter.statePublisher
+    .receive(on: RunLoop.main)
+    .sink { state in
+        // state keys include battery %, charging, AC, temperature, power modes
+        print(state)
+    }
+
+// later:
+BTDaemonEventCenter.stop()
+cancellable.cancel()
+```
+
+### Calibration Note
+
+Calibration scheduling is **host-app policy**, not package policy. Use package primitives (`chargeToFull`, `disablePowerAdapter`, `chargeToLimit`, state stream) to implement your own monthly/bi-monthly calibration workflow.
+
+## Troubleshooting
+
+- `requiresApproval`: call `BTActions.approveDaemon(timeout:)` and complete approval in System Settings.
+- Helper not launching: verify plist location, `BundleProgram`, copy phases, and signing.
+- Config failures: confirm all `BT_*` keys exist in app + helper `Info.plist`.
+- XPC authorization failures: verify `BT_*` plist values, signing identity/`BT_CODESIGN_CN`, and that `BTXPCValidation` requirements match app/helper identities.
+- If Login Items/Extensions background entry is stale, reset BTM and re-register:
+
+```bash
+sfltool resetbtm
+```
+
+Then relaunch app and call `BTActions.startDaemon()` again.
+
+## License
+
+BSD-3-Clause (see `LICENSE.txt`).

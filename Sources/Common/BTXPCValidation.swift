@@ -10,17 +10,69 @@ import SecCodeEx
 
 public enum BTXPCValidation {
     public static func protectDaemon(connection: NSXPCConnection) {
-        // Temporary debug bypass.
-        _ = connection
+        if #available(macOS 13.0, *) {
+            connection.setCodeSigningRequirement(
+                requirementsTextFromId(identifier: BTPreprocessor.daemonId)
+            )
+        }
     }
 
     public static func isValidClient(connection: NSXPCConnection) -> Bool {
-        // Temporary debug bypass.
-        _ = connection
-        return true
+        var token = connection.auditToken
+        let tokenData = Data(
+            bytes: &token,
+            count: MemoryLayout.size(ofValue: token)
+        )
+        let attributes = [kSecGuestAttributeAudit: tokenData]
+
+        var code: SecCode? = nil
+        let codeStatus = SecCodeCopyGuestWithAttributes(
+            nil,
+            attributes as CFDictionary,
+            [],
+            &code
+        )
+        guard codeStatus == errSecSuccess, let code else {
+            return false
+        }
+
+        guard self.verifyCsStatus(code: code) else {
+            return false
+        }
+
+        let requirementText = self
+            .requirementsTextFromId(identifier: BTPreprocessor.appId)
+        if #available(macOS 13.0, *) {
+            connection.setCodeSigningRequirement(requirementText)
+            return true
+        } else {
+            var requirement: SecRequirement? = nil
+            let reqStatus = SecRequirementCreateWithString(
+                requirementText as CFString,
+                [],
+                &requirement
+            )
+            guard reqStatus == errSecSuccess, let requirement else {
+                return false
+            }
+
+            let validStatus = SecCodeCheckValidity(
+                code,
+                [
+                    .enforceRevocationChecks,
+                    SecCSFlags(rawValue: kSecCSRestrictSidebandData),
+                    SecCSFlags(rawValue: kSecCSStrictValidate),
+                ],
+                requirement
+            )
+            return validStatus == errSecSuccess
+        }
     }
 
     private static func verifyCsStatus(code: SecCode) -> Bool {
+#if DEBUG
+        return true
+#else
         var signInfo: CFDictionary? = nil
         let infoStatus = SecCodeCopySigningInformationDynamic(
             code,
@@ -67,19 +119,6 @@ public enum BTXPCValidation {
             SecCodeStatus(rawValue: SecCodeSignatureFlags.runtime.rawValue),
         ]
         //
-        // Debugging the app may change its dynamic codesign properties.
-        //
-        if codeStatus.contains(.debugged) {
-            #if !DEBUG
-                os_log(
-                    "Signature status constraints violated: Code has been debugged"
-                )
-                return false
-            #else
-                reqStatus.remove([.valid, .hard, .kill])
-            #endif
-        }
-
         guard codeStatus.contains(reqStatus) else {
             os_log(
                 "Signature status constraints violated: \(signStatus) vs \(reqStatus.rawValue)"
@@ -88,9 +127,14 @@ public enum BTXPCValidation {
         }
 
         return true
+#endif
     }
 
     private static func requirementsTextFromId(identifier: String) -> String {
+#if DEBUG
+        let debugText = "identifier \"" + identifier + "\""
+        return debugText
+#else
         let debugText = "identifier \"" + identifier + "\"" +
             " and anchor apple generic" +
             " and certificate leaf[subject.CN] = \"" + BTPreprocessor.codesignCN + "\"" +
@@ -99,11 +143,8 @@ public enum BTXPCValidation {
             " and !(entitlement[\"com.apple.security.cs.disable-library-validation\"] /* exists */)" +
             " and !(entitlement[\"com.apple.security.cs.allow-unsigned-executable-memory\"] /* exists */)" +
             " and !(entitlement[\"com.apple.security.cs.allow-jit\"] /* exists */)"
-        #if DEBUG
-            return debugText
-        #else
-            return debugText +
-                " and !(entitlement[\"com.apple.security.get-task-allow\"] /* exists */)"
-        #endif
+        return debugText +
+            " and !(entitlement[\"com.apple.security.get-task-allow\"] /* exists */)"
+#endif
     }
 }

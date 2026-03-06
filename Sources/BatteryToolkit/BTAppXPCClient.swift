@@ -17,7 +17,11 @@ public enum BTAppXPCClient {
     }
 
     public static func getManageAuthorization() async throws -> Data {
-        return Data()
+#if DEBUG
+        try await self.getAuthorizationData(rightName: nil)
+#else
+        try await self.getAuthorizationData(rightName: BTAuthorizationRights.manage)
+#endif
     }
 
     private static func getAuthorizationData(rightName: String?) async throws -> Data {

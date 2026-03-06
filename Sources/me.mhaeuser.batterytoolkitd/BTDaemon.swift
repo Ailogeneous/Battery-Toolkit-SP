@@ -174,7 +174,8 @@ public enum BTDaemon {
                 rightName: BTAuthorizationRights.manage,
                 templateName: kAuthorizationRuleAuthenticateAsAdmin,
                 comment: "Used by \(BTPreprocessor.daemonId) to allow access to its privileged functions",
-                timeout: 300
+                timeout: 300,
+                requesterIdentifier: BTPreprocessor.appId
             )
             if status != errSecSuccess {
                 os_log("Error adding manage right: \(status)")

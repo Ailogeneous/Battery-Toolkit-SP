@@ -11,12 +11,16 @@ internal enum BTSettings {
     private(set) static var minCharge = BTSettingsInfo.Defaults.minCharge
     private(set) static var maxCharge = BTSettingsInfo.Defaults.maxCharge
     private(set) static var adapterSleep = BTSettingsInfo.Defaults.adapterSleep
+    private(set) static var sleepProtection = BTSettingsInfo.Defaults.sleepProtection
     private(set) static var magSafeSync = BTSettingsInfo.Defaults.magSafeSync
     private(set) static var magSafeInvertedIndicator = BTSettingsInfo.Defaults.magSafeInvertedIndicator
 
     static func readDefaults() {
         self.adapterSleep = UserDefaults.standard.bool(
             forKey: BTSettingsInfo.Keys.adapterSleep
+        )
+        self.sleepProtection = UserDefaults.standard.bool(
+            forKey: BTSettingsInfo.Keys.sleepProtection
         )
         self.magSafeSync = UserDefaults.standard.bool(
             forKey: BTSettingsInfo.Keys.magSafeSync
@@ -51,6 +55,9 @@ internal enum BTSettings {
             forKey: BTSettingsInfo.Keys.adapterSleep
         )
         UserDefaults.standard.removeObject(
+            forKey: BTSettingsInfo.Keys.sleepProtection
+        )
+        UserDefaults.standard.removeObject(
             forKey: BTSettingsInfo.Keys.magSafeSync
         )
         UserDefaults.standard.removeObject(
@@ -70,12 +77,14 @@ internal enum BTSettings {
         let minCharge = NSNumber(value: self.minCharge)
         let maxCharge = NSNumber(value: self.maxCharge)
         let adapterSleep = NSNumber(value: self.adapterSleep)
+        let sleepProtection = NSNumber(value: self.sleepProtection)
         let magSafeSync = NSNumber(value: self.magSafeSync)
         let magSafeInvertedIndicator = NSNumber(value: self.magSafeInvertedIndicator)
         var settings: [String: NSObject & Sendable] = [
             BTSettingsInfo.Keys.minCharge: minCharge,
             BTSettingsInfo.Keys.maxCharge: maxCharge,
             BTSettingsInfo.Keys.adapterSleep: adapterSleep,
+            BTSettingsInfo.Keys.sleepProtection: sleepProtection,
         ]
 
         if SMCComm.MagSafe.supported {
@@ -115,6 +124,13 @@ internal enum BTSettings {
             BTSettingsInfo.Defaults.adapterSleep
 
         self.setAdapterSleep(enabled: adapterSleep)
+
+        let sleepProtectionNum =
+            settings[BTSettingsInfo.Keys.sleepProtection] as? NSNumber
+        let sleepProtection = sleepProtectionNum?.boolValue ??
+            BTSettingsInfo.Defaults.sleepProtection
+
+        self.setSleepProtection(enabled: sleepProtection)
 
         let magSafeSyncNum =
             settings[BTSettingsInfo.Keys.magSafeSync] as? NSNumber
@@ -167,6 +183,15 @@ internal enum BTSettings {
         BTPowerState.adapterSleepSettingToggled()
     }
 
+    private static func setSleepProtection(enabled: Bool) {
+        guard self.sleepProtection != enabled else {
+            return
+        }
+
+        self.sleepProtection = enabled
+        BTPowerState.reevaluateChargingSleepAssertionPolicy()
+    }
+
     private static func setMagSafeSync(enabled: Bool) {
         guard self.magSafeSync != enabled else {
             return
@@ -205,6 +230,10 @@ internal enum BTSettings {
         UserDefaults.standard.set(
             self.adapterSleep,
             forKey: BTSettingsInfo.Keys.adapterSleep
+        )
+        UserDefaults.standard.set(
+            self.sleepProtection,
+            forKey: BTSettingsInfo.Keys.sleepProtection
         )
         UserDefaults.standard.set(
             self.magSafeSync,
