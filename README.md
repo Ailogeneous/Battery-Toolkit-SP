@@ -206,6 +206,18 @@ Available modes:
 - `.green`, `.orange`
 - `.orangeSlowBlink`, `.orangeFastBlink`, `.orangeBlinkOff`
 
+### Battery Temperature Sources (On-Demand)
+
+You can fetch battery temperature from multiple sources on demand. The daemon state stream still reports the IOKit temperature; these actions are for explicit reads (useful for higher-frequency polling in your app).
+
+```swift
+let iopsTemp = try await BTActions.getBatteryTemperature(source: .iops)
+let tb0tTemp = try await BTActions.getBatteryTemperature(source: .smcTB0T)
+let tb1tTemp = try await BTActions.getBatteryTemperature(source: .smcTB1T)
+let tb2tTemp = try await BTActions.getBatteryTemperature(source: .smcTB2T)
+let batpTemp = try await BTActions.getBatteryTemperature(source: .smcBATP)
+```
+
 ### Event Stream
 
 ```swift
@@ -247,3 +259,10 @@ Then relaunch app and call `BTActions.startDaemon()` again.
 ## License
 
 BSD-3-Clause (see `LICENSE.txt`).
+
+# Credits
+* Icon based on [reference icon by Streamline](https://seekicon.com/free-icon/rechargable-battery_1)
+* README overhauled by [rogue](https://github.com/realrogue)
+
+# Donate
+Message from mhaeuser: For various reasons, I will not accept personal donations. However, if you would like to support my work with the [Kinderschutzbund Kaiserslautern-Kusel](https://www.kinderschutzbund-kaiserslautern.de/) child protection association, you may donate [here](https://www.kinderschutzbund-kaiserslautern.de/helfen-sie-mit/spenden/).

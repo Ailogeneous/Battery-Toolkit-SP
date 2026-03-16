@@ -5,6 +5,7 @@
 
 import Foundation
 
+@MainActor
 public enum BatteryTemperatureSources {
     public static func read(source: BTTemperatureSource) -> Double? {
         switch source {
