@@ -51,6 +51,10 @@ public enum BTActions {
         return try await BTDaemonXPCClient.getSettings()
     }
 
+    public static func getBatteryTemperature(source: BTTemperatureSource) async throws -> Double? {
+        return try await BTDaemonXPCClient.getBatteryTemperature(source: source)
+    }
+
     public static func setSettings(settings: [String: NSObject & Sendable]) async throws {
         try await BTDaemonXPCClient.setSettings(settings: settings)
     }

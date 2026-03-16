@@ -324,6 +324,26 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
         }
     }
 
+    func getBatteryTemperature(
+        source: UInt8,
+        reply: @Sendable @escaping (NSNumber?) -> Void
+    ) {
+        Task { @MainActor in
+            guard BTDaemon.supported else {
+                reply(nil)
+                return
+            }
+
+            guard let source = BTTemperatureSource(rawValue: source) else {
+                reply(nil)
+                return
+            }
+
+            let value = BatteryTemperatureSources.read(source: source)
+            reply(value.map(NSNumber.init(value:)))
+        }
+    }
+
     private func checkRight(authData: Data?, rightName: String) -> Bool {
 #if DEBUG
         return true

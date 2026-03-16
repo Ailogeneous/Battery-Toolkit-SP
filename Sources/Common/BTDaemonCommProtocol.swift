@@ -66,4 +66,9 @@ public enum BTDaemonCommCommand: UInt8 {
         scope: UInt8,
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     )
+
+    func getBatteryTemperature(
+        source: UInt8,
+        reply: @Sendable @escaping (NSNumber?) -> Void
+    )
 }

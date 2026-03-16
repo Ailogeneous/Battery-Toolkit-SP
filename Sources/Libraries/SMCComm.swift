@@ -67,6 +67,7 @@ public extension SMCComm {
         static let ui8  = SMCComm.KeyType("u", "i", "8", " ")
         static let ui32 = SMCComm.KeyType("u", "i", "3", "2")
         static let hex  = SMCComm.KeyType("h", "e", "x", "_")
+        static let sp78 = SMCComm.KeyType("s", "p", "7", "8")
     }
     
     static func KeyInfoDataEq (
@@ -82,6 +83,10 @@ public extension SMCComm {
 @MainActor
 public enum SMCComm {
     private static var connect = IO_OBJECT_NULL
+
+    static var isActive: Bool {
+        return self.connect != IO_OBJECT_NULL
+    }
 
     static func start() -> Bool {
         assert(self.connect == IO_OBJECT_NULL)
@@ -138,6 +143,20 @@ public enum SMCComm {
         )
         IOServiceClose(self.connect)
         self.connect = IO_OBJECT_NULL
+    }
+
+    static func withSession<T>(_ action: () -> T?) -> T? {
+        if self.isActive {
+            return action()
+        }
+
+        guard self.start() else {
+            return nil
+        }
+        defer {
+            self.stop()
+        }
+        return action()
     }
 
     static func getKeyInfo(key: SMCComm.Key)

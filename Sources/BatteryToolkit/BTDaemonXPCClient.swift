@@ -172,6 +172,16 @@ public enum BTDaemonXPCClient {
         }
     }
 
+    public static func getBatteryTemperature(source: BTTemperatureSource) async throws -> Double? {
+        try await withCheckedThrowingContinuation { continuation in
+            self.executeDaemonRetry(continuation: continuation) { daemon in
+                daemon.getBatteryTemperature(source: source.rawValue) { value in
+                    continuation.resume(returning: value?.doubleValue)
+                }
+            }
+        }
+    }
+
     public static func setSettings(settings: [String: NSObject & Sendable]) async throws {
         let authData = try await BTAppXPCClient.getManageAuthorization()
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
