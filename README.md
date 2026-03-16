@@ -262,7 +262,6 @@ BSD-3-Clause (see `LICENSE.txt`).
 
 # Credits
 * Icon based on [reference icon by Streamline](https://seekicon.com/free-icon/rechargable-battery_1)
-* README overhauled by [rogue](https://github.com/realrogue)
 
 # Donate
 Message from mhaeuser: For various reasons, I will not accept personal donations. However, if you would like to support my work with the [Kinderschutzbund Kaiserslautern-Kusel](https://www.kinderschutzbund-kaiserslautern.de/) child protection association, you may donate [here](https://www.kinderschutzbund-kaiserslautern.de/helfen-sie-mit/spenden/).
