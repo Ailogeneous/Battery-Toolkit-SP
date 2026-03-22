@@ -24,7 +24,8 @@ public enum BTSettingsInfo {
         public static let minCharge = "MinCharge"
         public static let maxCharge = "MaxCharge"
         public static let adapterSleep = "AdapterSleep"
-        public static let sleepProtection = "SleepProtection"
+        public static let desktopMode = "DesktopMode"
+        public static let legacySleepProtection = "SleepProtection"
         public static let magSafeSync = "MagSafeSync"
         public static let magSafeInvertedIndicator = "MagSafeInvertedIndicator"
     }

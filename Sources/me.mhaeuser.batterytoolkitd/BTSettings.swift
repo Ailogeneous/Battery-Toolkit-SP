@@ -19,9 +19,16 @@ internal enum BTSettings {
         self.adapterSleep = UserDefaults.standard.bool(
             forKey: BTSettingsInfo.Keys.adapterSleep
         )
-        self.sleepProtection = UserDefaults.standard.bool(
-            forKey: BTSettingsInfo.Keys.sleepProtection
-        )
+        let defaults = UserDefaults.standard
+        if defaults.object(forKey: BTSettingsInfo.Keys.desktopMode) != nil {
+            self.sleepProtection = defaults.bool(forKey: BTSettingsInfo.Keys.desktopMode)
+        } else if defaults.object(forKey: BTSettingsInfo.Keys.legacySleepProtection) != nil {
+            let legacyValue = defaults.bool(forKey: BTSettingsInfo.Keys.legacySleepProtection)
+            self.sleepProtection = legacyValue
+            defaults.set(legacyValue, forKey: BTSettingsInfo.Keys.desktopMode)
+        } else {
+            self.sleepProtection = BTSettingsInfo.Defaults.sleepProtection
+        }
         self.magSafeSync = UserDefaults.standard.bool(
             forKey: BTSettingsInfo.Keys.magSafeSync
         )
@@ -55,7 +62,10 @@ internal enum BTSettings {
             forKey: BTSettingsInfo.Keys.adapterSleep
         )
         UserDefaults.standard.removeObject(
-            forKey: BTSettingsInfo.Keys.sleepProtection
+            forKey: BTSettingsInfo.Keys.desktopMode
+        )
+        UserDefaults.standard.removeObject(
+            forKey: BTSettingsInfo.Keys.legacySleepProtection
         )
         UserDefaults.standard.removeObject(
             forKey: BTSettingsInfo.Keys.magSafeSync
@@ -84,7 +94,8 @@ internal enum BTSettings {
             BTSettingsInfo.Keys.minCharge: minCharge,
             BTSettingsInfo.Keys.maxCharge: maxCharge,
             BTSettingsInfo.Keys.adapterSleep: adapterSleep,
-            BTSettingsInfo.Keys.sleepProtection: sleepProtection,
+            BTSettingsInfo.Keys.desktopMode: sleepProtection,
+            BTSettingsInfo.Keys.legacySleepProtection: sleepProtection,
         ]
 
         if SMCComm.MagSafe.supported {
@@ -125,9 +136,12 @@ internal enum BTSettings {
 
         self.setAdapterSleep(enabled: adapterSleep)
 
-        let sleepProtectionNum =
-            settings[BTSettingsInfo.Keys.sleepProtection] as? NSNumber
-        let sleepProtection = sleepProtectionNum?.boolValue ??
+        let desktopModeNum =
+            settings[BTSettingsInfo.Keys.desktopMode] as? NSNumber
+        let legacySleepProtectionNum =
+            settings[BTSettingsInfo.Keys.legacySleepProtection] as? NSNumber
+        let sleepProtection = desktopModeNum?.boolValue ??
+            legacySleepProtectionNum?.boolValue ??
             BTSettingsInfo.Defaults.sleepProtection
 
         self.setSleepProtection(enabled: sleepProtection)
@@ -233,7 +247,11 @@ internal enum BTSettings {
         )
         UserDefaults.standard.set(
             self.sleepProtection,
-            forKey: BTSettingsInfo.Keys.sleepProtection
+            forKey: BTSettingsInfo.Keys.desktopMode
+        )
+        UserDefaults.standard.set(
+            self.sleepProtection,
+            forKey: BTSettingsInfo.Keys.legacySleepProtection
         )
         UserDefaults.standard.set(
             self.magSafeSync,
