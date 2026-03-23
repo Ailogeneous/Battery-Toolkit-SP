@@ -211,6 +211,20 @@ public enum BTDaemonXPCClient {
         }
     }
 
+    public static func setCaffeinate(flags: BTCaffeinateFlags, durationSeconds: Int) async throws {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
+            self.executeDaemonManageRetry(continuation: continuation) { daemon in
+                daemon.setCaffeinate(
+                    authData: authData,
+                    flags: flags.rawValue,
+                    durationSeconds: durationSeconds,
+                    reply: self.continuationStatusHandler(continuation: continuation)
+                )
+            }
+        }
+    }
+
     public static func setPowerMode(scope: BTPowerModeScope, mode: UInt8) async throws {
         let authData = try await BTAppXPCClient.getManageAuthorization()
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in

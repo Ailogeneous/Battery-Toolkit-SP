@@ -324,6 +324,33 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
         }
     }
 
+    func setCaffeinate(
+        authData: Data,
+        flags: UInt32,
+        durationSeconds: Int,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        Task { @MainActor in
+            guard BTDaemon.supported else {
+                reply(BTError.unsupported.rawValue)
+                return
+            }
+
+            let authorized = self.checkRight(
+                authData: authData,
+                rightName: BTAuthorizationRights.manage
+            )
+            guard authorized else {
+                reply(BTError.notAuthorized.rawValue)
+                return
+            }
+
+            let resolvedFlags = BTCaffeinateFlags(rawValue: flags)
+            BTCaffeinate.set(flags: resolvedFlags, durationSeconds: durationSeconds)
+            reply(BTError.success.rawValue)
+        }
+    }
+
     func getBatteryTemperature(
         source: UInt8,
         reply: @Sendable @escaping (NSNumber?) -> Void

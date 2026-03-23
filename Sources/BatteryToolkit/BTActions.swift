@@ -83,6 +83,10 @@ public enum BTActions {
         try await BTDaemonXPCClient.setPMSet(setting: .highstandbythreshold, value: value, scope: scope)
     }
 
+    public static func caffeinate(flags: BTCaffeinateFlags, durationSeconds: Int) async throws {
+        try await BTDaemonXPCClient.setCaffeinate(flags: flags, durationSeconds: durationSeconds)
+    }
+
     public static func removeDaemon() async throws {
         try await BTDaemonManagement.remove()
     }
