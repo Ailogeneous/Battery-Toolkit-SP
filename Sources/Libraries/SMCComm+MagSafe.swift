@@ -45,6 +45,16 @@ public extension SMCComm {
         static func setOrangeBlinkOff() -> Bool {
             return self.setColor(color: 0x19)
         }
+
+        static func getColor() -> UInt8? {
+            guard self.supported else {
+                return nil
+            }
+            guard let bytes = SMCComm.readKey(key: self.Keys.ACLC.key, dataSize: 1) else {
+                return nil
+            }
+            return bytes.first
+        }
     }
 }
 

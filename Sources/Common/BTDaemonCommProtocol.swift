@@ -74,6 +74,18 @@ public enum BTDaemonCommCommand: UInt8 {
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     )
 
+    func setCaffeinateBuckets(
+        authData: Data,
+        flags: [UInt32],
+        durations: [Int],
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    )
+
+    func killCaffeinate(
+        authData: Data,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    )
+
     func getBatteryTemperature(
         source: UInt8,
         reply: @Sendable @escaping (NSNumber?) -> Void

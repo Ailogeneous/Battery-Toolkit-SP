@@ -8,8 +8,9 @@ import IOKit.pwr_mgt
 
 @MainActor
 enum BTCaffeinate {
-    private static var timer: DispatchSourceTimer?
     private static var activeAssertions: [BTCaffeinateFlags: IOPMAssertionID] = [:]
+    private static var sessions: [Int: BTCaffeinateFlags] = [:]
+    private static var sessionTimers: [Int: DispatchSourceTimer] = [:]
 
     private static let allFlags: [BTCaffeinateFlags] = [
         .preventUserIdleSystemSleep,
@@ -29,34 +30,65 @@ enum BTCaffeinate {
 
     static func set(flags: BTCaffeinateFlags, durationSeconds: Int) {
         if durationSeconds <= 0 || flags.isEmpty {
-            cancel()
+            killAll()
             return
         }
-
-        updateAssertions(for: flags)
-
-        timer?.cancel()
-        let timer = DispatchSource.makeTimerSource(queue: .main)
-        timer.schedule(deadline: .now() + .seconds(durationSeconds))
-        timer.setEventHandler { [weak timer] in
-            timer?.cancel()
-            Task { @MainActor in
-                cancel()
-            }
-        }
-        timer.resume()
-        self.timer = timer
+        setBuckets([(flags, durationSeconds)])
     }
 
-    static func cancel() {
-        timer?.cancel()
-        timer = nil
+    static func setBuckets(_ buckets: [(BTCaffeinateFlags, Int)]) {
+        var desired: [Int: BTCaffeinateFlags] = [:]
+        for (flags, duration) in buckets {
+            guard duration > 0, !flags.isEmpty else { continue }
+            desired[duration, default: []].formUnion(flags)
+        }
 
+        let removedDurations = sessions.keys.filter { desired[$0] == nil }
+        for duration in removedDurations {
+            removeSession(duration: duration)
+        }
+
+        for (duration, flags) in desired {
+            sessions[duration] = flags
+            startOrResetSession(duration: duration)
+        }
+
+        let combined = sessions.values.reduce(BTCaffeinateFlags()) { $0.union($1) }
+        updateAssertions(for: combined)
+    }
+
+    static func killAll() {
+        for duration in sessionTimers.keys {
+            sessionTimers[duration]?.cancel()
+        }
+        sessionTimers.removeAll()
+        sessions.removeAll()
         for (flag, assertion) in activeAssertions {
             IOPMAssertionRelease(assertion)
             activeAssertions[flag] = nil
         }
         activeAssertions.removeAll()
+    }
+
+    private static func startOrResetSession(duration: Int) {
+        sessionTimers[duration]?.cancel()
+        let timer = DispatchSource.makeTimerSource(queue: .main)
+        timer.schedule(deadline: .now() + .seconds(duration))
+        timer.setEventHandler {
+            Task { @MainActor in
+                removeSession(duration: duration)
+                let combined = sessions.values.reduce(BTCaffeinateFlags()) { $0.union($1) }
+                updateAssertions(for: combined)
+            }
+        }
+        timer.resume()
+        sessionTimers[duration] = timer
+    }
+
+    private static func removeSession(duration: Int) {
+        sessionTimers[duration]?.cancel()
+        sessionTimers[duration] = nil
+        sessions[duration] = nil
     }
 
     private static func updateAssertions(for flags: BTCaffeinateFlags) {

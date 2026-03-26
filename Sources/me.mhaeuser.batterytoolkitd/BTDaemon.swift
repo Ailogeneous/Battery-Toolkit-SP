@@ -71,6 +71,9 @@ public enum BTDaemon {
         if let temperatureC = IOPSPrivate.GetBatteryTemperatureCelsius() {
             state[BTStateInfo.Keys.batteryTemperature] = NSNumber(value: temperatureC)
         }
+        if let magSafeColor = SMCComm.MagSafe.getColor() {
+            state[BTStateInfo.Keys.magSafeIndicator] = NSNumber(value: magSafeColor)
+        }
 
         return state
     }

@@ -351,6 +351,64 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
         }
     }
 
+    func setCaffeinateBuckets(
+        authData: Data,
+        flags: [UInt32],
+        durations: [Int],
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        Task { @MainActor in
+            guard BTDaemon.supported else {
+                reply(BTError.unsupported.rawValue)
+                return
+            }
+
+            let authorized = self.checkRight(
+                authData: authData,
+                rightName: BTAuthorizationRights.manage
+            )
+            guard authorized else {
+                reply(BTError.notAuthorized.rawValue)
+                return
+            }
+
+            guard flags.count == durations.count else {
+                reply(BTError.malformedData.rawValue)
+                return
+            }
+
+            let buckets = zip(flags, durations).map { (raw, seconds) in
+                (BTCaffeinateFlags(rawValue: raw), seconds)
+            }
+            BTCaffeinate.setBuckets(buckets)
+            reply(BTError.success.rawValue)
+        }
+    }
+
+    func killCaffeinate(
+        authData: Data,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        Task { @MainActor in
+            guard BTDaemon.supported else {
+                reply(BTError.unsupported.rawValue)
+                return
+            }
+
+            let authorized = self.checkRight(
+                authData: authData,
+                rightName: BTAuthorizationRights.manage
+            )
+            guard authorized else {
+                reply(BTError.notAuthorized.rawValue)
+                return
+            }
+
+            BTCaffeinate.killAll()
+            reply(BTError.success.rawValue)
+        }
+    }
+
     func getBatteryTemperature(
         source: UInt8,
         reply: @Sendable @escaping (NSNumber?) -> Void

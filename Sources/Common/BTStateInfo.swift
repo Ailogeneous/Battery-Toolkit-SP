@@ -30,6 +30,7 @@ public enum BTStateInfo {
         public static let isCharging = "IsCharging"
         public static let isACConnected = "IsACConnected"
         public static let batteryTemperature = "BatteryTemperature"
+        public static let magSafeIndicator = "MagSafeIndicator"
         public static let powerModeAll = "PowerModeAll"
         public static let powerModeBattery = "PowerModeBattery"
         public static let powerModeCharger = "PowerModeCharger"
