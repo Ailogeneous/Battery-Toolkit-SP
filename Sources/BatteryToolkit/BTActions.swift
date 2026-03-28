@@ -55,6 +55,10 @@ public enum BTActions {
         return try await BTDaemonXPCClient.getBatteryTemperature(source: source)
     }
 
+    public static func copyPowerlogDatabase(destinationPath: String) async throws {
+        try await BTDaemonXPCClient.copyPowerlogDatabase(destinationPath: destinationPath)
+    }
+
     public static func setSettings(settings: [String: NSObject & Sendable]) async throws {
         try await BTDaemonXPCClient.setSettings(settings: settings)
     }

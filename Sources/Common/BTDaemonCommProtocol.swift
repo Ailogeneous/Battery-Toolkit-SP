@@ -90,4 +90,10 @@ public enum BTDaemonCommCommand: UInt8 {
         source: UInt8,
         reply: @Sendable @escaping (NSNumber?) -> Void
     )
+
+    func copyPowerlogDatabase(
+        authData: Data,
+        destinationPath: String,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    )
 }

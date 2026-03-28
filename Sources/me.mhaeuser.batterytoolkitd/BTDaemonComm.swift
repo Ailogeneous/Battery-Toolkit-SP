@@ -429,6 +429,42 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
         }
     }
 
+    func copyPowerlogDatabase(
+        authData: Data,
+        destinationPath: String,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        Task { @MainActor in
+            guard BTDaemon.supported else {
+                reply(BTError.unsupported.rawValue)
+                return
+            }
+            let authorized = self.checkRight(
+                authData: authData,
+                rightName: BTAuthorizationRights.manage
+            )
+            guard authorized else {
+                reply(BTError.notAuthorized.rawValue)
+                return
+            }
+
+            let sourceURL = URL(fileURLWithPath: "/private/var/db/powerlog/Library/BatteryLife/CurrentPowerlog.PLSQL")
+            let destinationURL = URL(fileURLWithPath: destinationPath)
+            let destinationDir = destinationURL.deletingLastPathComponent()
+            do {
+                try FileManager.default.createDirectory(at: destinationDir, withIntermediateDirectories: true)
+                if FileManager.default.fileExists(atPath: destinationURL.path) {
+                    try FileManager.default.removeItem(at: destinationURL)
+                }
+                try FileManager.default.copyItem(at: sourceURL, to: destinationURL)
+                reply(BTError.success.rawValue)
+            } catch {
+                os_log("Failed to copy powerlog database: %{public}@", error.localizedDescription)
+                reply(BTError.unknown.rawValue)
+            }
+        }
+    }
+
     private func checkRight(authData: Data?, rightName: String) -> Bool {
 #if DEBUG
         return true

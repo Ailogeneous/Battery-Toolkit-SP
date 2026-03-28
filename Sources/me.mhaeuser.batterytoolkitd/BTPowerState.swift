@@ -298,11 +298,6 @@ internal enum BTPowerState {
     }
 
     private static func shouldDisableSleepForCharging(currentPercent: UInt8) -> Bool {
-        if let clamshellClosed = IOPSPrivate.IsClamshellClosed(), clamshellClosed {
-            self.resetChargeStagnationWindow()
-            return false
-        }
-
         if let batteryTempC = IOPSPrivate.GetBatteryTemperatureCelsius(), batteryTempC >= self.thermalStopCelsius {
             self.resetChargeStagnationWindow()
             return false

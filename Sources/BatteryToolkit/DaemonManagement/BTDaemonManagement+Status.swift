@@ -5,7 +5,7 @@
 
 import Foundation
 
-public enum BTDaemonManagementStatus: UInt8 {
+public enum BTDaemonManagementStatus: UInt8, Sendable {
     case notRegistered = 0
     case enabled = 1
     case requiresApproval = 2
