@@ -21,7 +21,6 @@ internal enum BTPowerState {
     private static var chargeStagnationStartPercent: UInt8?
     private static let chargeStagnationInterval: TimeInterval = 15 * 60
     private static let chargeProgressStepPercent: UInt8 = 1
-    private static let thermalStopCelsius: Double = 40.0
 
     static func initState() {
         let chargingDisabled = SMCComm.Power.isChargingDisabled()
@@ -302,7 +301,7 @@ internal enum BTPowerState {
            let clamshellClosed = IOPSPrivate.IsClamshellClosed(),
            clamshellClosed,
            let batteryTempC = IOPSPrivate.GetBatteryTemperatureCelsius(),
-           batteryTempC >= self.thermalStopCelsius {
+           batteryTempC >= BTSettings.criticalTemperatureC {
             self.resetChargeStagnationWindow()
             return false
         }

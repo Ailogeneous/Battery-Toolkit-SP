@@ -13,11 +13,14 @@ public enum BTSettingsInfo {
         public static let sleepProtection = false
         public static let magSafeSync = false
         public static let magSafeInvertedIndicator = false
+        public static let criticalTemperatureC: Double = 40.0
     }
 
     public enum Bounds {
         public static let minChargeMin: UInt8 = 20
         public static let maxChargeMin: UInt8 = 50
+        public static let criticalTemperatureMin: Double = 35.0
+        public static let criticalTemperatureMax: Double = 50.0
     }
 
     public enum Keys {
@@ -28,6 +31,7 @@ public enum BTSettingsInfo {
         public static let legacySleepProtection = "SleepProtection"
         public static let magSafeSync = "MagSafeSync"
         public static let magSafeInvertedIndicator = "MagSafeInvertedIndicator"
+        public static let criticalTemperatureC = "CriticalTemperatureC"
     }
 
     public static func chargeLimitsValid(

@@ -51,7 +51,8 @@ public enum BTDaemon {
                 .chargingDisabled: NSNumber(value: chargingDisabled),
             BTStateInfo.Keys.progress: NSNumber(value: progress.rawValue),
             BTStateInfo.Keys.chargingMode: NSNumber(value: mode.rawValue),
-            BTStateInfo.Keys.maxCharge: NSNumber(value: maxCharge)
+            BTStateInfo.Keys.maxCharge: NSNumber(value: maxCharge),
+            BTStateInfo.Keys.criticalTemperatureC: NSNumber(value: BTSettings.criticalTemperatureC)
         ]
 
         let powerModes = BTPowerMode.readCurrent()

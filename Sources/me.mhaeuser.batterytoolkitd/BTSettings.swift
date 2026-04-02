@@ -14,6 +14,7 @@ internal enum BTSettings {
     private(set) static var sleepProtection = BTSettingsInfo.Defaults.sleepProtection
     private(set) static var magSafeSync = BTSettingsInfo.Defaults.magSafeSync
     private(set) static var magSafeInvertedIndicator = BTSettingsInfo.Defaults.magSafeInvertedIndicator
+    private(set) static var criticalTemperatureC = BTSettingsInfo.Defaults.criticalTemperatureC
 
     static func readDefaults() {
         self.adapterSleep = UserDefaults.standard.bool(
@@ -35,6 +36,14 @@ internal enum BTSettings {
         self.magSafeInvertedIndicator = UserDefaults.standard.bool(
             forKey: BTSettingsInfo.Keys.magSafeInvertedIndicator
         )
+        let storedCriticalTemperature = UserDefaults.standard.double(
+            forKey: BTSettingsInfo.Keys.criticalTemperatureC
+        )
+        if storedCriticalTemperature > 0 {
+            self.criticalTemperatureC = self.normalizedCriticalTemperatureC(storedCriticalTemperature)
+        } else {
+            self.criticalTemperatureC = BTSettingsInfo.Defaults.criticalTemperatureC
+        }
 
         let minCharge = UserDefaults.standard.integer(
             forKey: BTSettingsInfo.Keys.minCharge
@@ -74,6 +83,9 @@ internal enum BTSettings {
             forKey: BTSettingsInfo.Keys.magSafeInvertedIndicator
         )
         UserDefaults.standard.removeObject(
+            forKey: BTSettingsInfo.Keys.criticalTemperatureC
+        )
+        UserDefaults.standard.removeObject(
             forKey: BTSettingsInfo.Keys.minCharge
         )
         UserDefaults.standard.removeObject(
@@ -90,12 +102,14 @@ internal enum BTSettings {
         let sleepProtection = NSNumber(value: self.sleepProtection)
         let magSafeSync = NSNumber(value: self.magSafeSync)
         let magSafeInvertedIndicator = NSNumber(value: self.magSafeInvertedIndicator)
+        let criticalTemperature = NSNumber(value: self.criticalTemperatureC)
         var settings: [String: NSObject & Sendable] = [
             BTSettingsInfo.Keys.minCharge: minCharge,
             BTSettingsInfo.Keys.maxCharge: maxCharge,
             BTSettingsInfo.Keys.adapterSleep: adapterSleep,
             BTSettingsInfo.Keys.desktopMode: sleepProtection,
             BTSettingsInfo.Keys.legacySleepProtection: sleepProtection,
+            BTSettingsInfo.Keys.criticalTemperatureC: criticalTemperature,
         ]
 
         if SMCComm.MagSafe.supported {
@@ -159,6 +173,13 @@ internal enum BTSettings {
             BTSettingsInfo.Defaults.magSafeInvertedIndicator
 
         self.setMagSafeInvertedIndicator(enabled: magSafeInverted)
+
+        let criticalTempNum =
+            settings[BTSettingsInfo.Keys.criticalTemperatureC] as? NSNumber
+        let criticalTemp = criticalTempNum?.doubleValue ??
+            BTSettingsInfo.Defaults.criticalTemperatureC
+
+        self.setCriticalTemperatureC(criticalTemp)
 
         self.writeDefaults()
 
@@ -225,6 +246,22 @@ internal enum BTSettings {
         BTPowerState.magSafeSyncSettingToggled()
     }
 
+    private static func setCriticalTemperatureC(_ value: Double) {
+        let normalized = self.normalizedCriticalTemperatureC(value)
+        guard self.criticalTemperatureC != normalized else {
+            return
+        }
+
+        self.criticalTemperatureC = normalized
+        BTPowerState.reevaluateChargingSleepAssertionPolicy()
+    }
+
+    private static func normalizedCriticalTemperatureC(_ value: Double) -> Double {
+        let minValue = BTSettingsInfo.Bounds.criticalTemperatureMin
+        let maxValue = BTSettingsInfo.Bounds.criticalTemperatureMax
+        return min(maxValue, max(minValue, value))
+    }
+
     private static func writeDefaults() {
         assert(
             BTSettingsInfo.chargeLimitsValid(
@@ -260,6 +297,10 @@ internal enum BTSettings {
         UserDefaults.standard.set(
             self.magSafeInvertedIndicator,
             forKey: BTSettingsInfo.Keys.magSafeInvertedIndicator
+        )
+        UserDefaults.standard.set(
+            self.criticalTemperatureC,
+            forKey: BTSettingsInfo.Keys.criticalTemperatureC
         )
         //
         // As NSUserDefaults are not automatically synchronized without
