@@ -21,12 +21,8 @@ internal enum BTSettings {
             forKey: BTSettingsInfo.Keys.adapterSleep
         )
         let defaults = UserDefaults.standard
-        if defaults.object(forKey: BTSettingsInfo.Keys.desktopMode) != nil {
-            self.sleepProtection = defaults.bool(forKey: BTSettingsInfo.Keys.desktopMode)
-        } else if defaults.object(forKey: BTSettingsInfo.Keys.legacySleepProtection) != nil {
-            let legacyValue = defaults.bool(forKey: BTSettingsInfo.Keys.legacySleepProtection)
-            self.sleepProtection = legacyValue
-            defaults.set(legacyValue, forKey: BTSettingsInfo.Keys.desktopMode)
+        if defaults.object(forKey: BTSettingsInfo.Keys.displayMode) != nil {
+            self.sleepProtection = defaults.bool(forKey: BTSettingsInfo.Keys.displayMode)
         } else {
             self.sleepProtection = BTSettingsInfo.Defaults.sleepProtection
         }
@@ -71,7 +67,7 @@ internal enum BTSettings {
             forKey: BTSettingsInfo.Keys.adapterSleep
         )
         UserDefaults.standard.removeObject(
-            forKey: BTSettingsInfo.Keys.desktopMode
+            forKey: BTSettingsInfo.Keys.displayMode
         )
         UserDefaults.standard.removeObject(
             forKey: BTSettingsInfo.Keys.legacySleepProtection
@@ -107,7 +103,7 @@ internal enum BTSettings {
             BTSettingsInfo.Keys.minCharge: minCharge,
             BTSettingsInfo.Keys.maxCharge: maxCharge,
             BTSettingsInfo.Keys.adapterSleep: adapterSleep,
-            BTSettingsInfo.Keys.desktopMode: sleepProtection,
+            BTSettingsInfo.Keys.displayMode: sleepProtection,
             BTSettingsInfo.Keys.legacySleepProtection: sleepProtection,
             BTSettingsInfo.Keys.criticalTemperatureC: criticalTemperature,
         ]
@@ -284,11 +280,7 @@ internal enum BTSettings {
         )
         UserDefaults.standard.set(
             self.sleepProtection,
-            forKey: BTSettingsInfo.Keys.desktopMode
-        )
-        UserDefaults.standard.set(
-            self.sleepProtection,
-            forKey: BTSettingsInfo.Keys.legacySleepProtection
+            forKey: BTSettingsInfo.Keys.displayMode
         )
         UserDefaults.standard.set(
             self.magSafeSync,
