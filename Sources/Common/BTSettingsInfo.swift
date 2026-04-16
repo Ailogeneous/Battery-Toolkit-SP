@@ -6,11 +6,18 @@
 import Foundation
 
 public enum BTSettingsInfo {
+    public enum DisplayMode: UInt8 {
+        case `default` = 0
+        case clamshellProtection = 1
+        case desktop = 2
+    }
+    
     public enum Defaults {
         public static let minCharge: UInt8 = 75
         public static let maxCharge: UInt8 = 80
         public static let adapterSleep = false
         public static let sleepProtection = false
+        public static let displayMode: DisplayMode = .default
         public static let magSafeSync = false
         public static let magSafeInvertedIndicator = false
         public static let criticalTemperatureC: Double = 40.0

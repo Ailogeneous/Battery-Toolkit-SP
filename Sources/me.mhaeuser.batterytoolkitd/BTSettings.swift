@@ -12,6 +12,7 @@ internal enum BTSettings {
     private(set) static var maxCharge = BTSettingsInfo.Defaults.maxCharge
     private(set) static var adapterSleep = BTSettingsInfo.Defaults.adapterSleep
     private(set) static var sleepProtection = BTSettingsInfo.Defaults.sleepProtection
+    private(set) static var displayMode = BTSettingsInfo.Defaults.displayMode
     private(set) static var magSafeSync = BTSettingsInfo.Defaults.magSafeSync
     private(set) static var magSafeInvertedIndicator = BTSettingsInfo.Defaults.magSafeInvertedIndicator
     private(set) static var criticalTemperatureC = BTSettingsInfo.Defaults.criticalTemperatureC
@@ -21,9 +22,23 @@ internal enum BTSettings {
             forKey: BTSettingsInfo.Keys.adapterSleep
         )
         let defaults = UserDefaults.standard
-        if defaults.object(forKey: BTSettingsInfo.Keys.displayMode) != nil {
-            self.sleepProtection = defaults.bool(forKey: BTSettingsInfo.Keys.displayMode)
+        if let displayModeValue = defaults.object(forKey: BTSettingsInfo.Keys.displayMode) {
+            //
+            // Handle both boolean and integer display mode values.
+            //
+            if let boolVal = displayModeValue as? Bool {
+                self.displayMode = boolVal ? .clamshellProtection : .default
+                self.sleepProtection = boolVal
+            } else if let intVal = displayModeValue as? UInt8,
+                      let mode = BTSettingsInfo.DisplayMode(rawValue: intVal) {
+                self.displayMode = mode
+                self.sleepProtection = (mode != .default)
+            } else {
+                self.displayMode = BTSettingsInfo.Defaults.displayMode
+                self.sleepProtection = BTSettingsInfo.Defaults.sleepProtection
+            }
         } else {
+            self.displayMode = BTSettingsInfo.Defaults.displayMode
             self.sleepProtection = BTSettingsInfo.Defaults.sleepProtection
         }
         self.magSafeSync = UserDefaults.standard.bool(

@@ -341,6 +341,18 @@ internal enum BTPowerState {
         guard !self.powerDisabled else {
             return false
         }
+        
+        //
+        // Desktop Mode: Keep system awake permanently when on AC power.
+        // No clamshell check, no external monitor requirement, no timeouts.
+        //
+        if BTSettings.displayMode == .desktop {
+            return IOPSPrivate.DrawingUnlimitedPower()
+        }
+        
+        //
+        // Clamshell Protection mode: Only when lid closed with external monitor.
+        //
         guard let clamshellClosed = IOPSPrivate.IsClamshellClosed(), clamshellClosed else {
             return false
         }
