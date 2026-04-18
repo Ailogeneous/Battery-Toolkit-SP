@@ -66,6 +66,20 @@ public enum BTDaemon {
             state[BTStateInfo.Keys.powerModeCharger] = NSNumber(value: value)
         }
 
+        let caffeinateProcess = Process()
+        caffeinateProcess.executableURL = URL(fileURLWithPath: "/usr/bin/pgrep")
+        caffeinateProcess.arguments = ["caffeinate"]
+        let caffeinatePipe = Pipe()
+        caffeinateProcess.standardOutput = caffeinatePipe
+        do {
+            try caffeinateProcess.run()
+            caffeinateProcess.waitUntilExit()
+            let caffeinateActive = caffeinateProcess.terminationStatus == 0
+            state[BTStateInfo.Keys.caffeinateActive] = NSNumber(value: caffeinateActive)
+        } catch {
+            // Ignore errors, assume not active
+        }
+
         if let batteryPercent { state[BTStateInfo.Keys.batteryPercent] = batteryPercent }
         if let isCharging { state[BTStateInfo.Keys.isCharging] = isCharging }
         if let isACConnected { state[BTStateInfo.Keys.isACConnected] = isACConnected }

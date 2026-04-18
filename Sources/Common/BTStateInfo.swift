@@ -35,5 +35,6 @@ public enum BTStateInfo {
         public static let powerModeAll = "PowerModeAll"
         public static let powerModeBattery = "PowerModeBattery"
         public static let powerModeCharger = "PowerModeCharger"
+        public static let caffeinateActive = "CaffeinateActive"
     }
 }
