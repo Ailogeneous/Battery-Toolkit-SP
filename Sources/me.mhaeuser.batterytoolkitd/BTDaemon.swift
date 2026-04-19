@@ -67,14 +67,18 @@ public enum BTDaemon {
         }
 
         let caffeinateProcess = Process()
-        caffeinateProcess.executableURL = URL(fileURLWithPath: "/usr/bin/pgrep")
-        caffeinateProcess.arguments = ["caffeinate"]
+        caffeinateProcess.executableURL = URL(fileURLWithPath: "/usr/bin/pmset")
+        caffeinateProcess.arguments = ["-g", "assertions"]
         let caffeinatePipe = Pipe()
         caffeinateProcess.standardOutput = caffeinatePipe
         do {
             try caffeinateProcess.run()
             caffeinateProcess.waitUntilExit()
-            let caffeinateActive = caffeinateProcess.terminationStatus == 0
+            
+            let data = caffeinatePipe.fileHandleForReading.readDataToEndOfFile()
+            let output = String(data: data, encoding: .utf8) ?? ""
+            let caffeinateActive = output.contains("BatteryToolkit Caffeinate")
+            
             state[BTStateInfo.Keys.caffeinateActive] = NSNumber(value: caffeinateActive)
         } catch {
             // Ignore errors, assume not active
