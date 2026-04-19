@@ -16,16 +16,14 @@ enum BTCaffeinate {
         .preventUserIdleSystemSleep,
         .preventUserIdleDisplaySleep,
         .preventDiskIdle,
-        .preventSystemSleep,
-        .userIsActive
+        .preventSystemSleep
     ]
 
     private static let assertionTypeMap: [BTCaffeinateFlags: CFString] = [
         .preventUserIdleSystemSleep: "PreventUserIdleSystemSleep" as CFString,
         .preventUserIdleDisplaySleep: "PreventUserIdleDisplaySleep" as CFString,
         .preventDiskIdle: "PreventDiskIdle" as CFString,
-        .preventSystemSleep: "PreventSystemSleep" as CFString,
-        .userIsActive: "UserIsActive" as CFString
+        .preventSystemSleep: "PreventSystemSleep" as CFString
     ]
 
     static func set(flags: BTCaffeinateFlags, durationSeconds: Int) {
