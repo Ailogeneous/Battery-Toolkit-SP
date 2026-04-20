@@ -27,7 +27,7 @@ enum BTCaffeinate {
     ]
 
     static func set(flags: BTCaffeinateFlags, durationSeconds: Int) {
-        if durationSeconds <= 0 || flags.isEmpty {
+        if durationSeconds < 0 || flags.isEmpty {
             killAll()
             return
         }
@@ -37,7 +37,7 @@ enum BTCaffeinate {
     static func setBuckets(_ buckets: [(BTCaffeinateFlags, Int)]) {
         var desired: [Int: BTCaffeinateFlags] = [:]
         for (flags, duration) in buckets {
-            guard duration > 0, !flags.isEmpty else { continue }
+            guard duration >= 0, !flags.isEmpty else { continue }
             desired[duration, default: []].formUnion(flags)
         }
 
@@ -70,6 +70,11 @@ enum BTCaffeinate {
 
     private static func startOrResetSession(duration: Int) {
         sessionTimers[duration]?.cancel()
+        if duration == 0 {
+            // 0 duration means indefinite - no timer needed
+            sessionTimers[duration] = nil
+            return
+        }
         let timer = DispatchSource.makeTimerSource(queue: .main)
         timer.schedule(deadline: .now() + .seconds(duration))
         timer.setEventHandler {
