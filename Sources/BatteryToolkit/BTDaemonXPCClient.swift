@@ -293,6 +293,20 @@ public enum BTDaemonXPCClient {
             }
         }
     }
+    
+    public static func checkHighPowerMode() async throws -> Bool {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        return try await withCheckedThrowingContinuation { continuation in
+            self.executeDaemonManageRetry(continuation: continuation) { daemon in
+                daemon.checkHighPowerMode(
+                    authData: authData,
+                    reply: { success in
+                        continuation.resume(returning: success)
+                    }
+                )
+            }
+        }
+    }
 
     public static func finishUpdate() {
         Task {

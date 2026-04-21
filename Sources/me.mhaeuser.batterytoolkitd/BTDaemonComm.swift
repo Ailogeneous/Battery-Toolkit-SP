@@ -249,6 +249,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
                 return
             }
 
+            // Use the updated set method that auto-detects supported mode type
             let success = BTPowerMode.set(scope: scope, mode: mode)
             let result = BTError(fromBool: success).rawValue
             if result == BTError.success.rawValue {
@@ -465,6 +466,35 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
         }
     }
 
+    func checkHighPowerMode(
+        authData: Data,
+        reply: @Sendable @escaping (Bool) -> Void
+    ) {
+        Task { @MainActor in
+            guard BTDaemon.supported else {
+                reply(false)
+                return
+            }
+
+            let authorized = self.checkRight(
+                authData: authData,
+                rightName: BTAuthorizationRights.manage
+            )
+            guard authorized else {
+                reply(false)
+                return
+            }
+
+            let success = BTPowerMode.checkAndSetHighPowerMode()
+            if success {
+                Task { @MainActor in
+                    BTEventHub.notifyStateChanged()
+                }
+            }
+            reply(success)
+        }
+    }
+    
     private func checkRight(authData: Data?, rightName: String) -> Bool {
 #if DEBUG
         return true

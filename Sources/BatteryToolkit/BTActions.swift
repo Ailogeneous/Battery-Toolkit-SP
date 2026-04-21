@@ -116,4 +116,8 @@ public enum BTActions {
     public static func setMagSafeIndicator(mode: BTMagSafeIndicatorMode) async throws {
         try await BTDaemonXPCClient.setMagSafeIndicator(mode: mode)
     }
+    
+    public static func checkHighPowerMode() async throws -> Bool {
+        return try await BTDaemonXPCClient.checkHighPowerMode()
+    }
 }
