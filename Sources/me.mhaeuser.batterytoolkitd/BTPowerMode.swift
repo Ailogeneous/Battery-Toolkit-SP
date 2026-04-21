@@ -207,15 +207,12 @@ enum BTPowerMode {
         // Try to set high power mode (mode 2)
         let success = set(scope: .all, mode: 2, type: type)
         
-        if !success {
-            // Restore original state if failed
-            if let allValue = currentState.all {
-                _ = set(scope: .all, mode: UInt8(allValue), type: type)
-            }
-            return false
+        // ALWAYS restore original state - this is only a check!
+        if let allValue = currentState.all {
+            _ = set(scope: .all, mode: UInt8(allValue), type: type)
         }
         
-        return true
+        return success
     }
 }
 
