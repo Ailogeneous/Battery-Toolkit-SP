@@ -494,6 +494,129 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
             reply(success)
         }
     }
+
+    func readSMCTemperatures(
+        authData: Data,
+        keys: [String],
+        reply: @Sendable @escaping ([String: NSObject & Sendable]) -> Void
+    ) {
+        Task { @MainActor in
+            guard BTDaemon.supported else {
+                reply([:])
+                return
+            }
+
+            let authorized = self.checkRight(
+                authData: authData,
+                rightName: BTAuthorizationRights.manage
+            )
+            guard authorized else {
+                reply([:])
+                return
+            }
+
+            reply(BTFanControl.readTemperatures(keys: keys))
+        }
+    }
+
+    func getFans(
+        authData: Data,
+        reply: @Sendable @escaping ([[String: NSObject & Sendable]]) -> Void
+    ) {
+        Task { @MainActor in
+            guard BTDaemon.supported else {
+                reply([])
+                return
+            }
+
+            let authorized = self.checkRight(
+                authData: authData,
+                rightName: BTAuthorizationRights.manage
+            )
+            guard authorized else {
+                reply([])
+                return
+            }
+
+            reply(BTFanControl.getFans())
+        }
+    }
+
+    func setFanMode(
+        authData: Data,
+        fanId: Int,
+        mode: UInt8,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        Task { @MainActor in
+            guard BTDaemon.supported else {
+                reply(BTError.unsupported.rawValue)
+                return
+            }
+
+            let authorized = self.checkRight(
+                authData: authData,
+                rightName: BTAuthorizationRights.manage
+            )
+            guard authorized else {
+                reply(BTError.notAuthorized.rawValue)
+                return
+            }
+
+            let ok = await BTFanControl.setFanMode(fanId: fanId, mode: mode)
+            reply(ok ? BTError.success.rawValue : BTError.unknown.rawValue)
+        }
+    }
+
+    func setFanSpeed(
+        authData: Data,
+        fanId: Int,
+        speed: Int,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        Task { @MainActor in
+            guard BTDaemon.supported else {
+                reply(BTError.unsupported.rawValue)
+                return
+            }
+
+            let authorized = self.checkRight(
+                authData: authData,
+                rightName: BTAuthorizationRights.manage
+            )
+            guard authorized else {
+                reply(BTError.notAuthorized.rawValue)
+                return
+            }
+
+            let ok = await BTFanControl.setFanSpeed(fanId: fanId, speed: speed)
+            reply(ok ? BTError.success.rawValue : BTError.unknown.rawValue)
+        }
+    }
+
+    func resetFanControl(
+        authData: Data,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        Task { @MainActor in
+            guard BTDaemon.supported else {
+                reply(BTError.unsupported.rawValue)
+                return
+            }
+
+            let authorized = self.checkRight(
+                authData: authData,
+                rightName: BTAuthorizationRights.manage
+            )
+            guard authorized else {
+                reply(BTError.notAuthorized.rawValue)
+                return
+            }
+
+            let ok = await BTFanControl.resetFanControl()
+            reply(ok ? BTError.success.rawValue : BTError.unknown.rawValue)
+        }
+    }
     
     private func checkRight(authData: Data?, rightName: String) -> Bool {
 #if DEBUG
