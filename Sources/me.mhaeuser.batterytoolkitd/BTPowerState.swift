@@ -257,6 +257,30 @@ internal enum BTPowerState {
         self.syncChargingSleepAssertionPolicy()
     }
 
+    static func reconcileGlobalSleepAssertion() {
+        let expectedDisabled = self.chargeSleepAssertionHeld || (self.powerDisabled && !BTSettings.adapterSleep)
+        GlobalSleep.reconcile(expectedDisabled: expectedDisabled)
+    }
+
+    static func shouldForceDisplaySleepNowForClosedLid() -> Bool {
+        guard IOPSPrivate.DrawingUnlimitedPower() else {
+            return false
+        }
+        guard GlobalSleep.isSleepDisabled() else {
+            return false
+        }
+        guard let (_, isCharging, _) = IOPSPrivate.GetPercentRemaining(), isCharging else {
+            return false
+        }
+        guard let clamshellClosed = IOPSPrivate.IsClamshellClosed(), clamshellClosed else {
+            return false
+        }
+        guard !IOPSPrivate.HasExternalDisplayConnected() else {
+            return false
+        }
+        return true
+    }
+
     private static func disableAdapterSleep() {
         if !BTSettings.adapterSleep {
             GlobalSleep.disable()
@@ -297,6 +321,11 @@ internal enum BTPowerState {
     }
 
     private static func shouldDisableSleepForCharging(currentPercent: UInt8) -> Bool {
+        guard IOPSPrivate.DrawingUnlimitedPower() else {
+            self.resetChargeStagnationWindow()
+            return false
+        }
+
         if !BTSettings.sleepProtection,
            let clamshellClosed = IOPSPrivate.IsClamshellClosed(),
            clamshellClosed,

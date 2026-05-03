@@ -24,6 +24,11 @@ internal enum BTPMSet {
         return true
     }
 
+    static func displaySleepNow() -> Bool {
+        let result = run("/usr/bin/pmset", args: ["displaysleepnow"])
+        return result.status == 0
+    }
+
     private static func run(_ executable: String, args: [String]) -> (status: Int32, stdout: String, stderr: String) {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: executable)

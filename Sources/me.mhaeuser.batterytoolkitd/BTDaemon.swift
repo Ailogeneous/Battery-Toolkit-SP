@@ -22,6 +22,7 @@ public enum BTDaemon {
     }
 
     static func getState() -> [String: NSObject & Sendable] {
+        BTPowerState.reconcileGlobalSleepAssertion()
         let chargingDisabled = BTPowerState.isChargingDisabled()
         let connected = enabled ? BTPowerEvents.unlimitedPower : IOPSPrivate.DrawingUnlimitedPower()
         let powerDisabled = BTPowerState.isPowerAdapterDisabled()
@@ -102,6 +103,7 @@ public enum BTDaemon {
                messageType == PowerEvents.kIOMessageSystemWillSleep {
                 MainActor.assumeIsolated {
                     _ = BTFanControl.resetFanControlNow()
+                    BTPowerState.reconcileGlobalSleepAssertion()
                 }
                 IOAllowPowerChange(
                     PowerEvents.root_port,
@@ -112,6 +114,9 @@ public enum BTDaemon {
                     _ = BTFanControl.resetFanControlNow()
                 }
                 BTPowerEvents.wakeFromSleep()
+                MainActor.assumeIsolated {
+                    BTPowerState.reconcileGlobalSleepAssertion()
+                }
             }
         }
 
@@ -167,10 +172,6 @@ public enum BTDaemon {
         self.uniqueId = CSIdentification.getUniqueIdSelf()
 
         BTSettings.readDefaults()
-
-        // Host application owns pmset policy decisions and can trigger
-        // enforcement explicitly via settings/actions when desired.
-        GlobalSleep.restoreOnStart()
 
         do {
             try self.start()

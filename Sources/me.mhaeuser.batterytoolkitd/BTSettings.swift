@@ -194,6 +194,7 @@ internal enum BTSettings {
             BTSettingsInfo.Defaults.criticalTemperatureC
 
         self.setCriticalTemperatureC(criticalTemp)
+        BTPowerState.reconcileGlobalSleepAssertion()
 
         self.writeDefaults()
 

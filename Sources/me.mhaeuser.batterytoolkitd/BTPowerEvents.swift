@@ -19,6 +19,10 @@ internal enum BTPowerEvents {
     private static var percentCreated = false
     private static var displayReconfigurationRegistered = false
     private static var assertionPolicyWatchdog: DispatchSourceTimer?
+    private static var lidStateWatchdog: DispatchSourceTimer?
+    private static var lastKnownClamshellClosed: Bool?
+    private static var lastDisplaySleepNowAt: Date?
+    private static let displaySleepNowCooldown: TimeInterval = 15
 
     static func start() throws {
         let smcSuccess = SMCComm.start()
@@ -40,6 +44,7 @@ internal enum BTPowerEvents {
         }
 
         self.registerDisplayReconfigurationHandler()
+        self.startLidStateWatchdog()
     }
 
     private static func restoreState() {
@@ -69,6 +74,7 @@ internal enum BTPowerEvents {
         assert(self.powerCreated)
 
         self.unregisterDisplayReconfigurationHandler()
+        self.stopLidStateWatchdog()
         self.unregisterLimitedPowerHandler()
         self.unregisterPercentChangedHandler()
         self.restoreState()
@@ -94,6 +100,8 @@ internal enum BTPowerEvents {
         // Restore sleep from the setup phase.
         //
         GlobalSleep.restore()
+        BTPowerState.reconcileGlobalSleepAssertion()
+        self.forceDisplaySleepNowIfNeeded()
     }
 
     static func settingsChanged() {
@@ -309,7 +317,9 @@ internal enum BTPowerEvents {
             //
             let (percent, _, _) = BTPowerState.getPercentRemaining()
             _ = BTPowerState.enableCharging(percent: percent)
+            BTPowerState.reevaluateChargingSleepAssertionPolicy()
         }
+        self.forceDisplaySleepNowIfNeeded()
     }
 
     private static func handleLimitedPower() {
@@ -323,6 +333,7 @@ internal enum BTPowerEvents {
         // Restore sleep from the setup phase.
         //
         GlobalSleep.restore()
+        BTPowerState.reconcileGlobalSleepAssertion()
     }
 
     private static func restoreDefaults() {
@@ -371,7 +382,47 @@ internal enum BTPowerEvents {
 
     fileprivate static func displayReconfigurationChanged() {
         BTPowerState.reevaluateChargingSleepAssertionPolicy()
+        self.forceDisplaySleepNowIfNeeded()
         BTEventHub.notifyStateChanged()
+    }
+
+    private static func forceDisplaySleepNowIfNeeded() {
+        guard BTPowerState.shouldForceDisplaySleepNowForClosedLid() else {
+            return
+        }
+        if let lastAt = self.lastDisplaySleepNowAt,
+           Date().timeIntervalSince(lastAt) < self.displaySleepNowCooldown {
+            return
+        }
+        if BTPMSet.displaySleepNow() {
+            self.lastDisplaySleepNowAt = Date()
+        }
+    }
+
+    private static func startLidStateWatchdog() {
+        self.stopLidStateWatchdog()
+        self.lastKnownClamshellClosed = IOPSPrivate.IsClamshellClosed()
+
+        let timer = DispatchSource.makeTimerSource(queue: DispatchQueue.main)
+        timer.schedule(deadline: .now() + 2, repeating: 2)
+        timer.setEventHandler {
+            guard let isClosed = IOPSPrivate.IsClamshellClosed() else {
+                return
+            }
+            let didChange = self.lastKnownClamshellClosed.map { $0 != isClosed } ?? true
+            self.lastKnownClamshellClosed = isClosed
+            if didChange && isClosed {
+                self.forceDisplaySleepNowIfNeeded()
+            }
+        }
+        timer.resume()
+        self.lidStateWatchdog = timer
+    }
+
+    private static func stopLidStateWatchdog() {
+        self.lidStateWatchdog?.cancel()
+        self.lidStateWatchdog = nil
+        self.lastKnownClamshellClosed = nil
     }
 
     private static func enableBelowLimitMode(limit: UInt8) -> Bool {
