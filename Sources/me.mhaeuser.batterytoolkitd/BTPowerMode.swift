@@ -13,6 +13,19 @@ enum BTPowerModeType {
 }
 
 enum BTPowerMode {
+    private static func parseCapabilityTokens(_ output: String) -> Set<String> {
+        var tokens: Set<String> = []
+        for rawLine in output.split(separator: "\n", omittingEmptySubsequences: false) {
+            let line = rawLine.trimmingCharacters(in: .whitespacesAndNewlines)
+            if line.isEmpty { continue }
+            let first = line.split(whereSeparator: { $0 == " " || $0 == "\t" }).first
+            if let first {
+                tokens.insert(String(first).lowercased())
+            }
+        }
+        return tokens
+    }
+
     static func getSupportedType() -> BTPowerModeType {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: "/usr/bin/pmset")
@@ -37,12 +50,13 @@ enum BTPowerMode {
         guard let output = String(data: data, encoding: .utf8)?.lowercased() else {
             return .none
         }
-        
-        if output.contains("highpowermode") {
+
+        let tokens = parseCapabilityTokens(output)
+        if tokens.contains("highpowermode") {
             return .highpowermode
-        } else if output.contains("powermode") {
+        } else if tokens.contains("powermode") {
             return .powermode
-        } else if output.contains("lowpowermode") {
+        } else if tokens.contains("lowpowermode") {
             return .lowpowermode
         }
         
@@ -92,18 +106,10 @@ enum BTPowerMode {
         do {
             try process.run()
             process.waitUntilExit()
-            
             if process.terminationStatus != 0 {
-                let errData = errPipe.fileHandleForReading.readDataToEndOfFile()
-                let errOutput = String(data: errData, encoding: .utf8) ?? ""
-                // Check for specific unsupported error
-                if errOutput.lowercased().contains("highpowermode not supported") ||
-                   errOutput.lowercased().contains("not supported on battery power") {
-                    return false
-                }
+                _ = errPipe.fileHandleForReading.readDataToEndOfFile()
                 return false
             }
-            
             return true
         } catch {
             return false
@@ -200,19 +206,25 @@ enum BTPowerMode {
         guard type != .none else {
             return false
         }
-        
-        // Read current state
         let currentState = readCurrent(type: type)
-        
-        // Try to set high power mode (mode 2)
-        let success = set(scope: .all, mode: 2, type: type)
-        
-        // ALWAYS restore original state - this is only a check!
-        if let allValue = currentState.all {
-            _ = set(scope: .all, mode: UInt8(allValue), type: type)
+        let previousAll = currentState.all
+        let previousAC = currentState.charger
+        let previousBattery = currentState.battery
+
+        let setAll = set(scope: .all, mode: 2, type: type)
+        let afterSet = readCurrent(type: type)
+        let highStuck = afterSet.all == 2 || afterSet.charger == 2 || afterSet.battery == 2
+
+        if let previousAll {
+            _ = set(scope: .all, mode: UInt8(previousAll), type: type)
         }
-        
-        return success
+        if let previousBattery {
+            _ = set(scope: .battery, mode: UInt8(previousBattery), type: type)
+        }
+        if let previousAC {
+            _ = set(scope: .charger, mode: UInt8(previousAC), type: type)
+        }
+
+        return setAll && highStuck
     }
 }
-
