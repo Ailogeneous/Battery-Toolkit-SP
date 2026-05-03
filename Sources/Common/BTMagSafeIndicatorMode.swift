@@ -5,7 +5,7 @@
 
 import Foundation
 
-public enum BTMagSafeIndicatorMode: UInt8 {
+public enum BTMagSafeIndicatorMode: UInt8, Sendable {
     case sync = 0
     case system = 1
     case off = 2
