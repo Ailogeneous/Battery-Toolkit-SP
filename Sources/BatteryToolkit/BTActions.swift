@@ -63,27 +63,27 @@ public enum BTActions {
         try await BTDaemonXPCClient.setSettings(settings: settings)
     }
 
-    public static func setPowerMode(scope: BTPowerModeScope, mode: UInt8) async throws {
+    public static func setPowerMode(scope: BTPowerManagementScope, mode: UInt8) async throws {
         try await BTDaemonXPCClient.setPowerMode(scope: scope, mode: mode)
     }
 
-    public static func setPMSetHibernatemode(_ value: Int, scope: BTPowerModeScope = .all) async throws {
+    public static func setPMSetHibernatemode(_ value: Int, scope: BTPowerManagementScope = .all) async throws {
         try await BTDaemonXPCClient.setPMSet(setting: .hibernatemode, value: value, scope: scope)
     }
 
-    public static func setPMSetStandby(_ value: Int, scope: BTPowerModeScope = .all) async throws {
+    public static func setPMSetStandby(_ value: Int, scope: BTPowerManagementScope = .all) async throws {
         try await BTDaemonXPCClient.setPMSet(setting: .standby, value: value, scope: scope)
     }
 
-    public static func setPMSetStandbyDelayLow(_ value: Int, scope: BTPowerModeScope = .all) async throws {
+    public static func setPMSetStandbyDelayLow(_ value: Int, scope: BTPowerManagementScope = .all) async throws {
         try await BTDaemonXPCClient.setPMSet(setting: .standbydelaylow, value: value, scope: scope)
     }
 
-    public static func setPMSetStandbyDelayHigh(_ value: Int, scope: BTPowerModeScope = .all) async throws {
+    public static func setPMSetStandbyDelayHigh(_ value: Int, scope: BTPowerManagementScope = .all) async throws {
         try await BTDaemonXPCClient.setPMSet(setting: .standbydelayhigh, value: value, scope: scope)
     }
 
-    public static func setPMSetHighStandbyThreshold(_ value: Int, scope: BTPowerModeScope = .all) async throws {
+    public static func setPMSetHighStandbyThreshold(_ value: Int, scope: BTPowerManagementScope = .all) async throws {
         try await BTDaemonXPCClient.setPMSet(setting: .highstandbythreshold, value: value, scope: scope)
     }
 

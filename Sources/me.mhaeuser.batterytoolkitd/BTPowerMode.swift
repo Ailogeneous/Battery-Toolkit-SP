@@ -63,11 +63,11 @@ enum BTPowerMode {
         return .none
     }
     
-    static func set(scope: BTPowerModeScope, mode: UInt8) -> Bool {
+    static func set(scope: BTPowerManagementScope, mode: UInt8) -> Bool {
         return set(scope: scope, mode: mode, type: getSupportedType())
     }
     
-    static func set(scope: BTPowerModeScope, mode: UInt8, type: BTPowerModeType) -> Bool {
+    static func set(scope: BTPowerManagementScope, mode: UInt8, type: BTPowerModeType) -> Bool {
         guard mode <= 2 else {
             return false
         }
@@ -161,7 +161,7 @@ enum BTPowerMode {
         var all: Int?
         var battery: Int?
         var charger: Int?
-        var section: BTPowerModeScope = .all
+        var section: BTPowerManagementScope = .all
 
         for rawLine in output.split(separator: "\n", omittingEmptySubsequences: false) {
             let line = rawLine.trimmingCharacters(in: .whitespacesAndNewlines)

@@ -244,7 +244,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
                 return
             }
 
-            guard let scope = BTPowerModeScope(rawValue: scope) else {
+            guard let scope = BTPowerManagementScope(rawValue: scope) else {
                 reply(BTError.unknown.rawValue)
                 return
             }
@@ -315,7 +315,7 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
             }
 
             guard let setting = BTPMSetSetting(rawValue: setting),
-                  let scope = BTPowerModeScope(rawValue: scope) else {
+                  let scope = BTPowerManagementScope(rawValue: scope) else {
                 reply(BTError.malformedData.rawValue)
                 return
             }

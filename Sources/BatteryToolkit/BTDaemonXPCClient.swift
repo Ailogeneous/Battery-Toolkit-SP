@@ -209,7 +209,7 @@ public enum BTDaemonXPCClient {
     }
 
 
-    public static func setPMSet(setting: BTPMSetSetting, value: Int, scope: BTPowerModeScope) async throws {
+    public static func setPMSet(setting: BTPMSetSetting, value: Int, scope: BTPowerManagementScope) async throws {
         let authData = try await BTAppXPCClient.getManageAuthorization()
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
             self.executeDaemonManageRetry(continuation: continuation) { daemon in
@@ -268,7 +268,7 @@ public enum BTDaemonXPCClient {
         }
     }
 
-    public static func setPowerMode(scope: BTPowerModeScope, mode: UInt8) async throws {
+    public static func setPowerMode(scope: BTPowerManagementScope, mode: UInt8) async throws {
         let authData = try await BTAppXPCClient.getManageAuthorization()
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
             self.executeDaemonManageRetry(continuation: continuation) { daemon in

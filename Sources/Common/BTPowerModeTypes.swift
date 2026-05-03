@@ -5,7 +5,7 @@
 
 import Foundation
 
-public enum BTPowerModeScope: UInt8 {
+public enum BTPowerManagementScope: UInt8 {
     case all = 0
     case battery = 1
     case charger = 2

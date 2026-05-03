@@ -8,7 +8,7 @@ import os.log
 
 @MainActor
 internal enum BTPMSet {
-    static func set(setting: BTPMSetSetting, value: Int, scope: BTPowerModeScope) -> Bool {
+    static func set(setting: BTPMSetSetting, value: Int, scope: BTPowerManagementScope) -> Bool {
         let scopeFlag: String
         switch scope {
         case .all: scopeFlag = "-a"
