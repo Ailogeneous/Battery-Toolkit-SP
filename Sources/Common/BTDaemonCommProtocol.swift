@@ -101,4 +101,41 @@ public enum BTDaemonCommCommand: UInt8 {
         authData: Data,
         reply: @Sendable @escaping (Bool) -> Void
     )
+
+    func readSMCTemperatures(
+        authData: Data,
+        keys: [String],
+        reply: @Sendable @escaping ([String: NSObject & Sendable]) -> Void
+    )
+
+    func getFans(
+        authData: Data,
+        reply: @Sendable @escaping ([[String: NSObject & Sendable]]) -> Void
+    )
+
+    func setFanMode(
+        authData: Data,
+        fanId: Int,
+        mode: UInt8,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    )
+
+    func setFanSpeed(
+        authData: Data,
+        fanId: Int,
+        speed: Int,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    )
+
+    func setFanControlLease(
+        authData: Data,
+        percent: Int,
+        durationSeconds: Int,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    )
+
+    func resetFanControl(
+        authData: Data,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    )
 }

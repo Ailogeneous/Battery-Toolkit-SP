@@ -16,6 +16,11 @@ internal enum BTEventHub {
 
     static func unregister(connection: NSXPCConnection) {
         self.connections.removeAll { $0 === connection }
+        if self.connections.isEmpty {
+            Task { @MainActor in
+                _ = await BTFanControl.resetFanControl()
+            }
+        }
     }
 
     static func notifyStateChanged() {

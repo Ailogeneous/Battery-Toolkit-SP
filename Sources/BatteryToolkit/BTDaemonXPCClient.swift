@@ -308,6 +308,89 @@ public enum BTDaemonXPCClient {
         }
     }
 
+    public static func readSMCTemperatures(keys: [String]) async throws -> [String: NSObject & Sendable] {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        return try await withCheckedThrowingContinuation { continuation in
+            self.executeDaemonManageRetry(continuation: continuation) { daemon in
+                daemon.readSMCTemperatures(
+                    authData: authData,
+                    keys: keys,
+                    reply: { temps in
+                        continuation.resume(returning: temps)
+                    }
+                )
+            }
+        }
+    }
+
+    public static func getFans() async throws -> [[String: NSObject & Sendable]] {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        return try await withCheckedThrowingContinuation { continuation in
+            self.executeDaemonManageRetry(continuation: continuation) { daemon in
+                daemon.getFans(
+                    authData: authData,
+                    reply: { fans in
+                        continuation.resume(returning: fans)
+                    }
+                )
+            }
+        }
+    }
+
+    public static func setFanMode(fanId: Int, mode: UInt8) async throws {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
+            self.executeDaemonManageRetry(continuation: continuation) { daemon in
+                daemon.setFanMode(
+                    authData: authData,
+                    fanId: fanId,
+                    mode: mode,
+                    reply: self.continuationStatusHandler(continuation: continuation)
+                )
+            }
+        }
+    }
+
+    public static func setFanSpeed(fanId: Int, speed: Int) async throws {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
+            self.executeDaemonManageRetry(continuation: continuation) { daemon in
+                daemon.setFanSpeed(
+                    authData: authData,
+                    fanId: fanId,
+                    speed: speed,
+                    reply: self.continuationStatusHandler(continuation: continuation)
+                )
+            }
+        }
+    }
+
+    public static func setFanControlLease(percent: Int, durationSeconds: Int) async throws {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
+            self.executeDaemonManageRetry(continuation: continuation) { daemon in
+                daemon.setFanControlLease(
+                    authData: authData,
+                    percent: percent,
+                    durationSeconds: durationSeconds,
+                    reply: self.continuationStatusHandler(continuation: continuation)
+                )
+            }
+        }
+    }
+
+    public static func resetFanControl() async throws {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
+            self.executeDaemonManageRetry(continuation: continuation) { daemon in
+                daemon.resetFanControl(
+                    authData: authData,
+                    reply: self.continuationStatusHandler(continuation: continuation)
+                )
+            }
+        }
+    }
+
     public static func finishUpdate() {
         Task {
             do {

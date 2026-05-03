@@ -100,11 +100,17 @@ public enum BTDaemon {
         let callback: IOServiceInterestCallback = { refCon, service, messageType, messageArgument in
             if messageType == PowerEvents.kIOMessageCanSystemSleep ||
                messageType == PowerEvents.kIOMessageSystemWillSleep {
+                MainActor.assumeIsolated {
+                    _ = BTFanControl.resetFanControlNow()
+                }
                 IOAllowPowerChange(
                     PowerEvents.root_port,
                     Int(bitPattern: messageArgument)
                 )
             } else if messageType == PowerEvents.kIOMessageSystemHasPoweredOn {
+                MainActor.assumeIsolated {
+                    _ = BTFanControl.resetFanControlNow()
+                }
                 BTPowerEvents.wakeFromSleep()
             }
         }
@@ -176,6 +182,9 @@ public enum BTDaemon {
                 queue: DispatchQueue.main
             )
             termSource.setEventHandler {
+                MainActor.assumeIsolated {
+                    _ = BTFanControl.resetFanControlNow()
+                }
                 BTPowerEvents.exit()
                 exit(0)
             }

@@ -120,4 +120,28 @@ public enum BTActions {
     public static func checkHighPowerMode() async throws -> Bool {
         return try await BTDaemonXPCClient.checkHighPowerMode()
     }
+
+    public static func readSMCTemperatures(keys: [String]) async throws -> [String: NSObject & Sendable] {
+        return try await BTDaemonXPCClient.readSMCTemperatures(keys: keys)
+    }
+
+    public static func getFans() async throws -> [[String: NSObject & Sendable]] {
+        return try await BTDaemonXPCClient.getFans()
+    }
+
+    public static func setFanMode(fanId: Int, mode: UInt8) async throws {
+        try await BTDaemonXPCClient.setFanMode(fanId: fanId, mode: mode)
+    }
+
+    public static func setFanSpeed(fanId: Int, speed: Int) async throws {
+        try await BTDaemonXPCClient.setFanSpeed(fanId: fanId, speed: speed)
+    }
+
+    public static func setFanControlLease(percent: Int, durationSeconds: Int) async throws {
+        try await BTDaemonXPCClient.setFanControlLease(percent: percent, durationSeconds: durationSeconds)
+    }
+
+    public static func resetFanControl() async throws {
+        try await BTDaemonXPCClient.resetFanControl()
+    }
 }
