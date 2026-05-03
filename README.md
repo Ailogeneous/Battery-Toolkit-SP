@@ -168,10 +168,21 @@ try await BTActions.enablePowerAdapter()
 ### Power Mode Control
 
 ```swift
-// mode: 0 = low, 1 = automatic, 2 = high
+// mode: 0 = auto, 1 = low, 2 = high
 try await BTActions.setPowerMode(scope: .all, mode: 1)
 try await BTActions.setPowerMode(scope: .battery, mode: 0)
 try await BTActions.setPowerMode(scope: .charger, mode: 2)
+```
+
+Scope semantics:
+- `.all`: apply to both battery and charger contexts
+- `.battery`: apply only when on battery
+- `.charger`: apply only when on AC power
+
+### High Power Availability Probe
+
+```swift
+let supportsHighPowerMode = try await BTActions.checkHighPowerMode()
 ```
 
 ### PMSet Values
@@ -191,6 +202,11 @@ try await BTActions.setPMSetStandbyDelayHigh(86400, scope: .all)  // 24h
 try await BTActions.setPMSetHighStandbyThreshold(50, scope: .all)
 ```
 
+PMSet scope options:
+- `.all`
+- `.battery`
+- `.charger`
+
 ### MagSafe Indicator
 
 ```swift
@@ -205,6 +221,65 @@ Available modes:
 - `.sync`, `.system`, `.off`
 - `.green`, `.orange`
 - `.orangeSlowBlink`, `.orangeFastBlink`, `.orangeBlinkOff`
+
+### Caffeinate Controls
+
+```swift
+// finite session
+try await BTActions.caffeinate(
+    flags: [.preventUserIdleSystemSleep, .preventUserIdleDisplaySleep],
+    durationSeconds: 900
+)
+
+// mixed per-flag durations
+try await BTActions.setCaffeinateBuckets(buckets: [
+    (flags: .preventUserIdleSystemSleep, durationSeconds: 1800),
+    (flags: .preventUserIdleDisplaySleep, durationSeconds: 600)
+])
+
+// stop all managed caffeinate sessions
+try await BTActions.killCaffeinate()
+```
+
+Available `BTCaffeinateFlags`:
+- `.preventUserIdleSystemSleep`
+- `.preventUserIdleDisplaySleep`
+- `.preventDiskIdle`
+- `.preventSystemSleep`
+- `.userIsActive`
+
+Notes:
+- Default flags: `.preventUserIdleSystemSleep`
+- `userIsActive` can have OS-version-specific behavior changes; validate on your deployment targets.
+
+### Fan Control
+
+```swift
+let fans = try await BTActions.getFans()
+
+// mode: 0 = auto, 1 = manual
+try await BTActions.setFanMode(fanId: 0, mode: 1)
+try await BTActions.setFanSpeed(fanId: 0, speed: 3200)
+
+// lease manual fan control across all fans
+try await BTActions.setFanControlLease(percent: 45, durationSeconds: 3600)
+
+// return all fans to automatic system control
+try await BTActions.resetFanControl()
+```
+
+`getFans()` entries contain:
+- `id`
+- `min`
+- `max`
+- `current`
+- `target`
+- `mode` (`0 = auto`, `1 = manual`)
+
+Validation behavior:
+- `setFanMode(fanId:mode:)`: valid mode values are `0` (auto) and `1` (manual).
+- `setFanSpeed(fanId:speed:)`: speed is clamped to hardware-supported range.
+- `setFanControlLease(percent:durationSeconds:)`: `percent` is clamped to `0...100`; very short durations are normalized by daemon policy.
 
 ### Battery Temperature Sources (On-Demand)
 
