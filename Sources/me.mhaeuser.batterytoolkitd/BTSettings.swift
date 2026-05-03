@@ -27,7 +27,7 @@ internal enum BTSettings {
             // Handle both boolean and integer display mode values.
             //
             if let boolVal = displayModeValue as? Bool {
-                self.displayMode = boolVal ? .clamshellProtection : .default
+                self.displayMode = boolVal ? .display : .default
                 self.sleepProtection = boolVal
             } else if let intVal = displayModeValue as? UInt8,
                       let mode = BTSettingsInfo.DisplayMode(rawValue: intVal) {
@@ -107,7 +107,7 @@ internal enum BTSettings {
         let minCharge = NSNumber(value: self.minCharge)
         let maxCharge = NSNumber(value: self.maxCharge)
         let adapterSleep = NSNumber(value: self.adapterSleep)
-        let sleepProtection = NSNumber(value: self.sleepProtection)
+        let displayMode = NSNumber(value: self.displayMode.rawValue)
         let magSafeSync = NSNumber(value: self.magSafeSync)
         let magSafeInvertedIndicator = NSNumber(value: self.magSafeInvertedIndicator)
         let criticalTemperature = NSNumber(value: self.criticalTemperatureC)
@@ -115,7 +115,7 @@ internal enum BTSettings {
             BTSettingsInfo.Keys.minCharge: minCharge,
             BTSettingsInfo.Keys.maxCharge: maxCharge,
             BTSettingsInfo.Keys.adapterSleep: adapterSleep,
-            BTSettingsInfo.Keys.displayMode: sleepProtection,
+            BTSettingsInfo.Keys.displayMode: displayMode,
             BTSettingsInfo.Keys.criticalTemperatureC: criticalTemperature,
         ]
 
@@ -159,10 +159,20 @@ internal enum BTSettings {
 
         let displayModeNum =
             settings[BTSettingsInfo.Keys.displayMode] as? NSNumber
-        let sleepProtection = displayModeNum?.boolValue ??
-            BTSettingsInfo.Defaults.sleepProtection
-        
-        self.setSleepProtection(enabled: sleepProtection)
+        let legacyDisplayModeBool = displayModeNum?.boolValue
+        let hasIntegralDisplayMode = displayModeNum.map { CFNumberIsFloatType($0) == false } ?? false
+        let normalizedDisplayMode: BTSettingsInfo.DisplayMode
+        if hasIntegralDisplayMode,
+           let displayModeNum,
+           let mode = BTSettingsInfo.DisplayMode(rawValue: displayModeNum.uint8Value) {
+            normalizedDisplayMode = mode
+        } else if let legacyDisplayModeBool {
+            normalizedDisplayMode = legacyDisplayModeBool ? .display : .default
+        } else {
+            normalizedDisplayMode = BTSettingsInfo.Defaults.displayMode
+        }
+
+        self.setDisplayMode(mode: normalizedDisplayMode)
 
         let magSafeSyncNum =
             settings[BTSettingsInfo.Keys.magSafeSync] as? NSNumber
@@ -222,12 +232,13 @@ internal enum BTSettings {
         BTPowerState.adapterSleepSettingToggled()
     }
 
-    private static func setSleepProtection(enabled: Bool) {
-        guard self.sleepProtection != enabled else {
+    private static func setDisplayMode(mode: BTSettingsInfo.DisplayMode) {
+        guard self.displayMode != mode || self.sleepProtection != (mode != .default) else {
             return
         }
 
-        self.sleepProtection = enabled
+        self.displayMode = mode
+        self.sleepProtection = (mode != .default)
         BTPowerState.reevaluateChargingSleepAssertionPolicy()
     }
 
@@ -287,7 +298,7 @@ internal enum BTSettings {
             forKey: BTSettingsInfo.Keys.adapterSleep
         )
         UserDefaults.standard.set(
-            self.sleepProtection,
+            self.displayMode.rawValue,
             forKey: BTSettingsInfo.Keys.displayMode
         )
         UserDefaults.standard.set(

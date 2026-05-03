@@ -8,7 +8,7 @@ import Foundation
 public enum BTSettingsInfo {
     public enum DisplayMode: UInt8 {
         case `default` = 0
-        case clamshellProtection = 1
+        case display = 1
         case desktop = 2
     }
     
