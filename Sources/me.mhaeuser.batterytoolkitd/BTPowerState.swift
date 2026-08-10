@@ -93,6 +93,8 @@ internal enum BTPowerState {
         assert(BTSettings.magSafeSync)
         assert(!self.powerDisabled)
 
+        os_log("MagSafe sync decision percent=%{public}u max=%{public}u chargingDisabled=%{public}@ inverted=%{public}@ active=%{public}@ supported=%{public}@", percent, BTSettings.maxCharge, self.chargingDisabled.description, BTSettings.magSafeInvertedIndicator.description, SMCComm.isActive.description, SMCComm.MagSafe.supported.description)
+
         if percent >= BTSettings.maxCharge {
             let success = BTSettings.magSafeInvertedIndicator
                 ? SMCComm.MagSafe.setOrange()
@@ -114,6 +116,8 @@ internal enum BTPowerState {
 
     static func syncMagSafeState() {
         assert(BTSettings.magSafeSync)
+
+        os_log("MagSafe sync state powerDisabled=%{public}@ active=%{public}@ supported=%{public}@", self.powerDisabled.description, SMCComm.isActive.description, SMCComm.MagSafe.supported.description)
 
         if self.powerDisabled {
             _ = SMCComm.MagSafe.setOff()

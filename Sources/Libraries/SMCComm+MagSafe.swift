@@ -16,6 +16,7 @@ public extension SMCComm {
             // Ensure all required SMC keys are present and well-formed.
             //
             self.supported = SMCComm.keySupported(keyInfo: self.Keys.ACLC)
+            os_log("MagSafe prepare supported=%{public}@ active=%{public}@", self.supported.description, SMCComm.isActive.description)
         }
 
         static func setSystem() -> Bool {
@@ -71,6 +72,7 @@ private extension SMCComm.MagSafe {
     }
 
     private static func setColor(color: UInt8) -> Bool {
+        os_log("MagSafe setColor requested color=%{public}u supported=%{public}@ active=%{public}@", color, self.supported.description, SMCComm.isActive.description)
         guard self.supported else {
             os_log("MagSafe setColor skipped (unsupported), color=%{public}u", color)
             NSLog("MagSafe setColor skipped (unsupported), color=%u", color)
