@@ -3,9 +3,6 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //
 
-import Foundation
-import os.log
-
 public extension SMCComm {
     @MainActor
     enum Power {
@@ -26,72 +23,36 @@ public extension SMCComm {
             // Ensure all required SMC keys are present and well-formed.
             //
             let chargeKey = self.chargeKeys.firstIndex { key in
-                let actualInfo = SMCComm.getKeyInfo(key: key.keyInfo.key)
-                let supported = actualInfo.map {
-                    SMCComm.KeyInfoDataEq(data1: key.keyInfo.info, data2: $0)
-                } ?? false
-                os_log(
-                    "SMC charge key probe key=%{public}@ expectedSize=%{public}u expectedType=%{public}@ expectedAttributes=0x%{public}X actual=%{public}@ supported=%{public}@",
-                    self.keyName(key.keyInfo.key),
-                    key.keyInfo.info.dataSize,
-                    self.typeName(key.keyInfo.info.dataType),
-                    key.keyInfo.info.dataAttributes,
-                    actualInfo.map { self.infoName($0) } ?? "missing",
-                    supported.description
-                )
-                return supported
+                SMCComm.keySupported(keyInfo: key.keyInfo)
             }
             guard let chargeKey = chargeKey else {
-                os_log("SMC charging control unsupported: no matching charge key")
                 return false;
             }
             self.chargeKey = chargeKey
             
             
             let adapterKey = self.adapterKeys.firstIndex { key in
-                let actualInfo = SMCComm.getKeyInfo(key: key.keyInfo.key)
-                let supported = actualInfo.map {
-                    SMCComm.KeyInfoDataEq(data1: key.keyInfo.info, data2: $0)
-                } ?? false
-                os_log(
-                    "SMC adapter key probe key=%{public}@ expectedSize=%{public}u expectedType=%{public}@ expectedAttributes=0x%{public}X actual=%{public}@ supported=%{public}@",
-                    self.keyName(key.keyInfo.key),
-                    key.keyInfo.info.dataSize,
-                    self.typeName(key.keyInfo.info.dataType),
-                    key.keyInfo.info.dataAttributes,
-                    actualInfo.map { self.infoName($0) } ?? "missing",
-                    supported.description
-                )
-                return supported
+                SMCComm.keySupported(keyInfo: key.keyInfo)
             }
             guard let adapterKey = adapterKey else {
-                os_log("SMC adapter control unsupported: no matching adapter key")
                 return false;
             }
             self.adapterKey = adapterKey
-
-            os_log(
-                "SMC power controls supported chargeKey=%{public}@ adapterKey=%{public}@",
-                self.keyName(self.chargeKeys[self.chargeKey].keyInfo.key),
-                self.keyName(self.adapterKeys[self.adapterKey].keyInfo.key)
-            )
 
             return true
         }
 
         static func enableCharging() -> Bool {
-            return self.write(
+            return SMCComm.writeKey(
                 key: self.chargeKeys[self.chargeKey].keyInfo.key,
-                bytes: self.chargeKeys[self.chargeKey].onBytes,
-                operation: "enableCharging"
+                bytes: self.chargeKeys[self.chargeKey].onBytes
             )
         }
 
         static func disableCharging() -> Bool {
-            return self.write(
+            return SMCComm.writeKey(
                 key: self.chargeKeys[self.chargeKey].keyInfo.key,
-                bytes: self.chargeKeys[self.chargeKey].offBytes,
-                operation: "disableCharging"
+                bytes: self.chargeKeys[self.chargeKey].offBytes
             )
         }
 
@@ -108,18 +69,16 @@ public extension SMCComm {
         }
 
         static func enablePowerAdapter() -> Bool {
-            return self.write(
+            return SMCComm.writeKey(
                 key: self.adapterKeys[self.adapterKey].keyInfo.key,
-                bytes: self.adapterKeys[self.adapterKey].onBytes,
-                operation: "enablePowerAdapter"
+                bytes: self.adapterKeys[self.adapterKey].onBytes
             )
         }
 
         static func disablePowerAdapter() -> Bool {
-            return self.write(
+            return SMCComm.writeKey(
                 key: self.adapterKeys[self.adapterKey].keyInfo.key,
-                bytes: self.adapterKeys[self.adapterKey].offBytes,
-                operation: "disablePowerAdapter"
+                bytes: self.adapterKeys[self.adapterKey].offBytes
             )
         }
 
@@ -133,44 +92,6 @@ public extension SMCComm {
             }
 
             return value != self.adapterKeys[self.adapterKey].onBytes
-        }
-
-        private static func write(
-            key: SMCComm.Key,
-            bytes: [UInt8],
-            operation: String
-        ) -> Bool {
-            let writeResult = SMCComm.writeKey(key: key, bytes: bytes)
-            let readback = SMCComm.readKey(key: key, dataSize: bytes.count)
-            let readbackMatches = readback == bytes
-            os_log(
-                "SMC power write operation=%{public}@ key=%{public}@ requested=%{public}@ writeResult=%{public}@ readback=%{public}@ readbackMatches=%{public}@",
-                operation,
-                self.keyName(key),
-                bytes.description,
-                writeResult.description,
-                readback?.description ?? "missing",
-                readbackMatches.description
-            )
-            return writeResult && readbackMatches
-        }
-
-        private static func keyName(_ key: SMCComm.Key) -> String {
-            let bytes: [UInt8] = [
-                UInt8((key >> 24) & 0xFF),
-                UInt8((key >> 16) & 0xFF),
-                UInt8((key >> 8) & 0xFF),
-                UInt8(key & 0xFF)
-            ]
-            return String(bytes: bytes, encoding: .ascii) ?? String(format: "0x%08X", key)
-        }
-
-        private static func typeName(_ type: SMCComm.KeyType) -> String {
-            self.keyName(type)
-        }
-
-        private static func infoName(_ info: SMCComm.KeyInfoData) -> String {
-            "size=\(info.dataSize) type=\(self.typeName(info.dataType)) attributes=\(info.dataAttributes)"
         }
     }
 }

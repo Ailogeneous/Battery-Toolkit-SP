@@ -41,7 +41,6 @@ public enum BTDaemon {
         }
 
         if BTSettings.magSafeSync {
-            os_log("BTDaemon getState MagSafe sync active=%{public}@ supported=%{public}@ powerDisabled=%{public}@ chargingDisabled=%{public}@", SMCComm.isActive.description, SMCComm.MagSafe.supported.description, powerDisabled.description, chargingDisabled.description)
             BTPowerState.syncMagSafeState()
         }
 

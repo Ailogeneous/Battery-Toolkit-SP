@@ -89,7 +89,6 @@ public enum SMCComm {
     }
 
     static func start() -> Bool {
-        os_log("SMC session start requested active=%{public}@", self.isActive.description)
         assert(self.connect == IO_OBJECT_NULL)
 
         let smc = IOServiceGetMatchingService(
@@ -97,7 +96,6 @@ public enum SMCComm {
             IOServiceMatching("AppleSMC")
         )
         guard smc != IO_OBJECT_NULL else {
-            os_log("SMC session start failed: AppleSMC service unavailable")
             return false
         }
 
@@ -109,7 +107,6 @@ public enum SMCComm {
             &connect
         )
         guard resultOpen == kIOReturnSuccess, connect != IO_OBJECT_NULL else {
-            os_log("SMC session start failed: IOServiceOpen result=%{public}d connectValid=%{public}@", resultOpen, (connect != IO_OBJECT_NULL).description)
             return false
         }
 
@@ -127,12 +124,10 @@ public enum SMCComm {
             nil
         )
 
-        os_log("SMC session started active=%{public}@", self.isActive.description)
         return true
     }
 
     static func stop() {
-        os_log("SMC session stop requested active=%{public}@", self.isActive.description)
         assert(self.connect != IO_OBJECT_NULL)
         IOConnectCallMethod(
             self.connect,
@@ -148,7 +143,6 @@ public enum SMCComm {
         )
         IOServiceClose(self.connect)
         self.connect = IO_OBJECT_NULL
-        os_log("SMC session stopped active=%{public}@", self.isActive.description)
     }
 
     static func withSession<T>(_ action: () -> T?) -> T? {
@@ -202,7 +196,6 @@ public enum SMCComm {
     }
 
     static func writeKey(key: SMCComm.Key, bytes: [UInt8]) -> Bool {
-        os_log("SMC write requested key=%{public}u bytes=%{public}@ active=%{public}@", key, bytes.description, self.isActive.description)
         var inputStruct = SMCParamStruct.writeKey(key: key, bytes: bytes)
 
         let outputStruct = self.callSMCFunctionYPC(params: &inputStruct)
@@ -228,7 +221,6 @@ public enum SMCComm {
     private static func callSMCFunctionYPC(
         params: inout SMCParamStruct
     ) -> SMCParamStruct? {
-        os_log("SMC call active=%{public}@", self.isActive.description)
         assert(self.connect != IO_OBJECT_NULL)
 
         assert(MemoryLayout<SMCParamStruct>.stride == 80)
