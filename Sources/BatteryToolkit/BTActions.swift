@@ -47,6 +47,10 @@ public enum BTActions {
         return try await BTDaemonXPCClient.getState()
     }
 
+    public static func getDiagnostics() async throws -> [String: NSObject & Sendable] {
+        return try await BTDaemonXPCClient.getDiagnostics()
+    }
+
     public static func getSettings() async throws -> [String: NSObject & Sendable] {
         return try await BTDaemonXPCClient.getSettings()
     }

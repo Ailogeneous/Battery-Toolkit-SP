@@ -92,9 +92,11 @@ public enum BTDaemon {
             state[BTStateInfo.Keys.magSafeIndicator] = NSNumber(value: magSafeColor)
         }
 
-        state["batteryToolkit.smcWriteEvidence"] = NSArray(array: SMCComm.recentWriteEvidence())
-
         return state
+    }
+
+    static func getDiagnostics() -> [String: NSObject & Sendable] {
+        SMCComm.Power.diagnostics()
     }
     
     private static func start() throws {

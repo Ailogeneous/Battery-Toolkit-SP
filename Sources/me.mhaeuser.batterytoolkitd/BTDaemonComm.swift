@@ -175,6 +175,18 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
         }
     }
 
+    func getDiagnostics(
+        reply: @Sendable @escaping ([String: NSObject & Sendable]) -> Void
+    ) {
+        Task { @MainActor in
+            guard BTDaemon.supported else {
+                reply(["smcSupported": NSNumber(value: false)])
+                return
+            }
+            reply(BTDaemon.getDiagnostics())
+        }
+    }
+
     func getSettings(
         reply: @Sendable @escaping ([String: NSObject & Sendable]) -> Void
     ) {

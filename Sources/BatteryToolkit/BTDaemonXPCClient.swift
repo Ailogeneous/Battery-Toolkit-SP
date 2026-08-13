@@ -75,6 +75,16 @@ public enum BTDaemonXPCClient {
         }
     }
 
+    public static func getDiagnostics() async throws -> [String: NSObject & Sendable] {
+        try await withCheckedThrowingContinuation { continuation in
+            self.executeDaemonRetry(continuation: continuation) { daemon in
+                daemon.getDiagnostics { diagnostics in
+                    continuation.resume(returning: diagnostics)
+                }
+            }
+        }
+    }
+
     public static func disablePowerAdapter() async throws {
         let authData = try await BTAppXPCClient.getManageAuthorization()
         try await withCheckedThrowingContinuation { continuation in

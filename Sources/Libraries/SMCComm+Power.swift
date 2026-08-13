@@ -93,6 +93,26 @@ public extension SMCComm {
 
             return value != self.adapterKeys[self.adapterKey].onBytes
         }
+
+        static func diagnostics() -> [String: NSObject & Sendable] {
+            let isSupported = self.supported()
+            guard isSupported else {
+                return ["smcSupported": NSNumber(value: false)]
+            }
+            let chargeKey = self.chargeKeys[self.chargeKey].keyInfo.key
+            let adapterKey = self.adapterKeys[self.adapterKey].keyInfo.key
+            let chargeValue = SMCComm.readKey(key: chargeKey, dataSize: self.chargeKeys[self.chargeKey].onBytes.count)
+            let adapterValue = SMCComm.readKey(key: adapterKey, dataSize: self.adapterKeys[self.adapterKey].onBytes.count)
+            return [
+                "smcSupported": NSNumber(value: true),
+                "chargeKey": NSNumber(value: chargeKey),
+                "chargeReadSucceeded": NSNumber(value: chargeValue != nil),
+                "chargingDisabled": NSNumber(value: self.isChargingDisabled()),
+                "adapterKey": NSNumber(value: adapterKey),
+                "adapterReadSucceeded": NSNumber(value: adapterValue != nil),
+                "powerAdapterDisabled": NSNumber(value: self.isPowerAdapterDisabled())
+            ]
+        }
     }
 }
 

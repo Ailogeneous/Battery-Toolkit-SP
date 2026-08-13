@@ -36,6 +36,10 @@ public enum BTDaemonCommCommand: UInt8 {
         reply: @Sendable @escaping ([String: NSObject & Sendable]) -> Void
     )
 
+    func getDiagnostics(
+        reply: @Sendable @escaping ([String: NSObject & Sendable]) -> Void
+    )
+
     func getSettings(
         reply: @Sendable @escaping ([String: NSObject & Sendable]) -> Void
     )
