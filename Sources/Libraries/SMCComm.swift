@@ -63,6 +63,40 @@ public extension SMCComm {
         let info: SMCComm.KeyInfoData
     }
 
+    struct SMCWriteResult: Sendable {
+        public let key: UInt32
+        public let requestedByteCount: Int
+        public let readBackByteCount: Int
+        public let transportSucceeded: Bool
+        public let readBackSucceeded: Bool
+        public let verified: Bool
+        public let ioReturnCode: Int32
+        public let smcResultCode: UInt8
+        public let durationMilliseconds: Double
+
+        public init(
+            key: UInt32,
+            requestedByteCount: Int,
+            readBackByteCount: Int,
+            transportSucceeded: Bool,
+            readBackSucceeded: Bool,
+            verified: Bool,
+            ioReturnCode: Int32,
+            smcResultCode: UInt8,
+            durationMilliseconds: Double
+        ) {
+            self.key = key
+            self.requestedByteCount = requestedByteCount
+            self.readBackByteCount = readBackByteCount
+            self.transportSucceeded = transportSucceeded
+            self.readBackSucceeded = readBackSucceeded
+            self.verified = verified
+            self.ioReturnCode = ioReturnCode
+            self.smcResultCode = smcResultCode
+            self.durationMilliseconds = durationMilliseconds
+        }
+    }
+
     enum KeyTypes {
         static let ui8  = SMCComm.KeyType("u", "i", "8", " ")
         static let ui32 = SMCComm.KeyType("u", "i", "3", "2")
@@ -196,31 +230,39 @@ public enum SMCComm {
     }
 
     static func writeKey(key: SMCComm.Key, bytes: [UInt8]) -> Bool {
-        var inputStruct = SMCParamStruct.writeKey(key: key, bytes: bytes)
+        self.writeKeyResult(key: key, bytes: bytes).verified
+    }
 
-        let outputStruct = self.callSMCFunctionYPC(params: &inputStruct)
-        //
-        // This is defensive programming to protect against the SMC driver
-        // misreporting success or failure. No such occasions were identified so
-        // far. What has been identified so far were SMC keys reporting values
-        // different from both the previous value and what has been written.
-        //
+    static func writeKeyResult(key: SMCComm.Key, bytes: [UInt8]) -> SMCComm.SMCWriteResult {
+        let start = DispatchTime.now().uptimeNanoseconds
+        var inputStruct = SMCParamStruct.writeKey(key: key, bytes: bytes)
+        let callResult = self.callSMCFunctionResult(params: &inputStruct)
         let readValue = self.readKey(key: key, dataSize: bytes.count)
-        guard let readValue else {
-            //
-            // If the read fails, return the write result.
-            //
-            return outputStruct != nil
-        }
-        //
-        // If the read succeeds, compare the current to the written value.
-        //
-        return readValue == bytes
+        let readBackSucceeded = readValue != nil
+        let verified = readValue == bytes
+        let elapsed = DispatchTime.now().uptimeNanoseconds - start
+        return SMCComm.SMCWriteResult(
+            key: key,
+            requestedByteCount: bytes.count,
+            readBackByteCount: readValue?.count ?? 0,
+            transportSucceeded: callResult.ioReturnCode == kIOReturnSuccess && callResult.smcResultCode == UInt8(kSMCSuccess),
+            readBackSucceeded: readBackSucceeded,
+            verified: verified,
+            ioReturnCode: Int32(callResult.ioReturnCode),
+            smcResultCode: callResult.smcResultCode,
+            durationMilliseconds: Double(elapsed) / 1_000_000
+        )
     }
 
     private static func callSMCFunctionYPC(
         params: inout SMCParamStruct
     ) -> SMCParamStruct? {
+        self.callSMCFunctionResult(params: &params).output
+    }
+
+    private static func callSMCFunctionResult(
+        params: inout SMCParamStruct
+    ) -> (output: SMCParamStruct?, ioReturnCode: kern_return_t, smcResultCode: UInt8) {
         assert(self.connect != IO_OBJECT_NULL)
 
         assert(MemoryLayout<SMCParamStruct>.stride == 80)
@@ -236,15 +278,13 @@ public enum SMCComm {
             &outputValues,
             &outStructSize
         )
-        guard
-            resultCall == kIOReturnSuccess,
-            outputValues.result == UInt8(kSMCSuccess)
-        else {
+        let smcResultCode = outputValues.result
+        guard resultCall == kIOReturnSuccess, smcResultCode == UInt8(kSMCSuccess) else {
             os_log("SMC error: \(resultCall), \(outputValues.result)")
-            return nil
+            return (nil, resultCall, smcResultCode)
         }
 
-        return outputValues
+        return (outputValues, resultCall, smcResultCode)
     }
 }
 
