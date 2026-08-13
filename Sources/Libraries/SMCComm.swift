@@ -117,6 +117,7 @@ public extension SMCComm {
 @MainActor
 public enum SMCComm {
     private static var connect = IO_OBJECT_NULL
+    private static var recentWriteResults: [SMCComm.SMCWriteResult] = []
 
     static var isActive: Bool {
         return self.connect != IO_OBJECT_NULL
@@ -241,7 +242,7 @@ public enum SMCComm {
         let readBackSucceeded = readValue != nil
         let verified = readValue == bytes
         let elapsed = DispatchTime.now().uptimeNanoseconds - start
-        return SMCComm.SMCWriteResult(
+        let result = SMCComm.SMCWriteResult(
             key: key,
             requestedByteCount: bytes.count,
             readBackByteCount: readValue?.count ?? 0,
@@ -252,6 +253,27 @@ public enum SMCComm {
             smcResultCode: callResult.smcResultCode,
             durationMilliseconds: Double(elapsed) / 1_000_000
         )
+        self.recentWriteResults.append(result)
+        if self.recentWriteResults.count > 100 {
+            self.recentWriteResults.removeFirst(self.recentWriteResults.count - 100)
+        }
+        return result
+    }
+
+    static func recentWriteEvidence() -> [[String: NSObject & Sendable]] {
+        self.recentWriteResults.map { result in
+            [
+                "key": NSNumber(value: result.key),
+                "requestedByteCount": NSNumber(value: result.requestedByteCount),
+                "readBackByteCount": NSNumber(value: result.readBackByteCount),
+                "transportSucceeded": NSNumber(value: result.transportSucceeded),
+                "readBackSucceeded": NSNumber(value: result.readBackSucceeded),
+                "verified": NSNumber(value: result.verified),
+                "ioReturnCode": NSNumber(value: result.ioReturnCode),
+                "smcResultCode": NSNumber(value: result.smcResultCode),
+                "durationMilliseconds": NSNumber(value: result.durationMilliseconds)
+            ]
+        }
     }
 
     private static func callSMCFunctionYPC(
