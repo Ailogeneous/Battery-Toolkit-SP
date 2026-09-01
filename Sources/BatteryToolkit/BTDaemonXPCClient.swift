@@ -192,19 +192,6 @@ public enum BTDaemonXPCClient {
         }
     }
 
-    public static func copyPowerlogDatabase(destinationPath: String) async throws {
-        let authData = try await BTAppXPCClient.getManageAuthorization()
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
-            self.executeDaemonManageRetry(continuation: continuation) { daemon in
-                daemon.copyPowerlogDatabase(
-                    authData: authData,
-                    destinationPath: destinationPath,
-                    reply: self.continuationStatusHandler(continuation: continuation)
-                )
-            }
-        }
-    }
-
     public static func setSettings(settings: [String: NSObject & Sendable]) async throws {
         let authData = try await BTAppXPCClient.getManageAuthorization()
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in

@@ -95,12 +95,6 @@ public enum BTDaemonCommCommand: UInt8 {
         reply: @Sendable @escaping (NSNumber?) -> Void
     )
 
-    func copyPowerlogDatabase(
-        authData: Data,
-        destinationPath: String,
-        reply: @Sendable @escaping (BTError.RawValue) -> Void
-    )
-    
     func checkHighPowerMode(
         authData: Data,
         reply: @Sendable @escaping (Bool) -> Void
