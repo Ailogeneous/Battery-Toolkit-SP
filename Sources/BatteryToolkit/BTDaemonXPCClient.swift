@@ -451,8 +451,10 @@ public enum BTDaemonXPCClient {
     private static func continuationStatusHandler(continuation: CheckedContinuation<Void, any Error>) -> (@Sendable (BTError.RawValue) -> Void) {
         return { error in
             guard error == BTError.success.rawValue else {
-                BTAppXPCClient.invalidateManageAuthorization()
-                continuation.resume(throwing: BTError.init(rawValue: error)!)
+                Task { @BTBackgroundActor in
+                    BTAppXPCClient.invalidateManageAuthorization()
+                    continuation.resume(throwing: BTError.init(rawValue: error)!)
+                }
                 return
             }
             continuation.resume()
