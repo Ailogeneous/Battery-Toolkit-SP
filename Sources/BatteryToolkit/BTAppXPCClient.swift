@@ -8,6 +8,8 @@ import ServiceManagement
 
 @BTBackgroundActor
 public enum BTAppXPCClient {
+    private static var manageAuthorizationData: Data?
+
     public static func getAuthorization() async throws -> Data {
         try await self.getAuthorizationData(rightName: nil)
     }
@@ -17,11 +19,21 @@ public enum BTAppXPCClient {
     }
 
     public static func getManageAuthorization() async throws -> Data {
+        if let manageAuthorizationData {
+            return manageAuthorizationData
+        }
+
 #if DEBUG
-        try await self.getAuthorizationData(rightName: nil)
+        let data = try await self.getAuthorizationData(rightName: nil)
 #else
-        try await self.getAuthorizationData(rightName: BTAuthorizationRights.manage)
+        let data = try await self.getAuthorizationData(rightName: BTAuthorizationRights.manage)
 #endif
+        self.manageAuthorizationData = data
+        return data
+    }
+
+    public static func invalidateManageAuthorization() {
+        self.manageAuthorizationData = nil
     }
 
     private static func getAuthorizationData(rightName: String?) async throws -> Data {

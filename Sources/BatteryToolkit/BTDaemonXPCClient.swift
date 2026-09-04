@@ -75,6 +75,11 @@ public enum BTDaemonXPCClient {
         }
     }
 
+    public static func prewarmManageConnection() async throws {
+        _ = try await BTAppXPCClient.getManageAuthorization()
+        _ = try await self.getState()
+    }
+
     public static func getDiagnostics() async throws -> [String: NSObject & Sendable] {
         try await withCheckedThrowingContinuation { continuation in
             self.executeDaemonRetry(continuation: continuation) { daemon in
@@ -446,6 +451,7 @@ public enum BTDaemonXPCClient {
     private static func continuationStatusHandler(continuation: CheckedContinuation<Void, any Error>) -> (@Sendable (BTError.RawValue) -> Void) {
         return { error in
             guard error == BTError.success.rawValue else {
+                BTAppXPCClient.invalidateManageAuthorization()
                 continuation.resume(throwing: BTError.init(rawValue: error)!)
                 return
             }
