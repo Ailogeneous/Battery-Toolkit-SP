@@ -26,6 +26,10 @@ enum BTCaffeinate {
         .preventSystemSleep: "PreventSystemSleep" as CFString
     ]
 
+    static var hasActiveAssertions: Bool {
+        !activeAssertions.isEmpty
+    }
+
     static func set(flags: BTCaffeinateFlags, durationSeconds: Int) {
         if durationSeconds < 0 || flags.isEmpty {
             killAll()

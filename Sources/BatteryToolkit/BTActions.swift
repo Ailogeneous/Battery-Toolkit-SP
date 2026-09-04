@@ -97,6 +97,12 @@ public enum BTActions {
         try await BTDaemonXPCClient.setCaffeinateBuckets(buckets: buckets)
     }
 
+    public static func replaceCaffeinate(
+        buckets: [(flags: BTCaffeinateFlags, durationSeconds: Int)]
+    ) async throws {
+        try await BTDaemonXPCClient.replaceCaffeinate(buckets: buckets)
+    }
+
     public static func killCaffeinate() async throws {
         try await BTDaemonXPCClient.killCaffeinate()
     }

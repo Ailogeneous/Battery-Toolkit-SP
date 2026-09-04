@@ -253,6 +253,24 @@ public enum BTDaemonXPCClient {
         }
     }
 
+    public static func replaceCaffeinate(
+        buckets: [(flags: BTCaffeinateFlags, durationSeconds: Int)]
+    ) async throws {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        let flags = buckets.map { $0.flags.rawValue }
+        let durations = buckets.map { $0.durationSeconds }
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
+            self.executeDaemonManageRetry(continuation: continuation) { daemon in
+                daemon.replaceCaffeinate(
+                    authData: authData,
+                    flags: flags,
+                    durations: durations,
+                    reply: self.continuationStatusHandler(continuation: continuation)
+                )
+            }
+        }
+    }
+
     public static func killCaffeinate() async throws {
         let authData = try await BTAppXPCClient.getManageAuthorization()
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
