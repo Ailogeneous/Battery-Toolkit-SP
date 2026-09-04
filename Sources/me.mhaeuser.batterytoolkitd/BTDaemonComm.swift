@@ -273,6 +273,45 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
         }
     }
 
+    func setPowerModes(
+        authData: Data,
+        batteryMode: UInt8,
+        chargerMode: UInt8,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    ) {
+        Task { @MainActor in
+            guard BTDaemon.supported else {
+                reply(BTError.unsupported.rawValue)
+                return
+            }
+
+            let authorized = self.checkRight(
+                authData: authData,
+                rightName: BTAuthorizationRights.manage
+            )
+            guard authorized else {
+                reply(BTError.notAuthorized.rawValue)
+                return
+            }
+
+            let batterySuccess = BTPowerMode.set(
+                scope: .battery,
+                mode: batteryMode
+            )
+            let chargerSuccess = batterySuccess && BTPowerMode.set(
+                scope: .charger,
+                mode: chargerMode
+            )
+            let result = BTError(fromBool: chargerSuccess).rawValue
+            if result == BTError.success.rawValue {
+                Task { @MainActor in
+                    BTEventHub.notifyStateChanged()
+                }
+            }
+            reply(result)
+        }
+    }
+
     func setMagSafeIndicator(
         authData: Data,
         mode: UInt8,

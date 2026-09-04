@@ -297,6 +297,20 @@ public enum BTDaemonXPCClient {
         }
     }
 
+    public static func setPowerModes(batteryMode: UInt8, chargerMode: UInt8) async throws {
+        let authData = try await BTAppXPCClient.getManageAuthorization()
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
+            self.executeDaemonManageRetry(continuation: continuation) { daemon in
+                daemon.setPowerModes(
+                    authData: authData,
+                    batteryMode: batteryMode,
+                    chargerMode: chargerMode,
+                    reply: self.continuationStatusHandler(continuation: continuation)
+                )
+            }
+        }
+    }
+
     public static func prepareUpdate() async throws {
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
             self.executeDaemonRetry(continuation: continuation) { daemon in

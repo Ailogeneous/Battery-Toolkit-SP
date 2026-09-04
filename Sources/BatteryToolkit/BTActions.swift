@@ -67,6 +67,10 @@ public enum BTActions {
         try await BTDaemonXPCClient.setPowerMode(scope: scope, mode: mode)
     }
 
+    public static func setPowerModes(batteryMode: UInt8, chargerMode: UInt8) async throws {
+        try await BTDaemonXPCClient.setPowerModes(batteryMode: batteryMode, chargerMode: chargerMode)
+    }
+
     public static func setPMSetHibernatemode(_ value: Int, scope: BTPowerManagementScope = .all) async throws {
         try await BTDaemonXPCClient.setPMSet(setting: .hibernatemode, value: value, scope: scope)
     }

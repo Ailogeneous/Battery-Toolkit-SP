@@ -57,6 +57,13 @@ public enum BTDaemonCommCommand: UInt8 {
         reply: @Sendable @escaping (BTError.RawValue) -> Void
     )
 
+    func setPowerModes(
+        authData: Data,
+        batteryMode: UInt8,
+        chargerMode: UInt8,
+        reply: @Sendable @escaping (BTError.RawValue) -> Void
+    )
+
     func setMagSafeIndicator(
         authData: Data,
         mode: UInt8,
