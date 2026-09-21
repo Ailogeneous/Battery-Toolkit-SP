@@ -154,6 +154,10 @@ internal enum BTPowerState {
     }
 
     static func enableCharging(percent: UInt8) -> Bool {
+        guard self.chargingDisabled else {
+            return true
+        }
+
         let success = SMCComm.Power.enableCharging()
         if !success {
             os_log("Failed to enable charging")
