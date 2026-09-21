@@ -32,7 +32,7 @@ private extension BTDaemonXPCServer {
         ) -> Bool {
             guard BTXPCValidation.isValidClient(connection: newConnection)
             else {
-                os_log(.error, "XPC server rejected an invalid client")
+                os_log("XPC server connection by invalid client")
                 return false
             }
 

@@ -33,7 +33,6 @@ public enum BTXPCValidation {
             &code
         )
         guard codeStatus == errSecSuccess, let code else {
-            os_log(.error, "XPC client validation failed while reading audit token: \(codeStatus, privacy: .public)")
             return false
         }
 
@@ -81,12 +80,12 @@ public enum BTXPCValidation {
             &signInfo
         )
         guard infoStatus == errSecSuccess else {
-            os_log(.error, "XPC client validation failed to retrieve signing information: \(infoStatus, privacy: .public)")
+            os_log("Failed to retrieve signing information")
             return false
         }
 
         guard let signInfo = signInfo as? [String: AnyObject] else {
-            os_log(.error, "XPC client validation returned no signing information")
+            os_log("Signing information is nil")
             return false
         }
 
@@ -94,7 +93,7 @@ public enum BTXPCValidation {
             let signStatus =
             signInfo[kSecCodeInfoStatus as String] as? UInt32
         else {
-            os_log(.error, "XPC client validation returned no signature status")
+            os_log("Failed to retrieve signature status")
             return false
         }
 
@@ -121,7 +120,9 @@ public enum BTXPCValidation {
         ]
         //
         guard codeStatus.contains(reqStatus) else {
-            os_log(.error, "XPC client signature status constraints violated: \(signStatus, privacy: .public) vs \(reqStatus.rawValue, privacy: .public)")
+            os_log(
+                "Signature status constraints violated: \(signStatus) vs \(reqStatus.rawValue)"
+            )
             return false
         }
 
