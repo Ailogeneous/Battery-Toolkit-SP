@@ -506,12 +506,12 @@ public enum BTDaemonXPCClient {
         command: @BTBackgroundActor @escaping @Sendable (BTDaemonCommProtocol) -> Void
     ) {
         self.executeDaemon(command: command) { error in
-            os_log("XPC client remote error: \(error, privacy: .public))")
+            os_log(.error, "XPC client remote error: \(error, privacy: .public)")
             os_log("Retrying...")
             Task { @BTBackgroundActor in
                 self.disconnectDaemon()
                 self.executeDaemon(command: command) { error in
-                    os_log("XPC client remote error: \(error, privacy: .public))")
+                    os_log(.error, "XPC client remote error after retry: \(error, privacy: .public)")
                     continuation.resume(throwing: BTError.commFailed)
                 }
             }
