@@ -107,15 +107,11 @@ public enum BTXPCValidation {
         // libraryValidation: Disallow loading of third-party libraries.
         // runtime:           Enforce Hardened Runtime.
         //
-        var reqStatus: SecCodeStatus = [
+        let reqStatus: SecCodeStatus = [
             .valid,
             .hard,
             .kill,
-            SecCodeStatus(rawValue: SecCodeSignatureFlags.restrict.rawValue),
             SecCodeStatus(rawValue: SecCodeSignatureFlags.enforcement.rawValue),
-            SecCodeStatus(
-                rawValue: SecCodeSignatureFlags.libraryValidation.rawValue
-            ),
             SecCodeStatus(rawValue: SecCodeSignatureFlags.runtime.rawValue),
         ]
         //
@@ -135,10 +131,14 @@ public enum BTXPCValidation {
         let debugText = "identifier \"" + identifier + "\""
         return debugText
 #else
+        let certificateRequirement = BTPreprocessor.codesignCN.hasPrefix("Developer ID Application: ")
+            ? " and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */" +
+                " and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */"
+            : " and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */"
         let debugText = "identifier \"" + identifier + "\"" +
             " and anchor apple generic" +
             " and certificate leaf[subject.CN] = \"" + BTPreprocessor.codesignCN + "\"" +
-            " and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */" +
+            certificateRequirement +
             " and !(entitlement[\"com.apple.security.cs.allow-dyld-environment-variables\"] /* exists */)" +
             " and !(entitlement[\"com.apple.security.cs.disable-library-validation\"] /* exists */)" +
             " and !(entitlement[\"com.apple.security.cs.allow-unsigned-executable-memory\"] /* exists */)" +
