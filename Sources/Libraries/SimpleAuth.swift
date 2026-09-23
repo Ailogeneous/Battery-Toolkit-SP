@@ -137,6 +137,7 @@ public enum SimpleAuth {
         var authRef: AuthorizationRef? = nil
         let status = AuthorizationCreateFromExternalForm(&extAuth, &authRef)
         guard status == errSecSuccess else {
+            os_log("AuthorizationCreateFromExternalForm failed: %{public}d", status)
             return nil
         }
 
@@ -174,6 +175,9 @@ public enum SimpleAuth {
                     flags,
                     nil
                 )
+                if status != errAuthorizationSuccess {
+                    os_log("AuthorizationCopyRights failed for %{public}s: %{public}d", rightName, status)
+                }
                 return status == errAuthorizationSuccess
             }
         }
