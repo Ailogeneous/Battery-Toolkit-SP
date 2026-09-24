@@ -95,6 +95,10 @@ public enum BTActions {
         try await BTDaemonXPCClient.setPMSet(setting: .highstandbythreshold, value: value, scope: scope)
     }
 
+    public static func setPMSet(_ setting: BTPMSetSetting, value: Int, scope: BTPowerManagementScope = .all) async throws {
+        try await BTDaemonXPCClient.setPMSet(setting: setting, value: value, scope: scope)
+    }
+
     public static func caffeinate(flags: BTCaffeinateFlags, durationSeconds: Int) async throws {
         try await BTDaemonXPCClient.setCaffeinate(flags: flags, durationSeconds: durationSeconds)
     }

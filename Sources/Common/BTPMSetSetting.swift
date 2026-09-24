@@ -11,6 +11,14 @@ public enum BTPMSetSetting: UInt8 {
     case standbydelaylow = 2
     case standbydelayhigh = 3
     case highstandbythreshold = 4
+    case womp = 5
+    case powernap = 6
+    case proximitywake = 7
+    case lidwake = 8
+    case acwake = 9
+    case autorestart = 10
+    case halfdim = 11
+    case lessbright = 12
 
     var cliName: String {
         switch self {
@@ -19,6 +27,14 @@ public enum BTPMSetSetting: UInt8 {
         case .standbydelaylow: return "standbydelaylow"
         case .standbydelayhigh: return "standbydelayhigh"
         case .highstandbythreshold: return "highstandbythreshold"
+        case .womp: return "womp"
+        case .powernap: return "powernap"
+        case .proximitywake: return "proximitywake"
+        case .lidwake: return "lidwake"
+        case .acwake: return "acwake"
+        case .autorestart: return "autorestart"
+        case .halfdim: return "halfdim"
+        case .lessbright: return "lessbright"
         }
     }
 }
