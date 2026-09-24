@@ -190,7 +190,9 @@ public enum BTDaemon {
             //
             signal(SIGTERM, SIG_IGN)
 
-            let rightTemplate = Bundle.main.object(forInfoDictionaryKey: "BT_MANAGE_RIGHT_POLICY") as? String == "signedClient"
+            let manageRightPolicy = Bundle.main.object(forInfoDictionaryKey: "BT_MANAGE_RIGHT_POLICY") as? String
+                ?? ProcessInfo.processInfo.environment["BT_MANAGE_RIGHT_POLICY"]
+            let rightTemplate = manageRightPolicy == "signedClient"
                 ? kAuthorizationRuleClassAllow
                 : kAuthorizationRuleAuthenticateAsAdmin
             let status = SimpleAuth.duplicateRight(
