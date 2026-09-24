@@ -190,9 +190,12 @@ public enum BTDaemon {
             //
             signal(SIGTERM, SIG_IGN)
 
+            let rightTemplate = Bundle.main.object(forInfoDictionaryKey: "BT_MANAGE_RIGHT_POLICY") as? String == "signedClient"
+                ? kAuthorizationRuleClassAllow
+                : kAuthorizationRuleAuthenticateAsAdmin
             let status = SimpleAuth.duplicateRight(
                 rightName: BTAuthorizationRights.manage,
-                templateName: kAuthorizationRuleAuthenticateAsAdmin,
+                templateName: rightTemplate,
                 comment: "Used by \(BTPreprocessor.daemonId) to allow access to its privileged functions",
                 timeout: 300,
                 requesterIdentifier: BTPreprocessor.appId
