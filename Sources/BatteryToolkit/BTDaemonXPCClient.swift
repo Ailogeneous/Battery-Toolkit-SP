@@ -452,7 +452,9 @@ public enum BTDaemonXPCClient {
         return { error in
             guard error == BTError.success.rawValue else {
                 Task { @BTBackgroundActor in
-                    BTAppXPCClient.invalidateManageAuthorization()
+                    if error == BTError.notAuthorized.rawValue {
+                        BTAppXPCClient.invalidateManageAuthorization()
+                    }
                     continuation.resume(throwing: BTError.init(rawValue: error)!)
                 }
                 return
