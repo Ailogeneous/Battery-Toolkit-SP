@@ -57,7 +57,7 @@ public enum SimpleAuth {
         return self.copyRight(
             simpleAuth: simpleAuth,
             rightName: rightName,
-            flags: [.destroyRights]
+            flags: []
         )
     }
 
