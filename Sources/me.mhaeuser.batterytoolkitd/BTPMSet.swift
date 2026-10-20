@@ -10,6 +10,7 @@ import os.log
 internal enum BTPMSet {
     static func set(setting: BTPMSetSetting, value: Int, scope: BTPowerManagementScope) -> Bool {
         guard setting != .displaysleep || (0...180).contains(value) else { return false }
+        guard setting != .autorestartatconnect || (0...1).contains(value) else { return false }
         let scopeFlag: String
         switch scope {
         case .all: scopeFlag = "-a"

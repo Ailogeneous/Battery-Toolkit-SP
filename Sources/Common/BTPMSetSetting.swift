@@ -20,6 +20,7 @@ public enum BTPMSetSetting: UInt8 {
     case halfdim = 11
     case lessbright = 12
     case displaysleep = 13
+    case autorestartatconnect = 14
 
     var cliName: String {
         switch self {
@@ -37,6 +38,7 @@ public enum BTPMSetSetting: UInt8 {
         case .halfdim: return "halfdim"
         case .lessbright: return "lessbright"
         case .displaysleep: return "displaysleep"
+        case .autorestartatconnect: return "autorestartatconnect"
         }
     }
 }
