@@ -83,8 +83,6 @@ enum BTPowerMode {
             scopeArg = "-b"
         case .charger:
             scopeArg = "-c"
-        case .ups:
-            return false
         }
         
         let modeKey: String
@@ -197,8 +195,6 @@ enum BTPowerMode {
                 battery = value
             case .charger:
                 charger = value
-            case .ups:
-                continue
             }
         }
 
