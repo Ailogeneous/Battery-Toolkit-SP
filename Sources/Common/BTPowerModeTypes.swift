@@ -9,5 +9,6 @@ public enum BTPowerManagementScope: UInt8 {
     case all = 0
     case battery = 1
     case charger = 2
+    case ups = 3
 }
 
