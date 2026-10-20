@@ -11,11 +11,15 @@ internal enum BTPMSet {
     static func set(setting: BTPMSetSetting, value: Int, scope: BTPowerManagementScope) -> Bool {
         guard setting != .displaysleep || (0...180).contains(value) else { return false }
         guard setting != .autorestartatconnect || (0...1).contains(value) else { return false }
+        let isUPSSetting = setting == .haltlevel || setting == .haltafter || setting == .haltremain
+        guard isUPSSetting == (scope == .ups) else { return false }
+        guard !isUPSSetting || value == -1 || (setting == .haltlevel ? (1...100).contains(value) : (1...1440).contains(value)) else { return false }
         let scopeFlag: String
         switch scope {
         case .all: scopeFlag = "-a"
         case .battery: scopeFlag = "-b"
         case .charger: scopeFlag = "-c"
+        case .ups: scopeFlag = "-u"
         }
 
         let result = run("/usr/bin/pmset", args: [scopeFlag, setting.cliName, String(value)])
