@@ -46,7 +46,7 @@ int main(void) {
         uint32_t bytes = out.keyInfo.dataSize;
         memset(&in, 0, sizeof(in)); in.key = key; in.data8 = kSMCReadKey; in.keyInfo.dataSize = bytes;
         kr = query(c, &in, &out);
-        printf("{\"kind\":\"value\",\"key\":%u,\"io\":%u,\"smc\":%u,\"hex\":\"");
+        printf("{\"kind\":\"value\",\"key\":%u,\"io\":%u,\"smc\":%u,\"hex\":\"", key, kr, out.result);
         if (!kr && !out.result) for (uint32_t j=0;j<bytes;j++) printf("%02x",out.bytes[j]);
         printf("\"}\n");
     }
