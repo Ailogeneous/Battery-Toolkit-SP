@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import os.log
 
 public extension SMCComm {
     @MainActor
@@ -28,18 +29,22 @@ public extension SMCComm {
                 SMCComm.keySupported(keyInfo: key.keyInfo)
             }
             guard let chargeKey = chargeKey else {
+                os_log("SMC power support failed: no matching charging key; adapter checks not reached")
                 return false;
             }
             self.chargeKey = chargeKey
+            os_log("SMC selected charging key=%{public}@", SMCComm.diagnosticKeyName(self.chargeKeys[chargeKey].keyInfo.key))
             
             
             let adapterKey = self.adapterKeys.firstIndex { key in
                 SMCComm.keySupported(keyInfo: key.keyInfo)
             }
             guard let adapterKey = adapterKey else {
+                os_log("SMC power support failed: no matching adapter key")
                 return false;
             }
             self.adapterKey = adapterKey
+            os_log("SMC selected adapter key=%{public}@", SMCComm.diagnosticKeyName(self.adapterKeys[adapterKey].keyInfo.key))
 
             return true
         }

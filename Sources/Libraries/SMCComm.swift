@@ -206,8 +206,23 @@ public enum SMCComm {
         return outputStruct.keyInfo
     }
 
+    static func diagnosticKeyName(_ key: SMCComm.Key) -> String {
+        let bytes = (0..<4).map { UInt8((key >> (24 - $0 * 8)) & 0xFF) }
+        return String(bytes: bytes, encoding: .ascii) ?? String(format: "0x%08X", key)
+    }
+
+    private static func diagnosticKeyInfo(_ info: SMCComm.KeyInfoData) -> String {
+        let type = self.diagnosticKeyName(info.dataType)
+        return "size=\(info.dataSize) type=\(type) attributes=\(String(format: "0x%02X", info.dataAttributes))"
+    }
+
     static func keySupported(keyInfo: SMCComm.KeyInfo) -> Bool {
         let info = SMCComm.getKeyInfo(key: keyInfo.key)
+        let name = self.diagnosticKeyName(keyInfo.key)
+        let expected = self.diagnosticKeyInfo(keyInfo.info)
+        let actual = info.map { self.diagnosticKeyInfo($0) } ?? "unavailable"
+        let matches = info.map { SMCComm.KeyInfoDataEq(data1: keyInfo.info, data2: $0) } ?? false
+        os_log("SMC support key=%{public}@ expected=[%{public}@] actual=[%{public}@] matches=%{public}@", name, expected, actual, matches.description)
         guard let info = info,
               SMCComm.KeyInfoDataEq(data1: keyInfo.info, data2: info) else {
             return false
@@ -281,7 +296,7 @@ public enum SMCComm {
         )
         let smcResultCode = outputValues.result
         guard resultCall == kIOReturnSuccess, smcResultCode == UInt8(kSMCSuccess) else {
-            os_log("SMC error: \(resultCall), \(outputValues.result)")
+            os_log("SMC failure key=%{public}@ operation=%{public}u ioReturn=0x%{public}08X smcResult=%{public}u", self.diagnosticKeyName(params.key), UInt32(params.data8), UInt32(bitPattern: resultCall), UInt32(smcResultCode))
             return (nil, resultCall, smcResultCode)
         }
 

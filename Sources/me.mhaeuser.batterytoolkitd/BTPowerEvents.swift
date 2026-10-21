@@ -4,6 +4,8 @@
 //
 
 import Foundation
+import Darwin
+import IOKit
 import CoreGraphics
 import IOKit.ps
 import os.log
@@ -24,9 +26,30 @@ internal enum BTPowerEvents {
     private static var lastDisplaySleepNowAt: Date?
     private static let displaySleepNowCooldown: TimeInterval = 15
 
+    private static func logDiagnosticEnvironment() {
+        func systemValue(_ name: String) -> String {
+            var size = 0
+            guard sysctlbyname(name, nil, &size, nil, 0) == 0, size > 0 else { return "unavailable" }
+            var bytes = [CChar](repeating: 0, count: size)
+            guard sysctlbyname(name, &bytes, &size, nil, 0) == 0 else { return "unavailable" }
+            return String(cString: bytes)
+        }
+        var firmware = "unavailable"
+        let chosen = IORegistryEntryFromPath(kIOMainPortDefault, "IODeviceTree:/chosen")
+        if chosen != IO_OBJECT_NULL {
+            defer { IOObjectRelease(chosen) }
+            if let data = IORegistryEntryCreateCFProperty(chosen, "system-firmware-version" as CFString, kCFAllocatorDefault, 0)?.takeRetainedValue() as? Data {
+                firmware = String(data: Data(data.prefix { $0 != 0 }), encoding: .utf8) ?? "unavailable"
+            }
+        }
+        os_log("SMC diagnostic environment os=%{public}@ build=%{public}@ model=%{public}@ firmware=%{public}@", ProcessInfo.processInfo.operatingSystemVersionString, systemValue("kern.osversion"), systemValue("hw.model"), firmware)
+    }
+
     static func start() throws {
+        self.logDiagnosticEnvironment()
         let smcSuccess = SMCComm.start()
         guard smcSuccess else {
+            os_log("SMC startup failed: AppleSMC connection unavailable")
             throw BTError.unknown
         }
 
