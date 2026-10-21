@@ -45,6 +45,9 @@ public enum BTDaemon {
         }
 
         var state: [String: NSObject & Sendable] = [
+            BTStateInfo.Keys.chargingSupported: NSNumber(value: SMCComm.Power.chargingSupported),
+            BTStateInfo.Keys.adapterSupported: NSNumber(value: SMCComm.Power.adapterSupported),
+            BTStateInfo.Keys.magSafeSupported: NSNumber(value: SMCComm.MagSafe.supported),
             BTStateInfo.Keys.enabled: NSNumber(value: enabled ? 1 : 0),
             BTStateInfo.Keys.powerDisabled: NSNumber(value: powerDisabled),
             BTStateInfo.Keys.connected: NSNumber(value: connected),

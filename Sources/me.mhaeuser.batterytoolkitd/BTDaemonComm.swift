@@ -64,6 +64,10 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
 
                 switch command {
                 case BTDaemonCommCommand.enablePowerAdapter.rawValue:
+                    guard SMCComm.Power.adapterSupported else {
+                        reply(BTError.unsupported.rawValue)
+                        return
+                    }
                     let success = BTPowerState.enablePowerAdapter()
                     reply(BTError(fromBool: success).rawValue)
                     Task { @MainActor in
@@ -71,6 +75,10 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
                     }
                     return
                 case BTDaemonCommCommand.chargeToFull.rawValue:
+                    guard SMCComm.Power.chargingSupported else {
+                        reply(BTError.unsupported.rawValue)
+                        return
+                    }
                     let success = BTPowerEvents.chargeToFull()
                     reply(BTError(fromBool: success).rawValue)
                     Task { @MainActor in
@@ -78,6 +86,10 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
                     }
                     return
                 case BTDaemonCommCommand.chargeToLimit.rawValue:
+                    guard SMCComm.Power.chargingSupported else {
+                        reply(BTError.unsupported.rawValue)
+                        return
+                    }
                     let success = BTPowerEvents.chargeToLimit()
                     reply(BTError(fromBool: success).rawValue)
                     Task { @MainActor in
@@ -86,6 +98,10 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
                     return
                     
                 case BTDaemonCommCommand.disablePowerAdapter.rawValue:
+                    guard SMCComm.Power.adapterSupported else {
+                        reply(BTError.unsupported.rawValue)
+                        return
+                    }
                     let authorized = self.checkRight(
                         authData: authData,
                         rightName: BTAuthorizationRights.manage
@@ -103,6 +119,10 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
                     return
 
                 case BTDaemonCommCommand.disableCharging.rawValue:
+                    guard SMCComm.Power.chargingSupported else {
+                        reply(BTError.unsupported.rawValue)
+                        return
+                    }
                     let authorized = self.checkRight(
                         authData: authData,
                         rightName: BTAuthorizationRights.manage
@@ -319,6 +339,11 @@ internal final class BTDaemonComm: NSObject, BTDaemonCommProtocol, Sendable {
     ) {
         Task { @MainActor in
             guard BTDaemon.supported else {
+                reply(BTError.unsupported.rawValue)
+                return
+            }
+
+            guard SMCComm.MagSafe.supported else {
                 reply(BTError.unsupported.rawValue)
                 return
             }

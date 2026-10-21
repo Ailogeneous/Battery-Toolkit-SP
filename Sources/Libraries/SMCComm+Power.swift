@@ -17,103 +17,106 @@ public extension SMCComm {
             KeyControl.CH0J
         ]
 
-        private static var chargeKey = 0
-        private static var adapterKey = 0
+        private static var chargeKey: Int?
+        private static var adapterKey: Int?
+
+        static var chargingSupported: Bool { self.chargeKey != nil }
+        static var adapterSupported: Bool { self.adapterKey != nil }
 
         static func supported() -> Bool {
-            //
-            // Ensure all required SMC keys are present and well-formed.
-            //
-            let chargeKey = self.chargeKeys.firstIndex { key in
+            self.chargeKey = self.chargeKeys.firstIndex { key in
                 SMCComm.keySupported(keyInfo: key.keyInfo)
             }
-            guard let chargeKey = chargeKey else {
-                return false;
-            }
-            self.chargeKey = chargeKey
-            
-            
-            let adapterKey = self.adapterKeys.firstIndex { key in
+            self.adapterKey = self.adapterKeys.firstIndex { key in
                 SMCComm.keySupported(keyInfo: key.keyInfo)
             }
-            guard let adapterKey = adapterKey else {
-                return false;
-            }
-            self.adapterKey = adapterKey
-
-            return true
+            return self.chargingSupported && self.adapterSupported
         }
 
         static func enableCharging() -> Bool {
+            guard let chargeKey = self.chargeKey else { return false }
             return SMCComm.writeKey(
-                key: self.chargeKeys[self.chargeKey].keyInfo.key,
-                bytes: self.chargeKeys[self.chargeKey].onBytes
+                key: self.chargeKeys[chargeKey].keyInfo.key,
+                bytes: self.chargeKeys[chargeKey].onBytes
             )
         }
 
         static func disableCharging() -> Bool {
+            guard let chargeKey = self.chargeKey else { return false }
             return SMCComm.writeKey(
-                key: self.chargeKeys[self.chargeKey].keyInfo.key,
-                bytes: self.chargeKeys[self.chargeKey].offBytes
+                key: self.chargeKeys[chargeKey].keyInfo.key,
+                bytes: self.chargeKeys[chargeKey].offBytes
             )
         }
 
         static func isChargingDisabled() -> Bool {
+            guard let chargeKey = self.chargeKey else { return false }
             let value = SMCComm.readKey(
-                key: self.chargeKeys[self.chargeKey].keyInfo.key,
-                dataSize: self.chargeKeys[self.chargeKey].onBytes.count
+                key: self.chargeKeys[chargeKey].keyInfo.key,
+                dataSize: self.chargeKeys[chargeKey].onBytes.count
             )
             guard let value else {
                 return false
             }
 
-            return value != self.chargeKeys[self.chargeKey].onBytes
+            return value != self.chargeKeys[chargeKey].onBytes
         }
 
         static func enablePowerAdapter() -> Bool {
+            guard let adapterKey = self.adapterKey else { return false }
             return SMCComm.writeKey(
-                key: self.adapterKeys[self.adapterKey].keyInfo.key,
-                bytes: self.adapterKeys[self.adapterKey].onBytes
+                key: self.adapterKeys[adapterKey].keyInfo.key,
+                bytes: self.adapterKeys[adapterKey].onBytes
             )
         }
 
         static func disablePowerAdapter() -> Bool {
+            guard let adapterKey = self.adapterKey else { return false }
             return SMCComm.writeKey(
-                key: self.adapterKeys[self.adapterKey].keyInfo.key,
-                bytes: self.adapterKeys[self.adapterKey].offBytes
+                key: self.adapterKeys[adapterKey].keyInfo.key,
+                bytes: self.adapterKeys[adapterKey].offBytes
             )
         }
 
         static func isPowerAdapterDisabled() -> Bool {
+            guard let adapterKey = self.adapterKey else { return false }
             let value = SMCComm.readKey(
-                key: self.adapterKeys[self.adapterKey].keyInfo.key,
-                dataSize: self.adapterKeys[self.adapterKey].onBytes.count
+                key: self.adapterKeys[adapterKey].keyInfo.key,
+                dataSize: self.adapterKeys[adapterKey].onBytes.count
             )
             guard let value else {
                 return false
             }
 
-            return value != self.adapterKeys[self.adapterKey].onBytes
+            return value != self.adapterKeys[adapterKey].onBytes
         }
 
         static func diagnostics() -> [String: NSObject & Sendable] {
-            let isSupported = self.supported()
-            guard isSupported else {
-                return ["smcSupported": NSNumber(value: false)]
-            }
-            let chargeKey = self.chargeKeys[self.chargeKey].keyInfo.key
-            let adapterKey = self.adapterKeys[self.adapterKey].keyInfo.key
-            let chargeValue = SMCComm.readKey(key: chargeKey, dataSize: self.chargeKeys[self.chargeKey].onBytes.count)
-            let adapterValue = SMCComm.readKey(key: adapterKey, dataSize: self.adapterKeys[self.adapterKey].onBytes.count)
-            return [
-                "smcSupported": NSNumber(value: true),
-                "chargeKey": NSNumber(value: chargeKey),
-                "chargeReadSucceeded": NSNumber(value: chargeValue != nil),
-                "chargingDisabled": NSNumber(value: self.isChargingDisabled()),
-                "adapterKey": NSNumber(value: adapterKey),
-                "adapterReadSucceeded": NSNumber(value: adapterValue != nil),
-                "powerAdapterDisabled": NSNumber(value: self.isPowerAdapterDisabled())
+            var result: [String: NSObject & Sendable] = [
+                "smcSupported": NSNumber(value: SMCComm.isActive),
+                "chargingSupported": NSNumber(value: self.chargingSupported),
+                "adapterSupported": NSNumber(value: self.adapterSupported),
+                "magSafeSupported": NSNumber(value: SMCComm.MagSafe.supported)
             ]
+            if let chargeKey = self.chargeKey {
+                let control = self.chargeKeys[chargeKey]
+                result["chargeKey"] = NSNumber(value: control.keyInfo.key)
+                let value = SMCComm.readKey(key: control.keyInfo.key, dataSize: control.onBytes.count)
+                result["chargeReadSucceeded"] = NSNumber(value: value != nil)
+                if let value {
+                    result["chargingDisabled"] = NSNumber(value: value != control.onBytes)
+                }
+            }
+            if let adapterKey = self.adapterKey {
+                let control = self.adapterKeys[adapterKey]
+                result["adapterKey"] = NSNumber(value: control.keyInfo.key)
+                let value = SMCComm.readKey(key: control.keyInfo.key, dataSize: control.onBytes.count)
+                result["adapterReadSucceeded"] = NSNumber(value: value != nil)
+                if let value {
+                    result["powerAdapterDisabled"] = NSNumber(value: value != control.onBytes)
+                }
+            }
+            return result
         }
     }
 }

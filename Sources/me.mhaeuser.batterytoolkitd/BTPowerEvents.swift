@@ -30,12 +30,8 @@ internal enum BTPowerEvents {
             throw BTError.unknown
         }
 
-        let supported = SMCComm.Power.supported()
-        guard supported else {
-            os_log("Machine is unsupported")
-            SMCComm.stop()
-            throw BTError.unsupported
-        }
+        _ = SMCComm.Power.supported()
+        os_log("SMC capabilities charging=%{public}@ adapter=%{public}@", SMCComm.Power.chargingSupported.description, SMCComm.Power.adapterSupported.description)
 
         let registerSuccess = self.registerLimitedPowerHandler()
         guard registerSuccess else {
@@ -114,11 +110,13 @@ internal enum BTPowerEvents {
     }
 
     static func chargeToLimit() -> Bool {
+        guard SMCComm.Power.chargingSupported else { return false }
         self.chargingMode = .toLimit
         return self.enableBelowLimitMode(limit: BTSettings.maxCharge)
     }
 
     static func disableCharging(percent: UInt8) -> Bool {
+        guard SMCComm.Power.chargingSupported else { return false }
         self.chargingMode = .standard
         return BTPowerState.disableCharging(percent: percent)
     }
@@ -129,6 +127,7 @@ internal enum BTPowerEvents {
     }
 
     static func chargeToFull() -> Bool {
+        guard SMCComm.Power.chargingSupported else { return false }
         self.chargingMode = .toFull
         return self.enableBelowLimitMode(limit: 100)
     }
@@ -259,6 +258,8 @@ internal enum BTPowerEvents {
         guard let (percent, _, _) = IOPSPrivate.GetPercentRemaining() else {
             return 100
         }
+        guard SMCComm.Power.chargingSupported else { return percent }
+
         //
         // The hysteresis does not apply when starting the daemon, as
         // micro-charges will already happen pre-boot and there is no point to
