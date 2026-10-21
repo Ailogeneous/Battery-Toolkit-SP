@@ -308,6 +308,12 @@ internal enum BTPowerState {
             return
         }
 
+        guard SMCComm.Power.chargingSupported else {
+            self.releaseChargingSleepAssertion()
+            self.resetChargeStagnationWindow()
+            return
+        }
+
         if self.chargingDisabled {
             self.releaseChargingSleepAssertion()
             self.resetChargeStagnationWindow()
