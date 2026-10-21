@@ -132,7 +132,6 @@ internal enum BTPowerState {
     }
 
     static func disableCharging(percent: UInt8) -> Bool {
-        guard SMCComm.Power.chargingSupported else { return false }
         guard !self.chargingDisabled else {
             return true
         }
@@ -155,7 +154,6 @@ internal enum BTPowerState {
     }
 
     static func enableCharging(percent: UInt8) -> Bool {
-        guard SMCComm.Power.chargingSupported else { return false }
         guard self.chargingDisabled else {
             return true
         }
@@ -177,7 +175,6 @@ internal enum BTPowerState {
     }
 
     static func disablePowerAdapter() -> Bool {
-        guard SMCComm.Power.adapterSupported else { return false }
         guard !self.powerDisabled else {
             return true
         }
@@ -200,7 +197,6 @@ internal enum BTPowerState {
     }
 
     static func enablePowerAdapter() -> Bool {
-        guard SMCComm.Power.adapterSupported else { return false }
         guard self.powerDisabled else {
             return true
         }

@@ -19,9 +19,6 @@ public enum BTStateInfo {
     }
 
     public enum Keys {
-        public static let chargingSupported = "ChargingSupported"
-        public static let adapterSupported = "AdapterSupported"
-        public static let magSafeSupported = "MagSafeSupported"
         public static let enabled = "Enabled"
         public static let powerDisabled = "PowerDisabled"
         public static let connected = "Connected"
