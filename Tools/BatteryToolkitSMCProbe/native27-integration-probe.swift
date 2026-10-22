@@ -3,8 +3,8 @@ import Foundation
 @main
 struct NativeChargingIntegrationProbe {
     @MainActor static func main() async {
-        guard CommandLine.arguments.count == 2, ["--test-75-and-restore", "--restore"].contains(CommandLine.arguments[1]) else {
-            print("Usage: native27-integration-probe --test-75-and-restore | --restore")
+        guard CommandLine.arguments.count == 2, ["--test-75-and-restore", "--test-transitions-and-restore", "--restore"].contains(CommandLine.arguments[1]) else {
+            print("Usage: native27-integration-probe --test-75-and-restore | --test-transitions-and-restore | --restore")
             exit(1)
         }
         guard SMCComm.start(), BTNativeCharging27.start() else { print("START FAILED"); exit(2) }
@@ -26,14 +26,20 @@ struct NativeChargingIntegrationProbe {
             source.resume()
             return source
         }
-        let accepted = BTNativeCharging27.request(limit: 75, suppressCalibration: true)
-        print("pid=\(getpid()) submitted=\(accepted)")
-        if accepted {
-            for _ in 0..<12 {
+        let transitions = CommandLine.arguments[1] == "--test-transitions-and-restore"
+        let limits = transitions ? [75, 80, 100, 75] : [75]
+        var accepted = true
+        for limit in limits {
+            let submitted = BTNativeCharging27.request(limit: limit, suppressCalibration: true)
+            print("pid=\(getpid()) limit=\(limit) submitted=\(submitted)")
+            accepted = accepted && submitted
+            guard submitted else { break }
+            for _ in 0..<(transitions ? 3 : 12) {
                 try? await Task.sleep(nanoseconds: 5_000_000_000)
                 let process = Process()
                 process.executableURL = URL(fileURLWithPath: "/usr/bin/pmset")
                 process.arguments = ["-g", "battlimit"]
+                process.standardOutput = FileHandle.standardOutput
                 try? process.run()
                 process.waitUntilExit()
                 BTNativeCharging27.sampleAndReconcile()
@@ -45,6 +51,7 @@ struct NativeChargingIntegrationProbe {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: "/usr/bin/pmset")
         process.arguments = ["-g", "battlimit"]
+        process.standardOutput = FileHandle.standardOutput
         try? process.run()
         process.waitUntilExit()
         withExtendedLifetime(signals) {}
