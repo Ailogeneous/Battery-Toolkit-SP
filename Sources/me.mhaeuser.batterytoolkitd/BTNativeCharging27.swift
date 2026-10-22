@@ -258,12 +258,11 @@ internal enum BTNativeCharging27 {
             "nativeCharging27": NSNumber(value: true),
             "nativePolicySubmitted": NSNumber(value: submissionSucceeded),
             "nativeNoChargeToFull": NSNumber(value: suppress),
-            "nativeRetryCount": NSNumber(value: attempts),
-            "nativeJournalPath": journalURL.path as NSString
+            "nativeRetryCount": NSNumber(value: attempts)
         ]
         if let requested { values["nativeRequestedLimit"] = NSNumber(value: requested) }
         if let state = SMCComm.readKey(key: SMCComm.Key("C", "H", "L", "T"), dataSize: 3) {
-            values["nativeSMCState"] = state.map { String(format: "%02x", $0) }.joined() as NSString
+            values["nativeSMCState"] = NSNumber(value: state.reduce(UInt32(0)) { ($0 << 8) | UInt32($1) })
         }
         return values
     }
