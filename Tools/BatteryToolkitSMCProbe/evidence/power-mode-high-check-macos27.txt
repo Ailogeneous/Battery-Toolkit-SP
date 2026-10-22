@@ -1,0 +1,2 @@
+type=lowpowermode baseline=(all: nil, battery: Optional(0), charger: Optional(0))
+HIGH DETECTION supported=false after=(all: nil, battery: Optional(0), charger: Optional(0))

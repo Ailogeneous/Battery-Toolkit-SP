@@ -1,0 +1,10 @@
+type=lowpowermode baseline=(all: nil, battery: Optional(0), charger: Optional(0))
+scope=battery mode=1 accepted=true observed=(all: nil, battery: Optional(1), charger: Optional(0)) verified=true
+scope=charger mode=1 accepted=true observed=(all: nil, battery: Optional(1), charger: Optional(1)) verified=true
+scope=battery mode=0 accepted=true observed=(all: nil, battery: Optional(0), charger: Optional(1)) verified=true
+scope=charger mode=0 accepted=true observed=(all: nil, battery: Optional(0), charger: Optional(0)) verified=true
+scope=all mode=1 accepted=true observed=(all: nil, battery: Optional(1), charger: Optional(1)) verified=true
+scope=all mode=0 accepted=true observed=(all: nil, battery: Optional(0), charger: Optional(0)) verified=true
+INVALID mode3 rejected=true UPS rejected=true
+TRANSITIONS verified=true
+RESTORE writes=true observed=(all: nil, battery: Optional(0), charger: Optional(0)) verified=true
