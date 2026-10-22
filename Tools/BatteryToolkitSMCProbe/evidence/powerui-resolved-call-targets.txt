@@ -1,0 +1,276 @@
+PowerUISmartChargeManager listener:shouldAcceptNewConnection: 0x1af6013f4
+0x1af601424 objc_retain
+0x1af601430 objc_retain
+0x1af601444 os_log_type_enabled
+0x1af601458 objc valueForEntitlement:
+0x1af60145c objc_claimAutoreleasedReturnValue
+0x1af60146c objc boolValue
+0x1af601480 os_log_type_enabled
+0x1af601498 objc interfaceWithProtocol:
+0x1af60149c objc_claimAutoreleasedReturnValue
+0x1af6014b8 objc_opt_class
+0x1af6014c8 objc_opt_class
+0x1af6014d8 objc_opt_class
+0x1af6014e8 objc_opt_class
+0x1af6014f8 objc_opt_class
+0x1af601508 objc_opt_class
+0x1af601520 objc setWithObjects:
+0x1af601524 objc_claimAutoreleasedReturnValue
+0x1af601544 objc setClasses:forSelector:argumentIndex:ofReply:
+0x1af60154c objc_release
+0x1af601558 objc setExportedInterface:
+0x1af601564 objc setExportedObject:
+0x1af60156c objc resume
+0x1af601574 objc_release
+0x1af60157c objc_release
+0x1af601584 objc_release
+0x1af60158c objc_release
+0x1af6015b8 -[PowerUISmartChargeManager listener:shouldAcceptNewConnection:].cold.1
+0x1af6015c4 -[PowerUISmartChargeManager listener:shouldAcceptNewConnection:].cold.2
+0x1af601614 CFPreferencesCopyAppValue
+0x1af60161c objc mutableCopy
+0x1af601628 objc_release
+0x1af601640 objc dateWithTimeIntervalSinceNow:
+0x1af601644 objc_claimAutoreleasedReturnValue
+0x1af601654 objc set
+0x1af601658 objc_claimAutoreleasedReturnValue
+0x1af6016a4 objc_retain
+0x1af6016b0 objc_retain
+0x1af6016c0 objc enumerateKeysAndObjectsUsingBlock:
+0x1af6016c8 objc allObjects
+0x1af6016cc objc_claimAutoreleasedReturnValue
+0x1af6016dc objc removeObjectsForKeys:
+0x1af6016e4 objc_release
+0x1af6016ec objc_retain
+PowerUISmartChargeManager client:setMCLLimit:withHandler: 0x1af6036b0
+0x1af6036dc objc_retain
+0x1af6036e8 objc_retain
+0x1af6036fc os_log_type_enabled
+0x1af603710 objc_retain
+0x1af603720 objc numberWithUnsignedChar:
+0x1af603724 objc_claimAutoreleasedReturnValue
+0x1af603768 _os_log_impl
+0x1af603770 objc_release
+0x1af603778 objc_release
+0x1af603780 objc isMCLSupported
+0x1af603798 objc clearMCLOverride
+0x1af6037a4 objc setMCLLimit:
+0x1af6037b0 objc now
+0x1af6037b4 objc_claimAutoreleasedReturnValue
+0x1af6037cc objc setDate:forPreferenceKey:
+0x1af6037d4 objc_release
+0x1af603800 os_log_type_enabled
+0x1af603814 -[PowerUISmartChargeManager client:setMCLLimit:withHandler:].cold.1
+0x1af603828 os_log_type_enabled
+0x1af60384c objc errorWithDomain:code:userInfo:
+0x1af603850 objc_claimAutoreleasedReturnValue
+0x1af603874 objc_release
+0x1af60387c objc_release
+0x1af603884 objc_release
+0x1af6038ac -[PowerUISmartChargeManager client:setMCLLimit:withHandler:].cold.2
+0x1af6038d8 objc_retain
+0x1af6038e4 objc_retain
+0x1af6038f8 os_log_type_enabled
+0x1af603930 _os_log_impl
+0x1af603938 objc isMCLSupported
+0x1af603948 objc checkWhetherMCLTempDisablementCanBeClearedOnPlugin:
+0x1af603988 objc errorWithDomain:code:userInfo:
+0x1af60398c objc_claimAutoreleasedReturnValue
+PowerUISmartChargeManager setMCLLimit: 0x1af603e8c
+0x1af603ed4 objc numberWithUnsignedChar:
+0x1af603ed8 objc_claimAutoreleasedReturnValue
+0x1af603ef0 objc setNumber:forPreferenceKey:
+0x1af603ef8 objc_release
+0x1af603f08 objc disableMCL
+0x1af603f18 os_log_type_enabled
+0x1af603f48 objc enableMCL
+0x1af603f58 os_log_type_enabled
+0x1af603f90 _os_log_impl
+0x1af603fa4 os_log_type_enabled
+0x1af603fc8 -[PowerUISmartChargeManager setMCLLimit:].cold.1
+0x1af603ff0 objc isMCLSupported
+0x1af604004 objc setCheckpoint:withSelector:
+0x1af604014 objc setTemporarilyDisabled:until:
+0x1af604034 objc setNumber:forPreferenceKey:
+0x1af604040 objc_release
+0x1af604054 objc setDate:forPreferenceKey:
+0x1af604070 objc currentBatteryLevelWithContext:
+0x1af60407c objc numberWithInteger:
+0x1af604080 objc_claimAutoreleasedReturnValue
+0x1af6040a0 objc submitEngagementEventWithBatteryLevel:targetSoC:predictedEndOfCharge:modeOfOperation:eventType:
+0x1af6040a8 objc_release
+0x1af6040b0 objc queue
+0x1af6040b4 objc_claimAutoreleasedReturnValue
+0x1af604108 dispatch_async
+0x1af604110 objc_release
+0x1af604124 os_log_type_enabled
+0x1af604144 -[PowerUISmartChargeManager enableMCL].cold.1
+0x1af604160 objc handleCallback:
+0x1af60416c objc UTF8String
+PowerUISmartChargeClient initWithClientName: 0x1af5cfce8
+0x1af5cfd0c objc_retain
+0x1af5cfd2c objc_msgSendSuper2
+0x1af5cfd40 objc_storeStrong
+0x1af5cfd48 objc_retainAutorelease
+0x1af5cfd4c objc UTF8String
+0x1af5cfd5c os_log_create
+0x1af5cfd6c objc_release
+0x1af5cfd78 objc_alloc
+0x1af5cfd88 objc initWithMachServiceName:options:
+0x1af5cfd98 objc_release
+0x1af5cfda4 objc_opt_class
+0x1af5cfda8 objc remoteInterface
+0x1af5cfdac objc_claimAutoreleasedReturnValue
+0x1af5cfdbc objc setRemoteObjectInterface:
+0x1af5cfdc4 objc_release
+0x1af5cfdcc objc resume
+0x1af5cfdd4 objc_release
+0x1af5cfe1c objc_retain
+0x1af5cfe28 objc_retain
+0x1af5cfe48 objc_msgSendSuper2
+0x1af5cfe5c objc_storeStrong
+0x1af5cfe64 objc_retainAutorelease
+0x1af5cfe68 objc UTF8String
+0x1af5cfe78 os_log_create
+0x1af5cfe88 objc_release
+0x1af5cfe94 objc_alloc
+0x1af5cfe9c objc initWithListenerEndpoint:
+0x1af5cfeac objc_release
+0x1af5cfeb8 objc_opt_class
+0x1af5cfebc objc remoteInterface
+0x1af5cfec0 objc_claimAutoreleasedReturnValue
+0x1af5cfed0 objc setRemoteObjectInterface:
+0x1af5cfed8 objc_release
+0x1af5cfee0 objc resume
+0x1af5cfee8 objc_release
+0x1af5cfef0 objc_release
+0x1af5cff2c objc invalidate
+0x1af5cff48 objc_msgSendSuper2
+0x1af5cff9c objc synchronousRemoteObjectProxyWithErrorHandler:
+0x1af5cffa0 objc_claimAutoreleasedReturnValue
+PowerUISmartChargeManager enableMCL 0x1af603fd0
+0x1af603ff0 objc isMCLSupported
+0x1af604004 objc setCheckpoint:withSelector:
+0x1af604014 objc setTemporarilyDisabled:until:
+0x1af604034 objc setNumber:forPreferenceKey:
+0x1af604040 objc_release
+0x1af604054 objc setDate:forPreferenceKey:
+0x1af604070 objc currentBatteryLevelWithContext:
+0x1af60407c objc numberWithInteger:
+0x1af604080 objc_claimAutoreleasedReturnValue
+0x1af6040a0 objc submitEngagementEventWithBatteryLevel:targetSoC:predictedEndOfCharge:modeOfOperation:eventType:
+0x1af6040a8 objc_release
+0x1af6040b0 objc queue
+0x1af6040b4 objc_claimAutoreleasedReturnValue
+0x1af604108 dispatch_async
+0x1af604110 objc_release
+0x1af604124 os_log_type_enabled
+0x1af604144 -[PowerUISmartChargeManager enableMCL].cold.1
+0x1af604160 objc handleCallback:
+0x1af60416c objc UTF8String
+0x1af6041a4 objc setCheckpoint:withSelector:
+0x1af6041bc objc setModeOfOperation:
+0x1af6041d8 objc setNumber:forPreferenceKey:
+0x1af6041e0 objc clearManualChargeLimit
+0x1af6041ec objc_release
+0x1af604200 objc setDate:forPreferenceKey:
+0x1af60421c objc submitEngagementEventWithBatteryLevel:targetSoC:predictedEndOfCharge:modeOfOperation:eventType:
+0x1af604228 objc UTF8String
+0x1af604268 objc queue
+0x1af60426c objc_claimAutoreleasedReturnValue
+0x1af6042c0 dispatch_sync
+0x1af6042c8 objc_release
+PowerUISmartChargeManager disableMCL 0x1af604188
+0x1af6041a4 objc setCheckpoint:withSelector:
+0x1af6041bc objc setModeOfOperation:
+0x1af6041d8 objc setNumber:forPreferenceKey:
+0x1af6041e0 objc clearManualChargeLimit
+0x1af6041ec objc_release
+0x1af604200 objc setDate:forPreferenceKey:
+0x1af60421c objc submitEngagementEventWithBatteryLevel:targetSoC:predictedEndOfCharge:modeOfOperation:eventType:
+0x1af604228 objc UTF8String
+0x1af604268 objc queue
+0x1af60426c objc_claimAutoreleasedReturnValue
+0x1af6042c0 dispatch_sync
+0x1af6042c8 objc_release
+0x1af604318 objc submitEngagementEventWithBatteryLevel:targetSoC:predictedEndOfCharge:modeOfOperation:eventType:
+0x1af60432c objc isPluggedInWithContext:
+0x1af60433c objc setCheckpoint:withSelector:
+0x1af604360 objc setNumber:forPreferenceKey:
+0x1af604368 objc clearManualChargeLimit
+0x1af604378 objc date
+0x1af60437c objc_claimAutoreleasedReturnValue
+0x1af60438c objc defaultDateToDisableUntilGivenDate:
+0x1af604390 objc_claimAutoreleasedReturnValue
+0x1af6043a4 objc_release
+0x1af6043ac objc_release
+0x1af6043c0 objc setDate:forPreferenceKey:
+0x1af6043d4 os_log_type_enabled
+0x1af604414 _os_log_impl
+0x1af604420 objc UTF8String
+0x1af604424 notify_post
+0x1af60445c objc queue
+0x1af604460 objc_claimAutoreleasedReturnValue
+PowerUISmartChargeManager engageManualChargeLimit 0x1af600a18
+0x1af600a40 _os_feature_enabled_impl
+0x1af600a58 _os_feature_enabled_impl
+0x1af600a6c objc setChargeLimitTo:forLimitType:
+0x1af600a7c os_log_type_enabled
+0x1af600ab8 _os_log_impl
+0x1af600ae4 objc sharedInstance
+0x1af600ae8 objc_claimAutoreleasedReturnValue
+0x1af600af0 objc removeAllNotifications
+0x1af600af8 objc_release
+0x1af600b00 objc sharedInstance
+0x1af600b04 objc_claimAutoreleasedReturnValue
+0x1af600b0c objc resetAll
+0x1af600b64 objc_retain
+0x1af600b70 objc_alloc_init
+0x1af600b80 objc_alloc
+0x1af600b8c objc initFileURLWithPath:
+0x1af600ba0 objc bundleWithURL:
+0x1af600ba4 objc_claimAutoreleasedReturnValue
+0x1af600bc4 objc localizedStringForKey:value:table:
+0x1af600bc8 objc_claimAutoreleasedReturnValue
+0x1af600bd8 objc setTitle:
+0x1af600be0 objc_release
+0x1af600bf0 objc setBody:
+0x1af600bfc objc setShouldIgnoreDoNotDisturb:
+0x1af600c0c objc ttrURLforBatteryLevel:withDate:
+0x1af600c10 objc_claimAutoreleasedReturnValue
+0x1af600c1c objc_release
+0x1af600c28 objc setDefaultActionURL:
+0x1af600c30 objc_release
+0x1af600c4c objc date
+0x1af600c50 objc_claimAutoreleasedReturnValue
+0x1af600c68 objc stringWithFormat:
+0x1af600c6c objc_claimAutoreleasedReturnValue
+0x1af600c84 objc requestWithIdentifier:content:trigger:
+0x1af600c88 objc_claimAutoreleasedReturnValue
+0x1af600c94 objc_release
+0x1af600c9c objc_release
+0x1af600ca4 objc_release
+0x1af600cac objc_release
+0x1af600cb4 objc_release
+0x1af600d14 objc_retain
+PowerUIChargingController setChargeLimitTo:forLimitType: 0x1af5cf678
+0x1af5cf6b4 objc lock
+0x1af5cf6f8 os_log_type_enabled
+0x1af5cf730 _os_log_impl
+0x1af5cf748 objc loadChargeLimitTokenForPreferenceKey:forReason:verbose:
+0x1af5cf764 IOPSLimitBatteryLevel
+0x1af5cf778 os_log_type_enabled
+0x1af5cf7c8 os_log_type_enabled
+0x1af5cf7d4 objc unlock
+0x1af5cf7e8 objc registerNewTokenForPreferenceKey:forReason:
+0x1af5cf7fc IOPSLimitBatteryLevel
+0x1af5cf814 os_log_type_enabled
+0x1af5cf820 objc unlock
+0x1af5cf82c objc clearChargeLimitForLimitType:
+0x1af5cf860 os_log_type_enabled
+0x1af5cf8a4 _os_log_impl
+0x1af5cf8ac objc unlock
+0x1af5cf8bc -[PowerUIChargingController setChargeLimitTo:forLimitType:setNoChargeToFull:].cold.1
+0x1af5cf8cc -[PowerUIChargingController setChargeLimitTo:forLimitType:setNoChargeToFull:].cold.2
+0x1af5cf92c objc_storeStrong
+0x1af5cf938 objc_storeStrong
