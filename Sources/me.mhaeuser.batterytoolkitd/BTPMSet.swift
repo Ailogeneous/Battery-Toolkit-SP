@@ -9,6 +9,8 @@ import os.log
 @MainActor
 internal enum BTPMSet {
     static func set(setting: BTPMSetSetting, value: Int, scope: BTPowerManagementScope) -> Bool {
+        guard setting != .sleep || (0...1440).contains(value) else { return false }
+        guard ![BTPMSetSetting.ttyskeepawake, .tcpkeepalive].contains(setting) || (0...1).contains(value) else { return false }
         guard setting != .displaysleep || (0...180).contains(value) else { return false }
         guard setting != .autorestartatconnect || (0...1).contains(value) else { return false }
         let isUPSSetting = setting == .haltlevel || setting == .haltafter || setting == .haltremain

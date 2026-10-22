@@ -24,6 +24,9 @@ public enum BTPMSetSetting: UInt8 {
     case haltlevel = 15
     case haltafter = 16
     case haltremain = 17
+    case sleep = 18
+    case ttyskeepawake = 19
+    case tcpkeepalive = 20
 
     var cliName: String {
         switch self {
@@ -45,6 +48,9 @@ public enum BTPMSetSetting: UInt8 {
         case .haltlevel: return "haltlevel"
         case .haltafter: return "haltafter"
         case .haltremain: return "haltremain"
+        case .sleep: return "sleep"
+        case .ttyskeepawake: return "ttyskeepawake"
+        case .tcpkeepalive: return "tcpkeepalive"
         }
     }
 }
