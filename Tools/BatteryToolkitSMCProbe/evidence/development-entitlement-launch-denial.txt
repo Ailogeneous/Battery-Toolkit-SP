@@ -1,0 +1,19 @@
+Timestamp               Ty Process[PID:TID]
+2026-10-21 17:18:23.095 I  amfid[589:5da36] Entering OSX path for /private/tmp/tethered-chls-entitled-probe
+2026-10-21 17:18:23.214 E  amfid[589:5da36] [com.apple.MobileFileIntegrity.framework:default] Failure validating against provisioning profiles: Error Domain=AppleMobileFileIntegrityError Code=-413 "No matching profile found" UserInfo={NSURL=file:///private/tmp/tethered-chls-entitled-probe, unsatisfiedEntitlements=<CFArray 0x7c19027ac0 [0x1f54c2f70]>{type = immutable, count = 1, values = (
+	0 : <CFString 0x7c18c34c00 [0x1f54c2f70]>{contents = "com.apple.private.applesmc.user-access"}
+)}, NSLocalizedDescription=No matching profile found}
+2026-10-21 17:18:23.214 E  amfid[589:5da36] [com.apple.MobileFileIntegrity.framework:default] Restricted entitlements not validated, bailing out. Error: Error Domain=AppleMobileFileIntegrityError Code=-413 "No matching profile found" UserInfo={NSURL=file:///private/tmp/tethered-chls-entitled-probe, unsatisfiedEntitlements=<CFArray 0x7c19027ac0 [0x1f54c2f70]>{type = immutable, count = 1, values = (
+	0 : <CFString 0x7c18c34c00 [0x1f54c2f70]>{contents = "com.apple.private.applesmc.user-access"}
+)}, NSLocalizedDescription=No matching profile found}
+2026-10-21 17:18:23.214 Df amfid[589:5da36] /private/tmp/tethered-chls-entitled-probe not valid: Error Domain=AppleMobileFileIntegrityError Code=-413 "No matching profile found" UserInfo={NSURL=file:///private/tmp/tethered-chls-entitled-probe, unsatisfiedEntitlements=<CFArray 0x7c19027ac0 [0x1f54c2f70]>{type = immutable, count = 1, values = (
+	0 : <CFString 0x7c18c34c00 [0x1f54c2f70]>{contents = "com.apple.private.applesmc.user-access"}
+)}, NSLocalizedDescription=No matching profile found}
+2026-10-21 17:18:23.214 Df kernel[0:604c2] (AppleMobileFileIntegrity) AMFI: When validating /private/tmp/tethered-chls-entitled-probe:
+  Code has restricted entitlements, but the validation of its code signature failed.
+Unsatisfied Entitlements: com.apple.private.applesmc.user-access
+2026-10-21 17:18:23.214 Df kernel[0:604c2] mac_vnode_check_signature: /private/tmp/tethered-chls-entitled-probe: code signature validation failed fatally: When validating /private/tmp/tethered-chls-entitled-probe:
+  Code has restricted entitlements, but the validation of its code signature failed.
+Unsatisfied Entitlements: com.apple.private.applesmc.user-access
+2026-10-21 17:18:23.214 Df kernel[0:604c2] proc 54763: load code signature error 4 for file "tethered-chls-entitled-probe"
+2026-10-21 17:18:23.215 Df kernel[0:604d5] (AppleSystemPolicy) ASP: Security policy would not allow process: 54763, /private/tmp/tethered-chls-entitled-probe
