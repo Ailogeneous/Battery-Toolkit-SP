@@ -1,0 +1,33 @@
+BASELINE
+["max": 6800, "target": 0, "id": 0, "current": 0, "min": 2317, "mode": 3]
+["min": 2317, "target": 0, "max": 6800, "current": 0, "id": 1, "mode": 3]
+LEASE result= 0
+OBSERVE 2026-10-22 01:58:13 +0000
+["id": 0, "target": 5231, "mode": 1, "current": 5231.6455078125, "min": 2317, "max": 6800]
+["id": 1, "target": 5231, "mode": 1, "max": 6800, "min": 2317, "current": 5232.330078125]
+OBSERVE 2026-10-22 01:58:18 +0000
+["id": 0, "target": 5231, "mode": 1, "current": 5232.40625, "min": 2317, "max": 6800]
+["id": 1, "target": 5231, "mode": 1, "max": 6800, "min": 2317, "current": 5231.7978515625]
+OBSERVE 2026-10-22 01:58:23 +0000
+["id": 0, "target": 5231, "mode": 1, "current": 5231.7978515625, "min": 2317, "max": 6800]
+["id": 1, "target": 5231, "mode": 1, "max": 6800, "min": 2317, "current": 5270.01513671875]
+OBSERVE 2026-10-22 01:58:28 +0000
+["id": 0, "target": 5231, "mode": 1, "current": 5287.4306640625, "min": 2317, "max": 6800]
+["id": 1, "target": 5231, "mode": 1, "max": 6800, "min": 2317, "current": 5327.80859375]
+OBSERVE 2026-10-22 01:58:34 +0000
+["id": 0, "target": 5231, "mode": 1, "current": 5269.70654296875, "min": 2317, "max": 6800]
+["id": 1, "target": 5231, "mode": 1, "max": 6800, "min": 2317, "current": 5213.009765625]
+OBSERVE 2026-10-22 01:58:39 +0000
+["id": 0, "target": 5231, "mode": 0, "current": 5231.34130859375, "min": 2317, "max": 6800]
+["id": 1, "target": 5231, "mode": 0, "max": 6800, "min": 2317, "current": 5213.83984375]
+OBSERVE 2026-10-22 01:58:44 +0000
+["id": 0, "target": 0, "mode": 3, "current": 0, "min": 2317, "max": 6800]
+["id": 1, "target": 0, "mode": 3, "max": 6800, "min": 2317, "current": 0]
+OBSERVE 2026-10-22 01:58:49 +0000
+["id": 0, "target": 0, "mode": 3, "current": 0, "min": 2317, "max": 6800]
+["id": 1, "target": 0, "mode": 3, "max": 6800, "min": 2317, "current": 0]
+FINAL RESET 9
+EXACT ORIGINAL RESTORE true
+RESTORED
+["id": 0, "target": 0, "mode": 3, "current": 0, "min": 2317, "max": 6800]
+["id": 1, "target": 0, "mode": 3, "max": 6800, "min": 2317, "current": 0]
