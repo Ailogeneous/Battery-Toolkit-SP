@@ -22,6 +22,11 @@ public extension SMCComm {
         private static var adapterKey = 0
 
         static func supported() -> Bool {
+            if BTNativeCharging27.active {
+                guard let index = adapterKeys.firstIndex(where: { SMCComm.keySupported(keyInfo: $0.keyInfo) }), BTNativeCharging27.start() else { return false }
+                adapterKey = index
+                return true
+            }
             //
             // Ensure all required SMC keys are present and well-formed.
             //
@@ -50,6 +55,10 @@ public extension SMCComm {
         }
 
         static func enableCharging() -> Bool {
+            if BTNativeCharging27.active {
+                let limit = BTPowerEvents.chargingMode == .toFull ? 100 : Int(BTSettings.maxCharge)
+                return BTNativeCharging27.request(limit: limit, suppressCalibration: BTSettings.maxCharge < 80 && BTPowerEvents.chargingMode != .toFull)
+            }
             return SMCComm.writeKey(
                 key: self.chargeKeys[self.chargeKey].keyInfo.key,
                 bytes: self.chargeKeys[self.chargeKey].onBytes
@@ -57,6 +66,9 @@ public extension SMCComm {
         }
 
         static func disableCharging() -> Bool {
+            if BTNativeCharging27.active {
+                return BTNativeCharging27.request(limit: Int(BTSettings.minCharge), suppressCalibration: BTSettings.maxCharge < 80)
+            }
             return SMCComm.writeKey(
                 key: self.chargeKeys[self.chargeKey].keyInfo.key,
                 bytes: self.chargeKeys[self.chargeKey].offBytes
@@ -64,6 +76,7 @@ public extension SMCComm {
         }
 
         static func isChargingDisabled() -> Bool {
+            if BTNativeCharging27.active { return BTPowerState.isChargingDisabled() }
             let value = SMCComm.readKey(
                 key: self.chargeKeys[self.chargeKey].keyInfo.key,
                 dataSize: self.chargeKeys[self.chargeKey].onBytes.count

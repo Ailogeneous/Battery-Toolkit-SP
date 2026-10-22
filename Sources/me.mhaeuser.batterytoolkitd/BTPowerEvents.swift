@@ -66,6 +66,7 @@ internal enum BTPowerEvents {
             throw BTError.unknown
         }
 
+        if BTNativeCharging27.active { _ = SMCComm.Power.enableCharging() }
         self.registerDisplayReconfigurationHandler()
         self.startLidStateWatchdog()
     }
@@ -76,6 +77,7 @@ internal enum BTPowerEvents {
         // power state.
         //
         if !self.updating {
+            if BTNativeCharging27.active { _ = BTNativeCharging27.restore() }
             self.restoreDefaults()
         }
 
@@ -128,6 +130,10 @@ internal enum BTPowerEvents {
     }
 
     static func settingsChanged() {
+        if BTNativeCharging27.active {
+            if BTPowerState.isChargingDisabled() { _ = SMCComm.Power.disableCharging() }
+            else { _ = SMCComm.Power.enableCharging() }
+        }
         guard self.percentCreated else {
             return
         }
@@ -364,6 +370,11 @@ internal enum BTPowerEvents {
         // Do not reset to defaults when debugging to not stress the batteries
         // of development machines.
         //
+        if BTNativeCharging27.active {
+            _ = BTPowerState.enablePowerAdapter()
+            if BTSettings.magSafeSync { _ = SMCComm.MagSafe.setSystem() }
+            return
+        }
         #if !DEBUG
             let (percent, _, _) = BTPowerState.getPercentRemaining()
             _ = BTPowerState.enableCharging(percent: percent)

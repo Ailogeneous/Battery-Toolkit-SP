@@ -132,7 +132,7 @@ internal enum BTPowerState {
     }
 
     static func disableCharging(percent: UInt8) -> Bool {
-        guard !self.chargingDisabled else {
+        guard !self.chargingDisabled || BTNativeCharging27.active else {
             return true
         }
 
@@ -154,7 +154,7 @@ internal enum BTPowerState {
     }
 
     static func enableCharging(percent: UInt8) -> Bool {
-        guard self.chargingDisabled else {
+        guard self.chargingDisabled || BTNativeCharging27.active else {
             return true
         }
 
