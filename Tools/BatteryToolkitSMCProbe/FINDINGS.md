@@ -192,3 +192,12 @@ Compiled the actual BTPowerMode.swift and BTPowerModeTypes.swift into a standalo
 The existing checkAndSetHighPowerMode() routine returned false on this target, consistent with capability output lacking highpowermode/powermode. After its bounded probe and restoration both settings remained0. Evidence: evidence/power-mode-high-check-macos27.txt. This is a target-hardware result, not a statement that High Power is unavailable on every macOS27 Mac.
 
 Source tracing confirms existing BTActions.setPowerMode/setPowerModes reach BTDaemonComm authorization/support checks then this same implementation. The host app's applyPowerModeTargets also gates local licensing, and systemPowerModeTargets applies the desired mode to the currently active power source while setting the inactive source to Automatic. The direct test isolates Toolkit/OS functionality; menu shortcuts, automatic rules, licensing and actual rebuilt helper XPC behavior are not thereby runtime-verified. Current source required no power-mode implementation change. Unrelated dirty Tethered work was preserved.
+
+
+## Display brightness verified on macOS 27
+
+Traced Tethered/MainApp/Extensions/Brightness.swift: readCurrentDisplayBrightness and setDisplayBrightness call DisplayServicesGetBrightness/SetBrightness directly on CGMainDisplayID, with0..1 normalization. This is app-side display control and does not pass through the unsupported privileged-helper gate found for menu power modes.
+
+A standalone probe used those same DisplayServices symbols and main-display selection on the running system. Built-in displayID1 original brightness1.0. Requested0.9375, returned0, observed0.93750006 after2seconds. Requested1.0, returned0, observed1.0. Restoration returned0 and independently read1.0. All checks passed with0.01 tolerance. No administrator authentication was required. No brightness source changes were needed. Evidence: evidence/brightness-macos27.txt; reusable probe brightness-probe.swift.
+
+This verifies the display API and reported brightness changes/restoration on the built-in main display. Physical luminance was not measured independently, and it does not verify automation rules, Low Power entry/exit brightness restoration, external-display support, or menu events. Those integration paths remain separate rebuilt-app tests.

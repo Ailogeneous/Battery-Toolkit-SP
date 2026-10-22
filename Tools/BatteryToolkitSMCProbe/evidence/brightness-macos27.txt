@@ -1,0 +1,4 @@
+display=1 builtIn=1 baseline_result=0 original=1.0
+target=0.9375 set_result=0 read_result=0 observed=0.93750006 verified=true
+target=1.0 set_result=0 read_result=0 observed=1.0 verified=true
+RESTORE set_result=0 read_result=0 observed=1.0 verified=true
