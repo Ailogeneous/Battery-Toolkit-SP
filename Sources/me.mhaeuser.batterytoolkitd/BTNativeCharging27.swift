@@ -241,12 +241,31 @@ internal enum BTNativeCharging27 {
         guard IORegistryEntryCreateCFProperties(service, &values, kCFAllocatorDefault, 0) == KERN_SUCCESS, let properties = values?.takeRetainedValue() as? [String: Any] else { return [:] }
         var result: [String: Any] = [:]
         for key in ["ExternalConnected", "IsCharging", "CurrentCapacity", "Amperage", "InstantAmperage", "Voltage", "BatteryData"] {
-            if let value = properties[key], key != "BatteryData" { result[key] = value }
+            if let value = properties[key], key != "BatteryData" {
+                if ["Amperage", "InstantAmperage"].contains(key), let number = value as? NSNumber { result[key] = number.int64Value }
+                else { result[key] = value }
+            }
         }
         if let state = SMCComm.readKey(key: SMCComm.Key("C", "H", "L", "T"), dataSize: 3) { result["CHLT"] = state.map { String(format: "%02x", $0) }.joined() }
         if let requested { result["requestedLimit"] = requested }
         result["noChargeToFull"] = suppress
         return result
+    }
+
+    static func diagnostics() -> [String: NSObject & Sendable] {
+        var values: [String: NSObject & Sendable] = [
+            "smcSupported": NSNumber(value: timer != nil),
+            "nativeCharging27": NSNumber(value: true),
+            "nativePolicySubmitted": NSNumber(value: submissionSucceeded),
+            "nativeNoChargeToFull": NSNumber(value: suppress),
+            "nativeRetryCount": NSNumber(value: attempts),
+            "nativeJournalPath": journalURL.path as NSString
+        ]
+        if let requested { values["nativeRequestedLimit"] = NSNumber(value: requested) }
+        if let state = SMCComm.readKey(key: SMCComm.Key("C", "H", "L", "T"), dataSize: 3) {
+            values["nativeSMCState"] = state.map { String(format: "%02x", $0) }.joined() as NSString
+        }
+        return values
     }
 
     private static func startSystemLog() {

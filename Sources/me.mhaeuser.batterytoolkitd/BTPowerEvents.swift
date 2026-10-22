@@ -66,7 +66,10 @@ internal enum BTPowerEvents {
             throw BTError.unknown
         }
 
-        if BTNativeCharging27.active { _ = SMCComm.Power.enableCharging() }
+        if BTNativeCharging27.active {
+            if BTPowerState.isChargingDisabled() { _ = SMCComm.Power.disableCharging() }
+            else { _ = SMCComm.Power.enableCharging() }
+        }
         self.registerDisplayReconfigurationHandler()
         self.startLidStateWatchdog()
     }

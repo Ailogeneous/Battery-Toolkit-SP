@@ -115,6 +115,7 @@ public extension SMCComm {
         }
 
         static func diagnostics() -> [String: NSObject & Sendable] {
+            if BTNativeCharging27.active { return BTNativeCharging27.diagnostics() }
             let isSupported = self.supported()
             guard isSupported else {
                 return ["smcSupported": NSNumber(value: false)]
