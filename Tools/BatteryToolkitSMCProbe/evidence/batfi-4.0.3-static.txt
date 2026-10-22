@@ -1,0 +1,272 @@
+BatFi stable 4.0.3 static inspection only; no BatFi executable launched.
+Source: https://files.micropixels.software/batfi/BatFi-latest.zip
+Helper SHA256: 475cc6c6adc45cbb27b5cca5b101ccc12b44cff9bddbe18fddaadbce1f2af19b
+
+Preference writer and initialization disassembly:
+10000ec88:	ff 03 02 91	add	sp, sp, #0x80
+10000ec8c:	ce fa ff 17	b	0x10000d7c4
+10000ec90:	f8 5f bc a9	stp	x24, x23, [sp, #-0x40]!
+10000ec94:	f6 57 01 a9	stp	x22, x21, [sp, #0x10]
+10000ec98:	f4 4f 02 a9	stp	x20, x19, [sp, #0x20]
+10000ec9c:	fd 7b 03 a9	stp	x29, x30, [sp, #0x30]
+10000eca0:	fd c3 00 91	add	x29, sp, #0x30
+10000eca4:	28 0e 00 d0	adrp	x8, 454 ; 0x1001d4000
+10000eca8:	08 59 41 f9	ldr	x8, [x8, #0x2b0]
+10000ecac:	93 6a 68 f8	ldr	x19, [x20, x8]
+10000ecb0:	59 92 04 94	bl	0x100133614 ; symbol stub for: _$sSi10FoundationE19_bridgeToObjectiveCSo8NSNumberCyF
+10000ecb4:	f5 03 00 aa	mov	x21, x0
+10000ecb8:	28 0e 00 d0	adrp	x8, 454 ; 0x1001d4000
+10000ecbc:	08 55 41 f9	ldr	x8, [x8, #0x2a8]
+10000ecc0:	96 6a 68 f8	ldr	x22, [x20, x8]
+10000ecc4:	28 0e 00 d0	adrp	x8, 454 ; 0x1001d4000
+10000ecc8:	08 65 41 f9	ldr	x8, [x8, #0x2c8]
+10000eccc:	97 6a 68 f8	ldr	x23, [x20, x8]
+10000ecd0:	28 0e 00 d0	adrp	x8, 454 ; 0x1001d4000
+10000ecd4:	08 69 41 f9	ldr	x8, [x8, #0x2d0]
+10000ecd8:	98 6a 68 f8	ldr	x24, [x20, x8]
+10000ecdc:	e0 03 13 aa	mov	x0, x19
+10000ece0:	e1 03 15 aa	mov	x1, x21
+10000ece4:	e2 03 16 aa	mov	x2, x22
+10000ece8:	e3 03 17 aa	mov	x3, x23
+10000ecec:	e4 03 18 aa	mov	x4, x24
+10000ecf0:	4d 94 04 94	bl	0x100133e24 ; symbol stub for: _CFPreferencesSetValue
+10000ecf4:	e0 03 15 aa	mov	x0, x21
+10000ecf8:	70 96 04 94	bl	0x1001346b8 ; symbol stub for: _objc_release
+10000ecfc:	28 0e 00 d0	adrp	x8, 454 ; 0x1001d4000
+10000ed00:	08 5d 41 f9	ldr	x8, [x8, #0x2b8]
+10000ed04:	93 6a 68 f8	ldr	x19, [x20, x8]
+10000ed08:	20 00 80 52	mov	w0, #0x1
+10000ed0c:	42 92 04 94	bl	0x100133614 ; symbol stub for: _$sSi10FoundationE19_bridgeToObjectiveCSo8NSNumberCyF
+10000ed10:	f5 03 00 aa	mov	x21, x0
+10000ed14:	e0 03 13 aa	mov	x0, x19
+10000ed18:	e1 03 15 aa	mov	x1, x21
+10000ed1c:	e2 03 16 aa	mov	x2, x22
+10000ed20:	e3 03 17 aa	mov	x3, x23
+10000ed24:	e4 03 18 aa	mov	x4, x24
+10000ed28:	3f 94 04 94	bl	0x100133e24 ; symbol stub for: _CFPreferencesSetValue
+10000ed2c:	e0 03 15 aa	mov	x0, x21
+10000ed30:	62 96 04 94	bl	0x1001346b8 ; symbol stub for: _objc_release
+10000ed34:	e0 03 16 aa	mov	x0, x22
+10000ed38:	e1 03 17 aa	mov	x1, x23
+10000ed3c:	e2 03 18 aa	mov	x2, x24
+10000ed40:	3c 94 04 94	bl	0x100133e30 ; symbol stub for: _CFPreferencesSynchronize
+10000ed44:	29 94 04 94	bl	0x100133de8 ; symbol stub for: _CFNotificationCenterGetDarwinNotifyCenter
+10000ed48:	fd 03 1d aa	mov	x29, x29
+10000ed4c:	67 96 04 94	bl	0x1001346e8 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+10000ed50:	f3 03 00 aa	mov	x19, x0
+10000ed54:	28 0e 00 d0	adrp	x8, 454 ; 0x1001d4000
+10000ed58:	08 61 41 f9	ldr	x8, [x8, #0x2c0]
+10000ed5c:	88 02 08 8b	add	x8, x20, x8
+10000ed60:	00 05 40 a9	ldp	x0, x1, [x8]
+10000ed64:	06 91 04 94	bl	0x10013317c ; symbol stub for: _$sSS10FoundationE19_bridgeToObjectiveCSo8NSStringCyF
+10000ed68:	f4 03 00 aa	mov	x20, x0
+10000ed6c:	e0 03 13 aa	mov	x0, x19
+10000ed70:	e1 03 14 aa	mov	x1, x20
+10000ed74:	02 00 80 d2	mov	x2, #0x0
+10000ed78:	03 00 80 d2	mov	x3, #0x0
+10000ed7c:	24 00 80 52	mov	w4, #0x1
+10000ed80:	1d 94 04 94	bl	0x100133df4 ; symbol stub for: _CFNotificationCenterPostNotification
+10000ed84:	e0 03 13 aa	mov	x0, x19
+10000ed88:	4c 96 04 94	bl	0x1001346b8 ; symbol stub for: _objc_release
+10000ed8c:	e0 03 14 aa	mov	x0, x20
+10000ed90:	fd 7b 43 a9	ldp	x29, x30, [sp, #0x30]
+10000ed94:	f4 4f 42 a9	ldp	x20, x19, [sp, #0x20]
+10000ed98:	f6 57 41 a9	ldp	x22, x21, [sp, #0x10]
+10000ed9c:	f8 5f c4 a8	ldp	x24, x23, [sp], #0x40
+10000eda0:	46 96 04 14	b	0x1001346b8 ; symbol stub for: _objc_release
+10000eda4:	bd 03 44 b2	orr	x29, x29, #0x1000000000000000
+10000eda8:	f3 0f 1e f8	str	x19, [sp, #-0x20]!
+10000edac:	fd 7b 01 a9	stp	x29, x30, [sp, #0x10]
+10000edb0:	f6 07 00 f9	str	x22, [sp, #0x8]
+10000edb4:	fd 43 00 91	add	x29, sp, #0x10
+10000edb8:	c3 52 07 a9	stp	x3, x20, [x22, #0x70]
+10000edbc:	c1 0a 06 a9	stp	x1, x2, [x22, #0x60]
+10000edc0:	c0 2e 00 f9	str	x0, [x22, #0x58]
+10000edc4:	00 00 80 d2	mov	x0, #0x0
+10000fc50:	0a 81 00 d1	sub	x10, x8, #0x20
+10000fc54:	28 0b 00 90	adrp	x8, 356 ; 0x100173000
+10000fc58:	08 81 22 91	add	x8, x8, #0x8a0 ; literal pool for: "ManualChargeLimit"
+10000fc5c:	0b 81 00 d1	sub	x11, x8, #0x20
+10000fc60:	35 02 80 d2	mov	x21, #0x11
+10000fc64:	15 00 fa f2	movk	x21, #0xd000, lsl #48
+10000fc68:	88 02 09 8b	add	x8, x20, x9
+10000fc6c:	a0 26 00 91	add	x0, x21, #0x9
+10000fc70:	41 01 41 b2	orr	x1, x10, #0x8000000000000000
+10000fc74:	63 01 41 b2	orr	x3, x11, #0x8000000000000000
+10000fc78:	22 02 80 d2	mov	x2, #0x11
+10000fc7c:	02 00 fa f2	movk	x2, #0xd000, lsl #48
+10000fc80:	4c 8c 04 94	bl	0x100132db0 ; symbol stub for: _$s2os6LoggerV9subsystem8categoryACSS_SStcfC
+10000fc84:	28 0e 00 b0	adrp	x8, 453 ; 0x1001d4000
+10000fc88:	13 55 41 f9	ldr	x19, [x8, #0x2a8]
+10000fc8c:	28 0b 00 90	adrp	x8, 356 ; 0x100173000
+10000fc90:	08 01 23 91	add	x8, x8, #0x8c0 ; literal pool for: "com.apple.smartcharging.topoffprotection"
+10000fc94:	08 81 00 d1	sub	x8, x8, #0x20
+10000fc98:	a0 5e 00 91	add	x0, x21, #0x17
+10000fc9c:	01 01 41 b2	orr	x1, x8, #0x8000000000000000
+10000fca0:	37 8d 04 94	bl	0x10013317c ; symbol stub for: _$sSS10FoundationE19_bridgeToObjectiveCSo8NSStringCyF
+10000fca4:	80 6a 33 f8	str	x0, [x20, x19]
+10000fca8:	28 0e 00 b0	adrp	x8, 453 ; 0x1001d4000
+10000fcac:	13 59 41 f9	ldr	x19, [x8, #0x2b0]
+10000fcb0:	a0 6d 8c d2	mov	x0, #0x636d
+10000fcb4:	80 8d a9 f2	movk	x0, #0x4c6c, lsl #16
+10000fcb8:	20 ad cd f2	movk	x0, #0x6d69, lsl #32
+10000fcbc:	20 8d ee f2	movk	x0, #0x7469, lsl #48
+10000fcc0:	c1 2a 8c d2	mov	x1, #0x6156
+10000fcc4:	81 ad ae f2	movk	x1, #0x756c, lsl #16
+10000fcc8:	a1 0c c0 f2	movk	x1, #0x65, lsl #32
+10000fccc:	01 a0 fd f2	movk	x1, #0xed00, lsl #48
+10000fcd0:	2b 8d 04 94	bl	0x10013317c ; symbol stub for: _$sSS10FoundationE19_bridgeToObjectiveCSo8NSStringCyF
+10000fcd4:	80 6a 33 f8	str	x0, [x20, x19]
+10000fcd8:	28 0e 00 b0	adrp	x8, 453 ; 0x1001d4000
+10000fcdc:	13 5d 41 f9	ldr	x19, [x8, #0x2b8]
+10000fce0:	a0 69 88 d2	mov	x0, #0x434d
+10000fce4:	80 c9 a8 f2	movk	x0, #0x464c, lsl #16
+10000fce8:	a0 2c cc f2	movk	x0, #0x6165, lsl #32
+10000fcec:	80 ae ee f2	movk	x0, #0x7574, lsl #48
+10000fcf0:	41 ae 8c d2	mov	x1, #0x6572
+10000fcf4:	61 8a ae f2	movk	x1, #0x7453, lsl #16
+10000fcf8:	21 8c ce f2	movk	x1, #0x7461, lsl #32
+10000fcfc:	a1 ec fd f2	movk	x1, #0xef65, lsl #48
+10000fd00:	1f 8d 04 94	bl	0x10013317c ; symbol stub for: _$sSS10FoundationE19_bridgeToObjectiveCSo8NSStringCyF
+10000fd04:	80 6a 33 f8	str	x0, [x20, x19]
+10000fd08:	28 0e 00 b0	adrp	x8, 453 ; 0x1001d4000
+10000fd0c:	08 61 41 f9	ldr	x8, [x8, #0x2c0]
+10000fd10:	88 02 08 8b	add	x8, x20, x8
+10000fd14:	29 0b 00 90	adrp	x9, 356 ; 0x100173000
+10000fd18:	29 c1 23 91	add	x9, x9, #0x8f0 ; literal pool for: "com.apple.smartcharging.defaultschanged"
+10000fd1c:	29 81 00 d1	sub	x9, x9, #0x20
+10000fd20:	29 01 41 b2	orr	x9, x9, #0x8000000000000000
+10000fd24:	aa 5a 00 91	add	x10, x21, #0x16
+10000fd28:	0a 25 00 a9	stp	x10, x9, [x8]
+10000fd2c:	28 0e 00 b0	adrp	x8, 453 ; 0x1001d4000
+10000fd30:	08 65 41 f9	ldr	x8, [x8, #0x2c8]
+10000fd34:	29 0d 00 f0	adrp	x9, 423 ; 0x1001b6000
+10000fd38:	29 39 42 f9	ldr	x9, [x9, #0x470] ; literal pool symbol address: _kCFPreferencesCurrentUser
+10000fd3c:	20 01 40 f9	ldr	x0, [x9]
+10000fd40:	80 6a 28 f8	str	x0, [x20, x8]
+10000fd44:	28 0e 00 b0	adrp	x8, 453 ; 0x1001d4000
+10000fd48:	08 69 41 f9	ldr	x8, [x8, #0x2d0]
+10000fd4c:	29 0d 00 f0	adrp	x9, 423 ; 0x1001b6000
+10000fd50:	29 35 42 f9	ldr	x9, [x9, #0x468] ; literal pool symbol address: _kCFPreferencesCurrentHost
+10000fd54:	33 01 40 f9	ldr	x19, [x9]
+10000fd58:	93 6a 28 f8	str	x19, [x20, x8]
+10000fd5c:	28 0e 00 b0	adrp	x8, 453 ; 0x1001d4000
+10000fd60:	08 6d 41 f9	ldr	x8, [x8, #0x2d8]
+10000fd64:	88 02 08 8b	add	x8, x20, x8
+10000fd68:	29 0b 00 90	adrp	x9, 356 ; 0x100173000
+10000fd6c:	29 81 24 91	add	x9, x9, #0x920 ; literal pool for: "/Library/Preferences/com.apple.powerd.charging.plist"
+10000fd70:	29 81 00 d1	sub	x9, x9, #0x20
+10000fd74:	29 01 41 b2	orr	x9, x9, #0x8000000000000000
+10000fd78:	aa 8e 00 91	add	x10, x21, #0x23
+10000fd7c:	0a 25 00 a9	stp	x10, x9, [x8]
+10000fd80:	28 0e 00 b0	adrp	x8, 453 ; 0x1001d4000
+10000fd84:	08 71 41 f9	ldr	x8, [x8, #0x2e0]
+10000fd88:	88 02 08 8b	add	x8, x20, x8
+10000fd8c:	1f 01 00 f9	str	xzr, [x8]
+10000fd90:	29 00 80 52	mov	w9, #0x1
+10000fd94:	09 21 00 39	strb	w9, [x8, #0x8]
+10000fd98:	28 0e 00 b0	adrp	x8, 453 ; 0x1001d4000
+10000fd9c:	08 75 41 f9	ldr	x8, [x8, #0x2e8]
+10000fda0:	9f 6a 28 f8	str	xzr, [x20, x8]
+
+Relevant helper strings (not execution evidence):
+Error changing charging mode %{public}s: %{public}@
+Accepted a connection from pid %{public}d
+Charge limit request cleared
+Charge limit request for %{public}ld%% went missing while waiting (domain holds %{public}s); writing it again
+Charge limit %{public}ld%% restored after the nudge
+Charge-resume nudge to %{public}ld%% did not confirm: %{public}@
+Nudging the charge limit to %{public}ld%% to re-open the charge session, then restoring %{public}ld%%
+A charge-resume nudge is already in flight; not starting another
+Charge limit %{public}ld%% written; on battery, so powerd will adopt it when the adapter is connected
+Charge limit %{public}ld%% was written but powerd did not adopt it within %{public}llds
+Charge limit %{public}ld%% was superseded by a newer request; abandoning it rather than writing it again
+Charge limit %{public}ld%% adopted by powerd
+Applying charge limit %{public}ld%%; powerd currently holds %{public}s
+Charge limit %{public}ld%% is written and the Mac is on battery; leaving it for the adapter's return
+Charge limit %{public}ld%% is already being waited on; joining that request
+Charge limit %{public}ld%% is already the policy powerd holds; nothing to write
+MCL override renewal failed: %{public}@
+temporarilyOverrideMCLTargetSoC returned false without error
+PowerUI MCL target overridden to %{public}hhu%%
+temporarilyOverrideMCLTargetSoC returned error: %{public}@
+setMCLLimit returned false without error
+System charge limit set to %{public}ld%%
+setMCLLimit returned error: %{public}@
+Could not read the user's system charge limit; not recording one
+BatFi will not record %{public}ld%% as the user's own system charge limit: System Settings cannot express a value below %{public}ld%%, so this is BatFi's own charge-limit request reading back rather than the user's setting. Recording it would lose the user's real value and leave a restore that can never succeed.
+Captured user's system charge limit: %{public}ld%%
+BatFi will not record this Mac's system charge limit as the user's own value. Under the %{public}s backend BatFi writes an MCL override of its own, and this build of PowerUI exposes no way to clear one 
+ so an override, from this process or from an earlier BatFi that died holding one, may still be standing in front of the read, and a limit read now could be that write rather than the user's setting. Writing it back later would overwrite a value the user cannot get back, so the limit is left alone.
+Discarding an unrestorable system charge limit snapshot of %{public}ld%%; it is below what setMCLLimit: accepts and cannot have been the user's value
+Could not restore the user's system charge limit; will retry on next release: %{public}@
+Restored user's system charge limit to %{public}ld%%
+clearMCLOverride selector not exposed on client; relying on natural expiry
+PowerUI MCL override cleared
+enableMCL: selector not exposed on client
+enableMCL: failed: %{public}s
+Apple's charge limit switched on
+No force discharge mechanism on this firmware; nothing to release
+No usable force discharge mechanism on this firmware
+Force discharge changed using CH0I/CH0J
+Force discharge changed using CHIE
+Turn off force discharge
+Force discharge
+Firmware charge range released
+Failed to release a stranded firmware charge range: %@
+Backend no longer resolves to the firmware charge range; releasing the band BatFi armed
+Firmware charge range set to %{public}ld-%{public}ld%%
+No usable charge control mechanism on this firmware
+Charging mode is governed by the system charge limit; no SMC write needed
+Inhibit charging changed using CH0B/CH0C
+Inhibit charging changed using CHTE
+Charging mode is governed by the firmware charge range; it cannot pause charging below the limit
+Charging mode is governed by the firmware charge range; the band stays in force
+Inhibit charging
+Enabling charging
+No charge control mechanism on this firmware; BatFi holds no inhibit
+System charge limit backend: BatFi holds no inhibit, charging is enabled
+CH0B: charging enabled = %{bool}d
+CHTE: charging enabled = %{bool}d
+Firmware charge range: BatFi holds no inhibit, charging is enabled
+Checking if charging is enabled
+SMC successfully opened!
+Attempting to open SMC...
+SMC opening error: %@
+Failed to open SMC after %ld attempts. Giving up...
+Failed to open SMC, retrying... (%ld/%ld)
+Opening SMC...
+Getting power distribution
+Getting MagSafe LED color
+Setting MagSafe LED color
+Failed to read the lid state; reporting it as unknown
+Getting lid closed status
+Getting charging enabled status
+Failed to read disable charging status
+Getting disable charging status
+Checking SMC status
+SMC is not open; reporting the probed capabilities as unknown
+Failed to read the firmware charge range activation key
+SMC writing error while re-enabling charging: %@
+SMC writing error while releasing the firmware charge range: %@
+SMC writing error while releasing force discharge: %@
+Restoring SMC defaults (auto charge, force discharge off)
+Could not put %{public}ld%% in force; leaving the limit alone rather than raising it, and retrying on the next pass
+Charge limit %{public}ld%% via defaults failed: %{public}@; falling back to the values PowerUI accepts
+Charge limit %{public}ld%% was superseded while being applied; powerd holds %{public}s
+System limit refused %{public}ld%%; applied it through the charge-limit defaults instead
+Charge limit no longer holds %{public}ld%%; re-applying
+Charge limit %{public}ld%% still holds; no write this pass
+System charge limit %{public}ld%% was adopted and is at or above the floor; no write this pass
+Firmware charge range for %{public}ld%% is already armed; no write this pass
+Charge-resume nudge asked for on a backend that cannot be in that state; ignoring
+Reasserting charge limit %{public}ld%%; discarding what this process recorded as applied
+PowerUI MCL override failed: %{public}@
+SMC writing error: %@
+No usable charge control mechanism on this firmware; charging mode not changed
+Setting SMC charging status
+Handling inhibit charging
+Handling enable charge
+Handling force discharge
+SMC is not open; refusing to cache a backend resolution
+Charge backend resolved to %{public}s on firmware %{public}s; usable keys: %{public}s
