@@ -159,7 +159,7 @@ internal enum BTNativeCharging27 {
             let current = preferences()
             let sameBoot = (current["bootSessionUUID"] as? String) == boot
             var entries = sameBoot ? try policies() : []
-            entries.removeAll { $0.reason == "BatteryToolkit.macOS27" }
+            entries.removeAll { $0.reason == "BatteryToolkit.macOS27" || $0.reason == "manualChargeLimit" }
             if requested < 100 {
                 entries.append(BTArchivedChargePolicy27(limit: requested, inhibitFull: suppress))
             }
