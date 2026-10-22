@@ -1,0 +1,73 @@
+BattOpt v1.2.9 released Resources/battopt ARM64 static disassembly. Not executed.
+SHA256 universal binary: cada2eb76439cf36dc9d6d0c43f3023c4212ddf4e12c24305480497a6efedf4f
+10007a144:	fd 7b 04 a9	stp	x29, x30, [sp, #0x40]
+10007a148:	fd 03 01 91	add	x29, sp, #0x40
+10007a14c:	f5 03 00 aa	mov	x21, x0
+10007a150:	1d 16 00 94	bl	0x10007f9c4 ; symbol stub for: _objc_autoreleasePoolPush
+10007a154:	f3 03 00 aa	mov	x19, x0
+10007a158:	a8 96 01 51	sub	w8, w21, #0x65
+10007a15c:	69 fd 9f 52	mov	w9, #0xffeb
+10007a160:	3f 21 28 6b	cmp	w9, w8, uxth
+10007a164:	08 0a 00 54	b.hi	0x10007a2a4
+10007a168:	c0 00 00 90	adrp	x0, 24 ; 0x100092000
+10007a16c:	00 f4 29 91	add	x0, x0, #0xa7d ; literal pool for: "/System/Library/PrivateFrameworks/PowerUI.framework/PowerUI"
+10007a170:	41 00 80 52	mov	w1, #0x2
+10007a174:	9c 15 00 94	bl	0x10007f7e4 ; symbol stub for: _dlopen
+10007a178:	60 09 00 b4	cbz	x0, 0x10007a2a4
+10007a17c:	f4 03 00 aa	mov	x20, x0
+10007a180:	00 01 00 90	adrp	x0, 32 ; 0x10009a000
+10007a184:	00 20 05 91	add	x0, x0, #0x148 ; Objc cfstring ref: @"PowerUISmartChargeClient"
+10007a188:	de 13 00 94	bl	0x10007f100 ; symbol stub for: _NSClassFromString
+10007a18c:	a0 06 00 b4	cbz	x0, 0x10007a260
+10007a190:	08 01 00 d0	adrp	x8, 34 ; 0x10009c000
+10007a194:	01 cd 46 f9	ldr	x1, [x8, #0xd98] ; Objc selector ref: alloc
+10007a198:	17 16 00 94	bl	0x10007f9f4 ; Objc message: +[NSString alloc]
+10007a19c:	f6 03 00 aa	mov	x22, x0
+10007a1a0:	00 01 00 90	adrp	x0, 32 ; 0x10009a000
+10007a1a4:	00 a0 05 91	add	x0, x0, #0x168 ; Objc cfstring ref: @"initWithClientName:"
+10007a1a8:	d9 13 00 94	bl	0x10007f10c ; symbol stub for: _NSSelectorFromString
+10007a1ac:	f7 03 00 aa	mov	x23, x0
+10007a1b0:	e0 03 16 aa	mov	x0, x22
+10007a1b4:	e1 03 17 aa	mov	x1, x23
+10007a1b8:	1b 16 00 94	bl	0x10007fa24 ; symbol stub for: _objc_opt_respondsToSelector
+10007a1bc:	80 05 00 36	tbz	w0, #0x0, 0x10007a26c
+10007a1c0:	02 01 00 90	adrp	x2, 32 ; 0x10009a000
+10007a1c4:	42 20 06 91	add	x2, x2, #0x188 ; Objc cfstring ref: @"ObjCTest"
+10007a1c8:	e0 03 16 aa	mov	x0, x22
+10007a1cc:	e1 03 17 aa	mov	x1, x23
+10007a1d0:	09 16 00 94	bl	0x10007f9f4 ; Objc message: -[x0 alloc]
+10007a1d4:	f6 03 00 aa	mov	x22, x0
+10007a1d8:	00 05 00 b4	cbz	x0, 0x10007a278
+10007a1dc:	00 01 00 90	adrp	x0, 32 ; 0x10009a000
+10007a1e0:	00 a0 06 91	add	x0, x0, #0x1a8 ; Objc cfstring ref: @"isMCLSupported"
+10007a1e4:	ca 13 00 94	bl	0x10007f10c ; symbol stub for: _NSSelectorFromString
+10007a1e8:	f7 03 00 aa	mov	x23, x0
+10007a1ec:	e0 03 16 aa	mov	x0, x22
+10007a1f0:	e1 03 17 aa	mov	x1, x23
+10007a1f4:	0c 16 00 94	bl	0x10007fa24 ; symbol stub for: _objc_opt_respondsToSelector
+10007a1f8:	60 04 00 36	tbz	w0, #0x0, 0x10007a284
+10007a1fc:	e0 03 16 aa	mov	x0, x22
+10007a200:	e1 03 17 aa	mov	x1, x23
+10007a204:	fc 15 00 94	bl	0x10007f9f4 ; Objc message: -[x0 alloc]
+10007a208:	40 04 00 36	tbz	w0, #0x0, 0x10007a290
+10007a20c:	ff 07 00 f9	str	xzr, [sp, #0x8]
+10007a210:	00 01 00 90	adrp	x0, 32 ; 0x10009a000
+10007a214:	00 20 07 91	add	x0, x0, #0x1c8 ; Objc cfstring ref: @"setMCLLimit:error:"
+10007a218:	bd 13 00 94	bl	0x10007f10c ; symbol stub for: _NSSelectorFromString
+10007a21c:	f7 03 00 aa	mov	x23, x0
+10007a220:	e0 03 16 aa	mov	x0, x22
+10007a224:	e1 03 17 aa	mov	x1, x23
+10007a228:	ff 15 00 94	bl	0x10007fa24 ; symbol stub for: _objc_opt_respondsToSelector
+10007a22c:	80 03 00 36	tbz	w0, #0x0, 0x10007a29c
+10007a230:	a2 1e 00 12	and	w2, w21, #0xff
+10007a234:	e3 23 00 91	add	x3, sp, #0x8
+10007a238:	e0 03 16 aa	mov	x0, x22
+10007a23c:	e1 03 17 aa	mov	x1, x23
+10007a240:	ed 15 00 94	bl	0x10007f9f4 ; Objc message: -[x0 alloc]
+10007a244:	f5 03 00 aa	mov	x21, x0
+10007a248:	e0 03 14 aa	mov	x0, x20
+10007a24c:	63 15 00 94	bl	0x10007f7d8 ; symbol stub for: _dlclose
+10007a250:	00 a8 81 52	mov	w0, #0xd40
+10007a254:	60 00 a0 72	movk	w0, #0x3, lsl #16
+10007a258:	65 16 00 94	bl	0x10007fbec ; symbol stub for: _usleep
+10007a25c:	13 00 00 14	b	0x10007a2a8
