@@ -1,0 +1,186 @@
+snapshot=/tmp/tethered-charge-defaults-original-62665.plist original_limit=100 uid=501 saved={
+}
+stage=baseline time=2026-10-22 00:53:09 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13068
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=75-requested time=2026-10-22 00:53:09 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13068
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=75-observation time=2026-10-22 00:53:14 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13068
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=75-observation time=2026-10-22 00:53:19 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13068
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=75-observation time=2026-10-22 00:53:24 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13068
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=75-observation time=2026-10-22 00:53:29 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13068
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=75-observation time=2026-10-22 00:53:34 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13068
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=75-observation time=2026-10-22 00:53:39 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13068
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=75-observation time=2026-10-22 00:53:44 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13068
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=75-observation time=2026-10-22 00:53:49 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13068
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=75-observation time=2026-10-22 00:53:54 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13060
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=75-observation time=2026-10-22 00:53:59 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13060
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=75-observation time=2026-10-22 00:54:05 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13060
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=75-observation time=2026-10-22 00:54:10 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13060
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=75-observation time=2026-10-22 00:54:15 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13060
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=75-observation time=2026-10-22 00:54:20 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13060
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=75-observation time=2026-10-22 00:54:25 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13060
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=75-observation time=2026-10-22 00:54:30 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13060
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=75-observation time=2026-10-22 00:54:35 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13060
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=75-observation time=2026-10-22 00:54:40 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13060
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+set limit=100 accepted=YES error=none
+stage=restored-observation time=2026-10-22 00:54:45 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13060
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=restored-observation time=2026-10-22 00:54:50 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13058
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=restored-observation time=2026-10-22 00:54:55 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13058
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=restored-observation time=2026-10-22 00:55:00 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13058
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=restored-observation time=2026-10-22 00:55:05 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13058
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=restored-observation time=2026-10-22 00:55:10 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13058
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+restore preference_values_exact=YES original_limit=100 getter=100 verified=YES error=none

@@ -1,0 +1,566 @@
+snapshot=/tmp/tethered-charge-defaults-original-63290.plist original_limit=100 uid=0 saved={
+}
+stage=baseline time=2026-10-22 00:55:29 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13058
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=75-requested time=2026-10-22 00:55:30 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13058
+state key=CHLT io=0x0 smc=0 bytes=4b0500
+state key=bfG0 io=0x0 smc=0 bytes=4b0500
+stage=75-observation time=2026-10-22 00:55:35 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13058
+state key=CHLT io=0x0 smc=0 bytes=4b0503
+state key=bfG0 io=0x0 smc=0 bytes=4b0503
+stage=75-observation time=2026-10-22 00:55:40 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13058
+state key=CHLT io=0x0 smc=0 bytes=4b0503
+state key=bfG0 io=0x0 smc=0 bytes=4b0503
+stage=75-observation time=2026-10-22 00:55:45 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+battery AC=1 charging=0 percent=100 current_mA=0 instant_mA=0 voltage_mV=13058
+state key=CHLT io=0x0 smc=0 bytes=4b0503
+state key=bfG0 io=0x0 smc=0 bytes=4b0503
+stage=75-observation time=2026-10-22 00:55:50 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+battery AC=1 charging=0 percent=100 current_mA=-1288 instant_mA=-1288 voltage_mV=12917
+state key=CHLT io=0x0 smc=0 bytes=4b0503
+state key=bfG0 io=0x0 smc=0 bytes=4b0503
+stage=75-observation time=2026-10-22 00:55:55 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+battery AC=1 charging=0 percent=100 current_mA=-1288 instant_mA=-1288 voltage_mV=12917
+state key=CHLT io=0x0 smc=0 bytes=4b0503
+state key=bfG0 io=0x0 smc=0 bytes=4b0503
+stage=75-observation time=2026-10-22 00:56:00 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+battery AC=1 charging=0 percent=100 current_mA=-1288 instant_mA=-1288 voltage_mV=12917
+state key=CHLT io=0x0 smc=0 bytes=4b0503
+state key=bfG0 io=0x0 smc=0 bytes=4b0503
+stage=75-observation time=2026-10-22 00:56:05 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+battery AC=1 charging=0 percent=100 current_mA=-1288 instant_mA=-1288 voltage_mV=12917
+state key=CHLT io=0x0 smc=0 bytes=4b0503
+state key=bfG0 io=0x0 smc=0 bytes=4b0503
+stage=75-observation time=2026-10-22 00:56:10 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+battery AC=1 charging=0 percent=100 current_mA=-1288 instant_mA=-1288 voltage_mV=12917
+state key=CHLT io=0x0 smc=0 bytes=4b0503
+state key=bfG0 io=0x0 smc=0 bytes=4b0503
+stage=75-observation time=2026-10-22 00:56:15 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+battery AC=1 charging=0 percent=100 current_mA=-1288 instant_mA=-1288 voltage_mV=12917
+state key=CHLT io=0x0 smc=0 bytes=4b0503
+state key=bfG0 io=0x0 smc=0 bytes=4b0503
+stage=75-observation time=2026-10-22 00:56:20 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+battery AC=1 charging=0 percent=100 current_mA=-1288 instant_mA=-1288 voltage_mV=12917
+state key=CHLT io=0x0 smc=0 bytes=4b0503
+state key=bfG0 io=0x0 smc=0 bytes=4b0503
+stage=75-observation time=2026-10-22 00:56:25 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+battery AC=1 charging=0 percent=100 current_mA=-1288 instant_mA=-1288 voltage_mV=12917
+state key=CHLT io=0x0 smc=0 bytes=4b0503
+state key=bfG0 io=0x0 smc=0 bytes=4b0503
+stage=75-observation time=2026-10-22 00:56:30 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+battery AC=1 charging=0 percent=100 current_mA=-1288 instant_mA=-1288 voltage_mV=12917
+state key=CHLT io=0x0 smc=0 bytes=4b0503
+state key=bfG0 io=0x0 smc=0 bytes=4b0503
+stage=75-observation time=2026-10-22 00:56:35 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+battery AC=1 charging=0 percent=100 current_mA=-1288 instant_mA=-1288 voltage_mV=12917
+state key=CHLT io=0x0 smc=0 bytes=4b0503
+state key=bfG0 io=0x0 smc=0 bytes=4b0503
+stage=75-observation time=2026-10-22 00:56:40 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+battery AC=1 charging=0 percent=100 current_mA=-1288 instant_mA=-1288 voltage_mV=12917
+state key=CHLT io=0x0 smc=0 bytes=4b0503
+state key=bfG0 io=0x0 smc=0 bytes=4b0503
+stage=75-observation time=2026-10-22 00:56:45 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+battery AC=1 charging=0 percent=100 current_mA=-1288 instant_mA=-1288 voltage_mV=12917
+state key=CHLT io=0x0 smc=0 bytes=4b0503
+state key=bfG0 io=0x0 smc=0 bytes=4b0503
+stage=75-observation time=2026-10-22 00:56:50 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+battery AC=1 charging=0 percent=100 current_mA=-1231 instant_mA=-1231 voltage_mV=12887
+state key=CHLT io=0x0 smc=0 bytes=4b0503
+state key=bfG0 io=0x0 smc=0 bytes=4b0503
+stage=75-observation time=2026-10-22 00:56:55 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+battery AC=1 charging=0 percent=100 current_mA=-1231 instant_mA=-1231 voltage_mV=12887
+state key=CHLT io=0x0 smc=0 bytes=4b0503
+state key=bfG0 io=0x0 smc=0 bytes=4b0503
+stage=75-observation time=2026-10-22 00:57:00 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+battery AC=1 charging=0 percent=100 current_mA=-1231 instant_mA=-1231 voltage_mV=12887
+state key=CHLT io=0x0 smc=0 bytes=4b0503
+state key=bfG0 io=0x0 smc=0 bytes=4b0503
+set limit=100 accepted=YES error=none
+stage=restored-observation time=2026-10-22 00:57:05 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=-1231 instant_mA=-1231 voltage_mV=12887
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=restored-observation time=2026-10-22 00:57:11 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=-1231 instant_mA=-1231 voltage_mV=12887
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=restored-observation time=2026-10-22 00:57:16 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=-1231 instant_mA=-1231 voltage_mV=12887
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=restored-observation time=2026-10-22 00:57:21 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=-1231 instant_mA=-1231 voltage_mV=12887
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=restored-observation time=2026-10-22 00:57:26 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=-1231 instant_mA=-1231 voltage_mV=12887
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+stage=restored-observation time=2026-10-22 00:57:31 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	100%; charged; 0:00 remaining present: true
+No battery level limits set
+battery AC=1 charging=0 percent=100 current_mA=-1231 instant_mA=-1231 voltage_mV=12887
+state key=CHLT io=0x0 smc=0 bytes=000000
+state key=bfG0 io=0x0 smc=0 bytes=000000
+restore preference_values_exact=YES original_limit=100 getter=100 verified=YES error=none

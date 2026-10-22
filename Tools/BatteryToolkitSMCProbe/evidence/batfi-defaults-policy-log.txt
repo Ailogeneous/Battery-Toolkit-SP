@@ -1,0 +1,1138 @@
+Timestamp               Ty Process[PID:TID]
+2026-10-21 17:53:09.575 Df PowerUIAgent[694:6bf0d] [com.apple.powerui.smartcharging:smartChargeManager] Loaded Settings: Enabled=0, CurrentState=0, Signals Ignored=0, Desktop device=0, Manual Charge Limit=0, Predictor = 2, Full Charge Deadline=(null), EngagementTimeOverride=(null), FullChargeDeadlineOverride=(null), repeatEngagementOverrideEndDate=(null) OverrideAllSignals=0 minutesToFullCharge=40.000000
+2026-10-21 17:54:40.346 Df PowerUIAgent[694:6d606] [com.apple.powerui.smartcharging:smartChargeManager] Loaded Settings: Enabled=0, CurrentState=0, Signals Ignored=0, Desktop device=0, Manual Charge Limit=0, Predictor = 2, Full Charge Deadline=(null), EngagementTimeOverride=(null), FullChargeDeadlineOverride=(null), repeatEngagementOverrideEndDate=(null) OverrideAllSignals=0 minutesToFullCharge=40.000000
+2026-10-21 17:55:30.026 Df PowerUIAgent[694:6e336] [com.apple.powerui.smartcharging:smartChargeManager] Loaded Settings: Enabled=0, CurrentState=0, Signals Ignored=0, Desktop device=0, Manual Charge Limit=1, Predictor = 2, Full Charge Deadline=(null), EngagementTimeOverride=(null), FullChargeDeadlineOverride=(null), repeatEngagementOverrideEndDate=(null) OverrideAllSignals=0 minutesToFullCharge=40.000000
+2026-10-21 17:55:30.029 Df powerd[586:6d908] [com.apple.powerd:charging] received SOC limit from 694: {
+    chargeSocLimitAction = 3;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+    chargeSocLimitToken = "974D574B-F3F4-4B4E-BFA7-612D7A384508";
+}
+2026-10-21 17:55:30.029 Df powerd[586:6d908] [com.apple.powerd:charging] converted policy:{
+    Owner: 694
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 694;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:55:30.029 Df powerd[586:6d908] [com.apple.powerd:charging] converted policy:{
+    Owner: 0
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 0;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:55:30.029 Df powerd[586:6d908] [com.apple.powerd:charging] OnHold And Override dict {
+    chargeSocLimitChargeLimit =     (
+                {
+            Terminated = 0;
+            chargeSocLimitDrain = 1;
+            chargeSocLimitIsEOC = 1;
+            chargeSocLimitNoChargeToFull = 0;
+            chargeSocLimitOwner = 694;
+            chargeSocLimitReason = manualChargeLimit;
+            chargeSocLimitSoc = 75;
+        },
+                {
+            Terminated = 0;
+            chargeSocLimitDrain = 1;
+            chargeSocLimitIsEOC = 1;
+            chargeSocLimitNoChargeToFull = 0;
+            chargeSocLimitOwner = 0;
+            chargeSocLimitReason = manualChargeLimit;
+            chargeSocLimitSoc = 75;
+        }
+    );
+    chargeSocLimitChargeOverride =     (
+    );
+}
+2026-10-21 17:55:30.058 Df powerd[586:6d908] [com.apple.powerd:charging] converted policy:{
+    Owner: 694
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 694;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:55:30.058 Df powerd[586:6d908] [com.apple.powerd:charging] converted policy:{
+    Owner: 0
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 0;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:55:30.058 Df powerd[586:6d908] [com.apple.powerd:charging] sending current policies:(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+2026-10-21 17:55:35.109 Df powerd[586:6e3f3] [com.apple.powerd:charging] converted policy:{
+    Owner: 694
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 694;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:55:35.109 Df powerd[586:6e3f3] [com.apple.powerd:charging] converted policy:{
+    Owner: 0
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 0;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:55:35.109 Df powerd[586:6e3f3] [com.apple.powerd:charging] sending current policies:(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+2026-10-21 17:55:40.157 Df powerd[586:6d908] [com.apple.powerd:charging] converted policy:{
+    Owner: 694
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 694;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:55:40.157 Df powerd[586:6d908] [com.apple.powerd:charging] converted policy:{
+    Owner: 0
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 0;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:55:40.157 Df powerd[586:6d908] [com.apple.powerd:charging] sending current policies:(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+2026-10-21 17:55:45.207 Df powerd[586:6d908] [com.apple.powerd:charging] converted policy:{
+    Owner: 694
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 694;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:55:45.207 Df powerd[586:6d908] [com.apple.powerd:charging] converted policy:{
+    Owner: 0
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 0;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:55:45.207 Df powerd[586:6d908] [com.apple.powerd:charging] sending current policies:(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+2026-10-21 17:55:50.253 Df powerd[586:6e3f3] [com.apple.powerd:charging] converted policy:{
+    Owner: 694
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 694;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:55:50.253 Df powerd[586:6e3f3] [com.apple.powerd:charging] converted policy:{
+    Owner: 0
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 0;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:55:50.253 Df powerd[586:6e3f3] [com.apple.powerd:charging] sending current policies:(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+2026-10-21 17:55:55.305 Df powerd[586:6d908] [com.apple.powerd:charging] converted policy:{
+    Owner: 694
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 694;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:55:55.305 Df powerd[586:6d908] [com.apple.powerd:charging] converted policy:{
+    Owner: 0
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 0;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:55:55.305 Df powerd[586:6d908] [com.apple.powerd:charging] sending current policies:(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+2026-10-21 17:56:00.355 Df powerd[586:6e716] [com.apple.powerd:charging] converted policy:{
+    Owner: 694
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 694;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:00.355 Df powerd[586:6e716] [com.apple.powerd:charging] converted policy:{
+    Owner: 0
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 0;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:00.355 Df powerd[586:6e716] [com.apple.powerd:charging] sending current policies:(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+2026-10-21 17:56:05.402 Df powerd[586:6e716] [com.apple.powerd:charging] converted policy:{
+    Owner: 694
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 694;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:05.402 Df powerd[586:6e716] [com.apple.powerd:charging] converted policy:{
+    Owner: 0
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 0;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:05.402 Df powerd[586:6e716] [com.apple.powerd:charging] sending current policies:(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+2026-10-21 17:56:10.452 Df powerd[586:6e716] [com.apple.powerd:charging] converted policy:{
+    Owner: 694
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 694;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:10.452 Df powerd[586:6e716] [com.apple.powerd:charging] converted policy:{
+    Owner: 0
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 0;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:10.452 Df powerd[586:6e716] [com.apple.powerd:charging] sending current policies:(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+2026-10-21 17:56:15.498 Df powerd[586:6e3f3] [com.apple.powerd:charging] converted policy:{
+    Owner: 694
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 694;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:15.498 Df powerd[586:6e3f3] [com.apple.powerd:charging] converted policy:{
+    Owner: 0
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 0;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:15.498 Df powerd[586:6e3f3] [com.apple.powerd:charging] sending current policies:(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+2026-10-21 17:56:20.549 Df powerd[586:6e716] [com.apple.powerd:charging] converted policy:{
+    Owner: 694
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 694;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:20.549 Df powerd[586:6e716] [com.apple.powerd:charging] converted policy:{
+    Owner: 0
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 0;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:20.549 Df powerd[586:6e716] [com.apple.powerd:charging] sending current policies:(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+2026-10-21 17:56:25.602 Df powerd[586:6e716] [com.apple.powerd:charging] converted policy:{
+    Owner: 694
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 694;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:25.602 Df powerd[586:6e716] [com.apple.powerd:charging] converted policy:{
+    Owner: 0
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 0;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:25.602 Df powerd[586:6e716] [com.apple.powerd:charging] sending current policies:(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+2026-10-21 17:56:30.648 Df powerd[586:6e716] [com.apple.powerd:charging] converted policy:{
+    Owner: 694
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 694;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:30.648 Df powerd[586:6e716] [com.apple.powerd:charging] converted policy:{
+    Owner: 0
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 0;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:30.648 Df powerd[586:6e716] [com.apple.powerd:charging] sending current policies:(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+2026-10-21 17:56:35.697 Df powerd[586:6e97e] [com.apple.powerd:charging] converted policy:{
+    Owner: 694
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 694;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:35.697 Df powerd[586:6e97e] [com.apple.powerd:charging] converted policy:{
+    Owner: 0
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 0;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:35.697 Df powerd[586:6e97e] [com.apple.powerd:charging] sending current policies:(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+2026-10-21 17:56:40.744 Df powerd[586:6e97e] [com.apple.powerd:charging] converted policy:{
+    Owner: 694
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 694;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:40.744 Df powerd[586:6e97e] [com.apple.powerd:charging] converted policy:{
+    Owner: 0
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 0;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:40.745 Df powerd[586:6e97e] [com.apple.powerd:charging] sending current policies:(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+2026-10-21 17:56:45.801 Df powerd[586:6e97e] [com.apple.powerd:charging] converted policy:{
+    Owner: 694
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 694;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:45.801 Df powerd[586:6e97e] [com.apple.powerd:charging] converted policy:{
+    Owner: 0
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 0;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:45.801 Df powerd[586:6e97e] [com.apple.powerd:charging] sending current policies:(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+2026-10-21 17:56:50.852 Df powerd[586:6e716] [com.apple.powerd:charging] converted policy:{
+    Owner: 694
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 694;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:50.852 Df powerd[586:6e716] [com.apple.powerd:charging] converted policy:{
+    Owner: 0
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 0;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:50.852 Df powerd[586:6e716] [com.apple.powerd:charging] sending current policies:(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+2026-10-21 17:56:55.904 Df powerd[586:6e97e] [com.apple.powerd:charging] converted policy:{
+    Owner: 694
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 694;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:55.904 Df powerd[586:6e97e] [com.apple.powerd:charging] converted policy:{
+    Owner: 0
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 0;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:56:55.904 Df powerd[586:6e97e] [com.apple.powerd:charging] sending current policies:(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+2026-10-21 17:57:00.954 Df powerd[586:6e97e] [com.apple.powerd:charging] converted policy:{
+    Owner: 694
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 694;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:57:00.954 Df powerd[586:6e97e] [com.apple.powerd:charging] converted policy:{
+    Owner: 0
+    SocLimit: 75
+    Drain: 1
+    NoChargeToFull: 0
+    IsEndOfCharge: 1
+    Terminated: 0
+    Reason: manualChargeLimit
+}
+ to dict:{
+    Terminated = 0;
+    chargeSocLimitDrain = 1;
+    chargeSocLimitIsEOC = 1;
+    chargeSocLimitNoChargeToFull = 0;
+    chargeSocLimitOwner = 0;
+    chargeSocLimitReason = manualChargeLimit;
+    chargeSocLimitSoc = 75;
+}
+2026-10-21 17:57:00.954 Df powerd[586:6e97e] [com.apple.powerd:charging] sending current policies:(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+2026-10-21 17:57:00.973 Df PowerUIAgent[694:6e336] [com.apple.powerui.smartcharging:smartChargeManager] Loaded Settings: Enabled=0, CurrentState=0, Signals Ignored=0, Desktop device=0, Manual Charge Limit=0, Predictor = 2, Full Charge Deadline=(null), EngagementTimeOverride=(null), FullChargeDeadlineOverride=(null), repeatEngagementOverrideEndDate=(null) OverrideAllSignals=0 minutesToFullCharge=40.000000
