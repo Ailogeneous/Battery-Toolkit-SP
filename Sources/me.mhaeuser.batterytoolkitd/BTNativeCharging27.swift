@@ -73,6 +73,7 @@ internal enum BTNativeCharging27 {
     static func start() -> Bool {
         guard active, geteuid() == 0 else { return false }
         if timer != nil { return true }
+        guard SMCComm.readKey(key: SMCComm.Key("C", "H", "L", "T"), dataSize: 3)?.count == 3 else { return false }
         var size = 0
         guard sysctlbyname("kern.bootsessionuuid", nil, &size, nil, 0) == 0 else { return false }
         var bytes = [CChar](repeating: 0, count: size)
