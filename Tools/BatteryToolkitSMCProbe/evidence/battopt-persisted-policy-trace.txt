@@ -1,0 +1,560 @@
+Static BattOpt released ARM64 CLI analysis; never executed.
+SHA256 ARM64 slice: b8ac64bc9ae44026d891748e64b0aadcd2eb42399526c0a905fb196179dcc358
+Decoded XOR 0x5a constants: ChargeCtrlPolicy; manualChargeLimit; com.apple.powerd.charging; CFPreferencesCopyMultiple; CFPreferencesSetMultiple; CFPreferencesSynchronize; /usr/bin/killall; -HUP; powerd (last two bytes constructed inline).
+
+100075550:	f6 57 bd a9	stp	x22, x21, [sp, #-0x30]!
+100075554:	f4 4f 01 a9	stp	x20, x19, [sp, #0x10]
+100075558:	fd 7b 02 a9	stp	x29, x30, [sp, #0x20]
+10007555c:	fd 83 00 91	add	x29, sp, #0x20
+100075560:	f3 03 00 aa	mov	x19, x0
+100075564:	1f 7c 00 a9	stp	xzr, xzr, [x0]
+100075568:	1f 08 00 f9	str	xzr, [x0, #0x10]
+10007556c:	a2 01 00 b4	cbz	x2, 0x1000755a0
+100075570:	f4 03 02 aa	mov	x20, x2
+100075574:	02 02 f8 b7	tbnz	x2, #0x3f, 0x1000755b4
+100075578:	f5 03 01 aa	mov	x21, x1
+10007557c:	e0 03 14 aa	mov	x0, x20
+100075580:	1b 28 00 94	bl	0x10007f5ec ; symbol stub for: __Znwm
+100075584:	60 02 00 a9	stp	x0, x0, [x19]
+100075588:	16 00 14 8b	add	x22, x0, x20
+10007558c:	76 0a 00 f9	str	x22, [x19, #0x10]
+100075590:	e1 03 15 aa	mov	x1, x21
+100075594:	e2 03 14 aa	mov	x2, x20
+100075598:	e1 28 00 94	bl	0x10007f91c ; symbol stub for: _memmove
+10007559c:	76 06 00 f9	str	x22, [x19, #0x8]
+1000755a0:	e0 03 13 aa	mov	x0, x19
+1000755a4:	fd 7b 42 a9	ldp	x29, x30, [sp, #0x20]
+1000755a8:	f4 4f 41 a9	ldp	x20, x19, [sp, #0x10]
+1000755ac:	f6 57 c3 a8	ldp	x22, x21, [sp], #0x30
+1000755b0:	c0 03 5f d6	ret
+1000755b4:	e0 03 13 aa	mov	x0, x19
+1000755b8:	ef 87 fe 97	bl	0x100017574
+1000755bc:	20 00 20 d4	brk	#0x1
+
+100077130:	00 d5 46 f9	ldr	x0, [x8, #0xda8] ; Objc class ref: _OBJC_CLASS_$_NSUUID
+100077134:	1b 26 00 94	bl	0x1000809a0
+100077138:	22 26 00 94	bl	0x1000809c0
+10007713c:	05 00 00 14	b	0x100077150
+100077140:	28 01 00 b0	adrp	x8, 37 ; 0x10009c000
+100077144:	00 d1 46 f9	ldr	x0, [x8, #0xda0] ; Objc class ref: _OBJC_CLASS_$_NSString
+100077148:	e2 23 00 91	add	x2, sp, #0x8
+10007714c:	b5 27 00 94	bl	0x100081020
+100077150:	a8 83 5e f8	ldur	x8, [x29, #-0x18]
+100077154:	09 01 00 b0	adrp	x9, 33 ; 0x100098000
+100077158:	29 d1 40 f9	ldr	x9, [x9, #0x1a0] ; literal pool symbol address: ___stack_chk_guard
+10007715c:	29 01 40 f9	ldr	x9, [x9]
+100077160:	3f 01 08 eb	cmp	x9, x8
+100077164:	a1 00 00 54	b.ne	0x100077178
+100077168:	fd 7b 52 a9	ldp	x29, x30, [sp, #0x120]
+10007716c:	fc 6f 51 a9	ldp	x28, x27, [sp, #0x110]
+100077170:	ff c3 04 91	add	sp, sp, #0x130
+100077174:	c0 03 5f d6	ret
+100077178:	41 21 00 94	bl	0x10007f67c ; symbol stub for: ___stack_chk_fail
+10007717c:	ff 43 02 d1	sub	sp, sp, #0x90
+100077180:	fa 67 04 a9	stp	x26, x25, [sp, #0x40]
+100077184:	f8 5f 05 a9	stp	x24, x23, [sp, #0x50]
+100077188:	f6 57 06 a9	stp	x22, x21, [sp, #0x60]
+10007718c:	f4 4f 07 a9	stp	x20, x19, [sp, #0x70]
+100077190:	fd 7b 08 a9	stp	x29, x30, [sp, #0x80]
+100077194:	fd 03 02 91	add	x29, sp, #0x80
+100077198:	f4 03 03 aa	mov	x20, x3
+10007719c:	f5 03 02 aa	mov	x21, x2
+1000771a0:	f6 03 01 aa	mov	x22, x1
+1000771a4:	f7 03 00 aa	mov	x23, x0
+1000771a8:	08 01 00 b0	adrp	x8, 33 ; 0x100098000
+1000771ac:	08 d1 40 f9	ldr	x8, [x8, #0x1a0] ; literal pool symbol address: ___stack_chk_guard
+1000771b0:	08 01 40 f9	ldr	x8, [x8]
+1000771b4:	e8 1f 00 f9	str	x8, [sp, #0x38]
+1000771b8:	38 01 00 b0	adrp	x24, 37 ; 0x10009c000
+1000771bc:	00 e3 46 f9	ldr	x0, [x24, #0xdc0] ; Objc class ref: X_LayoutConfig
+1000771c0:	fb 21 00 94	bl	0x10007f9ac ; symbol stub for: _objc_alloc_init
+1000771c4:	f3 03 00 aa	mov	x19, x0
+1000771c8:	48 01 00 f0	adrp	x8, 43 ; 0x1000a2000
+1000771cc:	08 41 34 91	add	x8, x8, #0xd10
+1000771d4:	68 0e 00 36	tbz	w8, #0x0, 0x1000773a0
+1000771d8:	88 01 80 52	mov	w8, #0xc
+1000771dc:	e8 5f 00 39	strb	w8, [sp, #0x17]
+1000771e0:	e8 ac 8c 52	mov	w8, #0x6567
+1000771e4:	c8 8d ae 72	movk	w8, #0x746e, lsl #16
+1000771e8:	e8 0b 00 b9	str	w8, [sp, #0x8]
+1000771ec:	c8 00 00 f0	adrp	x8, 27 ; 0x100092000
+1000771f0:	08 79 23 91	add	x8, x8, #0x8de ; literal pool for: "PowerUIAgent"
+1000771f4:	08 01 40 f9	ldr	x8, [x8]
+1000771f8:	e8 03 00 f9	str	x8, [sp]
+1000771fc:	ff 33 00 39	strb	wzr, [sp, #0xc]
+100077200:	e0 03 00 91	mov	x0, sp
+100077204:	89 f3 ff 97	bl	0x100074028
+100077208:	e2 03 00 aa	mov	x2, x0
+10007720c:	e0 03 13 aa	mov	x0, x19
+100077210:	3c 27 00 94	bl	0x100080f00
+100077214:	e8 5f c0 39	ldrsb	w8, [sp, #0x17]
+100077218:	68 00 f8 36	tbz	w8, #0x1f, 0x100077224
+10007721c:	e0 03 40 f9	ldr	x0, [sp]
+100077220:	ed 20 00 94	bl	0x10007f5d4 ; symbol stub for: __ZdlPv
+100077224:	39 01 00 b0	adrp	x25, 37 ; 0x10009c000
+100077228:	20 d3 46 f9	ldr	x0, [x25, #0xda0] ; Objc class ref: _OBJC_CLASS_$_NSString
+10007722c:	48 01 00 f0	adrp	x8, 43 ; 0x1000a2000
+100077230:	08 e1 33 91	add	x8, x8, #0xcf8
+100077234:	09 5d c0 39	ldrsb	w9, [x8, #0x17]
+100077238:	0a 01 40 f9	ldr	x10, [x8]
+10007723c:	3f 01 00 71	cmp	w9, #0x0
+100077240:	42 b1 88 9a	csel	x2, x10, x8, lt
+100077244:	77 27 00 94	bl	0x100081020
+100077248:	e2 03 00 aa	mov	x2, x0
+10007724c:	e0 03 13 aa	mov	x0, x19
+100077250:	34 27 00 94	bl	0x100080f20
+100077254:	e0 03 13 aa	mov	x0, x19
+100077258:	e2 03 17 aa	mov	x2, x23
+10007725c:	39 27 00 94	bl	0x100080f40
+100077260:	e0 03 13 aa	mov	x0, x19
+100077264:	e2 03 16 aa	mov	x2, x22
+100077268:	3e 27 00 94	bl	0x100080f60
+10007726c:	e0 03 13 aa	mov	x0, x19
+100077270:	02 00 80 52	mov	w2, #0x0
+100077274:	43 27 00 94	bl	0x100080f80
+100077278:	e0 03 13 aa	mov	x0, x19
+10007727c:	e2 03 15 aa	mov	x2, x21
+100077280:	48 27 00 94	bl	0x100080fa0
+100077284:	e0 03 13 aa	mov	x0, x19
+100077288:	e2 03 14 aa	mov	x2, x20
+10007728c:	55 27 00 94	bl	0x100080fe0
+100077290:	28 01 00 b0	adrp	x8, 37 ; 0x10009c000
+100077294:	00 d5 46 f9	ldr	x0, [x8, #0xda8] ; Objc class ref: _OBJC_CLASS_$_NSUUID
+100077298:	c2 25 00 94	bl	0x1000809a0
+10007729c:	e2 03 00 aa	mov	x2, x0
+1000772a0:	e0 03 13 aa	mov	x0, x19
+1000772a4:	47 27 00 94	bl	0x100080fc0
+1000772a8:	28 01 00 b0	adrp	x8, 37 ; 0x10009c000
+1000772ac:	00 e5 46 f9	ldr	x0, [x8, #0xdc8] ; Objc class ref: _OBJC_CLASS_$_NSMutableArray
+1000772b0:	e2 03 13 aa	mov	x2, x19
+1000772b4:	cb 25 00 94	bl	0x1000809e0
+1000772b8:	28 01 00 b0	adrp	x8, 37 ; 0x10009c000
+1000772bc:	00 e9 46 f9	ldr	x0, [x8, #0xdd0] ; Objc class ref: _OBJC_CLASS_$_NSKeyedArchiver
+1000772c0:	b8 21 00 94	bl	0x10007f9a0 ; symbol stub for: _objc_alloc
+1000772c4:	22 00 80 52	mov	w2, #0x1
+1000772c8:	7e 26 00 94	bl	0x100080cc0
+1000772cc:	f4 03 00 aa	mov	x20, x0
+1000772d0:	48 01 00 f0	adrp	x8, 43 ; 0x1000a2000
+1000772d4:	08 c1 34 91	add	x8, x8, #0xd30
+1000772dc:	48 0a 00 36	tbz	w8, #0x0, 0x100077424
+1000772e0:	20 d3 46 f9	ldr	x0, [x25, #0xda0]
+1000772e4:	48 01 00 f0	adrp	x8, 43 ; 0x1000a2000
+1000772e8:	08 61 34 91	add	x8, x8, #0xd18
+1000772ec:	09 5d c0 39	ldrsb	w9, [x8, #0x17]
+1000772f0:	0a 01 40 f9	ldr	x10, [x8]
+1000772f4:	3f 01 00 71	cmp	w9, #0x0
+1000772f8:	42 b1 88 9a	csel	x2, x10, x8, lt
+1000772fc:	49 27 00 94	bl	0x100081020
+100077300:	f5 03 00 aa	mov	x21, x0
+100077304:	00 e3 46 f9	ldr	x0, [x24, #0xdc0]
+100077308:	c1 21 00 94	bl	0x10007fa0c ; symbol stub for: _objc_opt_class
+10007730c:	e3 03 00 aa	mov	x3, x0
+100077310:	e0 03 14 aa	mov	x0, x20
+100077314:	e2 03 15 aa	mov	x2, x21
+100077318:	da 26 00 94	bl	0x100080e80
+10007731c:	f3 0f 00 f9	str	x19, [sp, #0x18]
+100077320:	28 01 00 b0	adrp	x8, 37 ; 0x10009c000
+100077324:	00 ed 46 f9	ldr	x0, [x8, #0xdd8] ; Objc class ref: _OBJC_CLASS_$_NSArray
+100077328:	e2 63 00 91	add	x2, sp, #0x18
+10007732c:	23 00 80 52	mov	w3, #0x1
+100077330:	b4 25 00 94	bl	0x100080a00
+100077334:	e2 03 00 aa	mov	x2, x0
+100077338:	08 01 00 b0	adrp	x8, 33 ; 0x100098000
+10007733c:	08 f1 40 f9	ldr	x8, [x8, #0x1e0] ; literal pool symbol address: _NSKeyedArchiveRootObjectKey
+100077340:	03 01 40 f9	ldr	x3, [x8]
+100077344:	e0 03 14 aa	mov	x0, x20
+100077348:	2e 26 00 94	bl	0x100080c00
+10007734c:	e0 03 14 aa	mov	x0, x20
+100077350:	44 26 00 94	bl	0x100080c60
+100077354:	e0 03 14 aa	mov	x0, x20
+100077358:	32 26 00 94	bl	0x100080c20
+10007735c:	f3 03 00 aa	mov	x19, x0
+
+10007a314:	e0 03 15 aa	mov	x0, x21
+10007a318:	aa 13 00 94	bl	0x10007f1c0 ; symbol stub for: __Unwind_Resume
+10007a31c:	fc 6f ba a9	stp	x28, x27, [sp, #-0x60]!
+10007a320:	fa 67 01 a9	stp	x26, x25, [sp, #0x10]
+10007a324:	f8 5f 02 a9	stp	x24, x23, [sp, #0x20]
+10007a328:	f6 57 03 a9	stp	x22, x21, [sp, #0x30]
+10007a32c:	f4 4f 04 a9	stp	x20, x19, [sp, #0x40]
+10007a330:	fd 7b 05 a9	stp	x29, x30, [sp, #0x50]
+10007a334:	fd 43 01 91	add	x29, sp, #0x50
+10007a338:	ff 43 07 d1	sub	sp, sp, #0x1d0
+10007a33c:	f3 03 03 aa	mov	x19, x3
+10007a340:	fa 03 02 aa	mov	x26, x2
+10007a344:	f6 03 01 aa	mov	x22, x1
+10007a348:	f4 03 00 aa	mov	x20, x0
+10007a34c:	e8 00 00 d0	adrp	x8, 30 ; 0x100098000
+10007a350:	08 d1 40 f9	ldr	x8, [x8, #0x1a0] ; literal pool symbol address: ___stack_chk_guard
+10007a354:	08 01 40 f9	ldr	x8, [x8]
+10007a358:	a8 83 19 f8	stur	x8, [x29, #-0x68]
+10007a35c:	9a 15 00 94	bl	0x10007f9c4 ; symbol stub for: _objc_autoreleasePoolPush
+10007a360:	f5 03 00 aa	mov	x21, x0
+10007a364:	49 01 00 b0	adrp	x9, 41 ; 0x1000a3000
+10007a368:	29 c1 25 91	add	x9, x9, #0x970
+10007a36c:	28 d5 5b 39	ldrb	w8, [x9, #0x6f5]
+10007a370:	1f 05 00 71	cmp	w8, #0x1
+10007a374:	81 00 00 54	b.ne	0x10007a384
+10007a378:	28 d9 5b 39	ldrb	w8, [x9, #0x6f6]
+10007a37c:	1f 05 00 71	cmp	w8, #0x1
+10007a380:	61 06 00 54	b.ne	0x10007a44c
+10007a384:	80 0c 80 52	mov	w0, #0x64
+10007a388:	6b ff ff 97	bl	0x10007a134
+10007a38c:	00 06 00 34	cbz	w0, 0x10007a44c
+10007a390:	f6 67 00 b9	str	w22, [sp, #0x64]
+10007a394:	f3 3f 00 b9	str	w19, [sp, #0x3c]
+10007a398:	b6 83 02 d1	sub	x22, x29, #0xa0
+10007a39c:	28 00 80 52	mov	w8, #0x1
+10007a3a0:	57 01 00 d0	adrp	x23, 42 ; 0x1000a4000
+10007a3a4:	e8 9e 0a 39	strb	w8, [x23, #0x2a7]
+10007a3a8:	13 19 80 52	mov	w19, #0xc8
+10007a3ac:	00 00 80 d2	mov	x0, #0x0
+10007a3b0:	09 16 00 94	bl	0x10007fbd4 ; symbol stub for: _time
+10007a3b4:	48 01 00 d0	adrp	x8, 42 ; 0x1000a4000
+10007a3b8:	08 4d 41 f9	ldr	x8, [x8, #0x298]
+10007a3bc:	08 00 08 cb	sub	x8, x0, x8
+10007a3c0:	1f 29 00 f1	cmp	x8, #0xa
+10007a3c4:	cc 00 00 54	b.gt	0x10007a3dc
+10007a3c8:	00 d4 90 52	mov	w0, #0x86a0
+10007a3cc:	20 00 a0 72	movk	w0, #0x1, lsl #16
+10007a3d0:	07 16 00 94	bl	0x10007fbec ; symbol stub for: _usleep
+10007a3d4:	73 06 00 71	subs	w19, w19, #0x1
+10007a3d8:	a1 fe ff 54	b.ne	0x10007a3ac
+10007a3dc:	ff ef 00 b9	str	wzr, [sp, #0xec]
+10007a3e0:	ff d7 01 79	strh	wzr, [sp, #0xea]
+10007a3e4:	ff 9f 03 39	strb	wzr, [sp, #0xe7]
+10007a3e8:	ff 43 03 39	strb	wzr, [sp, #0xd0]
+10007a3ec:	ff 3f 03 39	strb	wzr, [sp, #0xcf]
+10007a3f0:	e0 b3 03 91	add	x0, sp, #0xec
+10007a3f4:	e1 af 03 91	add	x1, sp, #0xeb
+10007a3f8:	e2 ab 03 91	add	x2, sp, #0xea
+10007a3fc:	e3 43 03 91	add	x3, sp, #0xd0
+10007a400:	e4 3f 03 91	add	x4, sp, #0xcf
+10007a404:	16 f9 ff 97	bl	0x10007885c
+10007a408:	60 02 00 34	cbz	w0, 0x10007a454
+10007a40c:	e8 ef 40 b9	ldr	w8, [sp, #0xec]
+10007a410:	1f 01 14 6b	cmp	w8, w20
+10007a414:	61 03 00 54	b.ne	0x10007a480
+10007a418:	e8 af 43 39	ldrb	w8, [sp, #0xeb]
+10007a41c:	e9 67 40 b9	ldr	w9, [sp, #0x64]
+10007a420:	1f 01 09 6b	cmp	w8, w9
+10007a424:	e1 02 00 54	b.ne	0x10007a480
+10007a428:	e8 ab 43 39	ldrb	w8, [sp, #0xea]
+10007a42c:	1f 01 1a 6b	cmp	w8, w26
+10007a430:	81 02 00 54	b.ne	0x10007a480
+10007a434:	9f 92 01 71	cmp	w20, #0x64
+10007a438:	40 02 00 54	b.eq	0x10007a480
+10007a43c:	48 01 00 d0	adrp	x8, 42 ; 0x1000a4000
+10007a440:	08 41 4a 39	ldrb	w8, [x8, #0x290]
+
+10007b048:	3f 01 00 71	cmp	w9, #0x0
+10007b04c:	42 b1 88 9a	csel	x2, x10, x8, lt
+10007b050:	f4 17 00 94	bl	0x100081020
+10007b054:	e3 03 00 aa	mov	x3, x0
+10007b058:	e0 03 18 aa	mov	x0, x24
+10007b05c:	e2 03 16 aa	mov	x2, x22
+10007b060:	90 17 00 94	bl	0x100080ea0
+10007b064:	08 01 00 b0	adrp	x8, 33 ; 0x10009c000
+10007b068:	00 d1 46 f9	ldr	x0, [x8, #0xda0] ; Objc class ref: _OBJC_CLASS_$_NSString
+10007b06c:	48 01 00 90	adrp	x8, 40 ; 0x1000a3000
+10007b070:	08 e1 07 91	add	x8, x8, #0x1f8
+10007b074:	09 5d c0 39	ldrsb	w9, [x8, #0x17]
+10007b078:	0a 01 40 f9	ldr	x10, [x8]
+10007b07c:	3f 01 00 71	cmp	w9, #0x0
+10007b080:	42 b1 88 9a	csel	x2, x10, x8, lt
+10007b084:	e7 17 00 94	bl	0x100081020
+10007b088:	e3 03 00 aa	mov	x3, x0
+10007b08c:	e0 03 18 aa	mov	x0, x24
+10007b090:	e2 03 19 aa	mov	x2, x25
+10007b094:	83 17 00 94	bl	0x100080ea0
+10007b098:	3d 00 00 14	b	0x10007b18c
+10007b09c:	18 00 80 d2	mov	x24, #0x0
+10007b0a0:	48 01 00 b0	adrp	x8, 41 ; 0x1000a4000
+10007b0a4:	08 41 4a 39	ldrb	w8, [x8, #0x290]
+10007b0a8:	68 00 00 37	tbnz	w8, #0x0, 0x10007b0b4
+10007b0ac:	80 0c 80 52	mov	w0, #0x64
+10007b0b0:	21 fc ff 97	bl	0x10007a134
+10007b0b4:	d8 06 00 b5	cbnz	x24, 0x10007b18c
+10007b0b8:	08 01 00 b0	adrp	x8, 33 ; 0x10009c000
+10007b0bc:	08 01 7e 39	ldrb	w8, [x8, #0xf80]
+10007b0c0:	1f 05 00 71	cmp	w8, #0x1
+10007b0c4:	21 06 00 54	b.ne	0x10007b188
+10007b0c8:	e0 03 14 aa	mov	x0, x20
+10007b0cc:	e1 67 40 b9	ldr	w1, [sp, #0x64]
+10007b0d0:	e2 03 1a aa	mov	x2, x26
+10007b0d4:	e3 3f 40 b9	ldr	w3, [sp, #0x3c]
+10007b0d8:	29 f0 ff 97	bl	0x10007717c
+10007b0dc:	f9 03 00 aa	mov	x25, x0
+10007b0e0:	c0 04 00 b4	cbz	x0, 0x10007b178
+10007b0e4:	08 01 00 b0	adrp	x8, 33 ; 0x10009c000
+10007b0e8:	00 01 47 f9	ldr	x0, [x8, #0xe00] ; Objc class ref: _OBJC_CLASS_$_NSMutableDictionary
+10007b0ec:	30 12 00 94	bl	0x10007f9ac ; symbol stub for: _objc_alloc_init
+10007b0f0:	f8 03 00 aa	mov	x24, x0
+10007b0f4:	48 01 00 90	adrp	x8, 40 ; 0x1000a3000
+10007b0f8:	08 c1 11 91	add	x8, x8, #0x470
+10007b100:	e8 5e 00 36	tbz	w8, #0x0, 0x10007bcdc
+10007b104:	f8 ef ff 97	bl	0x1000770e4
+10007b108:	f6 03 00 aa	mov	x22, x0
+10007b10c:	08 01 00 b0	adrp	x8, 33 ; 0x10009c000
+10007b110:	00 d1 46 f9	ldr	x0, [x8, #0xda0] ; Objc class ref: _OBJC_CLASS_$_NSString
+10007b114:	48 01 00 90	adrp	x8, 40 ; 0x1000a3000
+10007b118:	08 61 11 91	add	x8, x8, #0x458
+10007b11c:	09 5d c0 39	ldrsb	w9, [x8, #0x17]
+10007b120:	0a 01 40 f9	ldr	x10, [x8]
+10007b124:	3f 01 00 71	cmp	w9, #0x0
+10007b128:	42 b1 88 9a	csel	x2, x10, x8, lt
+10007b12c:	bd 17 00 94	bl	0x100081020
+10007b130:	e3 03 00 aa	mov	x3, x0
+10007b134:	e0 03 18 aa	mov	x0, x24
+10007b138:	e2 03 16 aa	mov	x2, x22
+10007b13c:	59 17 00 94	bl	0x100080ea0
+10007b140:	08 01 00 b0	adrp	x8, 33 ; 0x10009c000
+10007b144:	00 d1 46 f9	ldr	x0, [x8, #0xda0] ; Objc class ref: _OBJC_CLASS_$_NSString
+10007b148:	48 01 00 90	adrp	x8, 40 ; 0x1000a3000
+10007b14c:	08 e1 07 91	add	x8, x8, #0x1f8
+10007b150:	09 5d c0 39	ldrsb	w9, [x8, #0x17]
+10007b154:	0a 01 40 f9	ldr	x10, [x8]
+10007b158:	3f 01 00 71	cmp	w9, #0x0
+10007b15c:	42 b1 88 9a	csel	x2, x10, x8, lt
+10007b160:	b0 17 00 94	bl	0x100081020
+10007b164:	e3 03 00 aa	mov	x3, x0
+10007b168:	e0 03 18 aa	mov	x0, x24
+10007b16c:	e2 03 19 aa	mov	x2, x25
+10007b170:	4c 17 00 94	bl	0x100080ea0
+10007b174:	06 00 00 14	b	0x10007b18c
+10007b178:	18 00 80 d2	mov	x24, #0x0
+10007b17c:	e8 2f 40 f9	ldr	x8, [sp, #0x58]
+10007b180:	a8 00 00 b5	cbnz	x8, 0x10007b194
+10007b184:	06 00 00 14	b	0x10007b19c
+10007b188:	18 00 80 d2	mov	x24, #0x0
+10007b18c:	e8 2f 40 f9	ldr	x8, [sp, #0x58]
+10007b190:	68 00 00 b4	cbz	x8, 0x10007b19c
+10007b194:	e0 2f 40 f9	ldr	x0, [sp, #0x58]
+10007b198:	7a 0f 00 94	bl	0x10007ef80 ; symbol stub for: _CFRelease
+10007b19c:	78 03 00 b4	cbz	x24, 0x10007b208
+10007b1a0:	e0 03 18 aa	mov	x0, x24
+10007b1a4:	01 00 80 d2	mov	x1, #0x0
+10007b1a8:	e2 a3 44 a9	ldp	x2, x8, [sp, #0x48]
+10007b1ac:	e4 8f 42 a9	ldp	x4, x3, [sp, #0x28]
+10007b1b0:	00 01 3f d6	blr	x8
+10007b1b4:	e0 27 40 f9	ldr	x0, [sp, #0x48]
+10007b1b8:	e2 87 42 a9	ldp	x2, x1, [sp, #0x28]
+10007b1bc:	e8 13 40 f9	ldr	x8, [sp, #0x20]
+10007b1c0:	00 01 3f d6	blr	x8
+10007b1c4:	f6 03 00 aa	mov	x22, x0
+10007b1c8:	e0 03 18 aa	mov	x0, x24
+10007b1cc:	19 12 00 94	bl	0x10007fa30 ; symbol stub for: _objc_release
+10007b1d0:	16 02 00 34	cbz	w22, 0x10007b210
+10007b1d4:	93 02 80 52	mov	w19, #0x14
+10007b1d8:	00 00 80 d2	mov	x0, #0x0
+10007b1dc:	7e 12 00 94	bl	0x10007fbd4 ; symbol stub for: _time
+10007b1e0:	48 01 00 b0	adrp	x8, 41 ; 0x1000a4000
+10007b1e4:	08 4d 41 f9	ldr	x8, [x8, #0x298]
+10007b1e8:	08 00 08 cb	sub	x8, x0, x8
+10007b1ec:	1f 2d 00 f1	cmp	x8, #0xb
+10007b1f0:	4a 01 00 54	b.ge	0x10007b218
+10007b1f4:	20 00 80 52	mov	w0, #0x1
+10007b1f8:	50 12 00 94	bl	0x10007fb38 ; symbol stub for: _sleep
+10007b1fc:	73 06 00 71	subs	w19, w19, #0x1
+10007b200:	c1 fe ff 54	b.ne	0x10007b1d8
+10007b204:	24 00 00 14	b	0x10007b294
+10007b208:	80 0c 80 52	mov	w0, #0x64
+10007b20c:	ca fb ff 97	bl	0x10007a134
+10007b210:	18 00 80 52	mov	w24, #0x0
+10007b214:	35 00 00 14	b	0x10007b2e8
+10007b218:	00 00 80 d2	mov	x0, #0x0
+10007b21c:	6e 12 00 94	bl	0x10007fbd4 ; symbol stub for: _time
+10007b220:	48 01 00 b0	adrp	x8, 41 ; 0x1000a4000
+10007b224:	00 4d 01 f9	str	x0, [x8, #0x298]
+10007b228:	9f 8e 01 71	cmp	w20, #0x63
+10007b22c:	2c 03 00 54	b.gt	0x10007b290
+10007b230:	48 01 00 90	adrp	x8, 40 ; 0x1000a3000
+10007b234:	08 c1 25 91	add	x8, x8, #0x970
+10007b238:	08 d5 5b 39	ldrb	w8, [x8, #0x6f5]
+10007b23c:	a8 02 00 37	tbnz	w8, #0x0, 0x10007b290
+10007b240:	48 01 00 b0	adrp	x8, 41 ; 0x1000a4000
+10007b244:	14 ad 02 b9	str	w20, [x8, #0x2ac]
+10007b248:	48 01 00 b0	adrp	x8, 41 ; 0x1000a4000
+10007b24c:	e9 67 40 b9	ldr	w9, [sp, #0x64]
+10007b250:	09 c1 0a 39	strb	w9, [x8, #0x2b0]
+10007b254:	48 01 00 b0	adrp	x8, 41 ; 0x1000a4000
+10007b258:	e9 3f 40 b9	ldr	w9, [sp, #0x3c]
+10007b25c:	09 c5 0a 39	strb	w9, [x8, #0x2b1]
+10007b260:	48 01 00 b0	adrp	x8, 41 ; 0x1000a4000
+10007b264:	1a c9 0a 39	strb	w26, [x8, #0x2b2]
+10007b268:	01 80 9c d2	mov	x1, #0xe400
+10007b26c:	61 81 aa f2	movk	x1, #0x540b, lsl #16
+10007b270:	41 00 c0 f2	movk	x1, #0x2, lsl #32
+10007b274:	00 00 80 d2	mov	x0, #0x0
+10007b278:	52 11 00 94	bl	0x10007f7c0 ; symbol stub for: _dispatch_time
+10007b27c:	e1 00 00 b0	adrp	x1, 29 ; 0x100098000
+10007b280:	21 d4 40 f9	ldr	x1, [x1, #0x1a8] ; literal pool symbol address: __dispatch_main_q
+10007b284:	e2 00 00 d0	adrp	x2, 30 ; 0x100099000
+10007b288:	42 20 37 91	add	x2, x2, #0xdc8
+10007b28c:	2f 11 00 94	bl	0x10007f748 ; symbol stub for: _dispatch_after
+10007b290:	fa 03 00 94	bl	0x10007c278
+10007b294:	08 01 00 b0	adrp	x8, 33 ; 0x10009c000
+10007b298:	08 01 7e 39	ldrb	w8, [x8, #0xf80]
+10007b29c:	08 02 00 37	tbnz	w8, #0x0, 0x10007b2dc
+10007b2a0:	9f 92 01 71	cmp	w20, #0x64
+10007b2a4:	c0 01 00 54	b.eq	0x10007b2dc
+
+10007c278:	ff 03 02 d1	sub	sp, sp, #0x80
+10007c27c:	f6 57 05 a9	stp	x22, x21, [sp, #0x50]
+10007c280:	f4 4f 06 a9	stp	x20, x19, [sp, #0x60]
+10007c284:	fd 7b 07 a9	stp	x29, x30, [sp, #0x70]
+10007c288:	fd c3 01 91	add	x29, sp, #0x70
+10007c28c:	e8 00 00 90	adrp	x8, 28 ; 0x100098000
+10007c290:	08 d1 40 f9	ldr	x8, [x8, #0x1a0] ; literal pool symbol address: ___stack_chk_guard
+10007c294:	08 01 40 f9	ldr	x8, [x8]
+10007c298:	a8 83 1d f8	stur	x8, [x29, #-0x28]
+10007c29c:	28 01 00 f0	adrp	x8, 39 ; 0x1000a3000
+10007c2a0:	08 41 06 91	add	x8, x8, #0x190
+10007c2a8:	a8 0b 00 36	tbz	w8, #0x0, 0x10007c41c
+10007c2ac:	28 01 00 f0	adrp	x8, 39 ; 0x1000a3000
+10007c2b0:	08 c1 06 91	add	x8, x8, #0x1b0
+10007c2b8:	e8 0e 00 36	tbz	w8, #0x0, 0x10007c494
+10007c2bc:	28 01 00 f0	adrp	x8, 39 ; 0x1000a3000
+10007c2c0:	08 41 07 91	add	x8, x8, #0x1d0
+10007c2c8:	28 12 00 36	tbz	w8, #0x0, 0x10007c50c
+10007c2cc:	35 01 00 f0	adrp	x21, 39 ; 0x1000a3000
+10007c2d0:	b5 e2 05 91	add	x21, x21, #0x178
+10007c2d4:	a8 5e c0 39	ldrsb	w8, [x21, #0x17]
+10007c2d8:	a9 02 40 f9	ldr	x9, [x21]
+10007c2dc:	1f 01 00 71	cmp	w8, #0x0
+10007c2e0:	2a 01 00 f0	adrp	x10, 39 ; 0x1000a3000
+10007c2e4:	4a 61 06 91	add	x10, x10, #0x198
+10007c2e8:	2b b1 95 9a	csel	x11, x9, x21, lt
+10007c2ec:	4c 5d c0 39	ldrsb	w12, [x10, #0x17]
+10007c2f0:	9f 01 00 71	cmp	w12, #0x0
+10007c2f4:	4c 01 40 f9	ldr	x12, [x10]
+10007c2f8:	8a b1 8a 9a	csel	x10, x12, x10, lt
+10007c2fc:	eb 2b 01 a9	stp	x11, x10, [sp, #0x10]
+10007c300:	2a 01 00 f0	adrp	x10, 39 ; 0x1000a3000
+10007c304:	4a e1 06 91	add	x10, x10, #0x1b8
+10007c308:	4b 5d c0 39	ldrsb	w11, [x10, #0x17]
+10007c30c:	4c 01 40 f9	ldr	x12, [x10]
+10007c310:	7f 01 00 71	cmp	w11, #0x0
+10007c314:	8a b1 8a 9a	csel	x10, x12, x10, lt
+10007c318:	ea 7f 02 a9	stp	x10, xzr, [sp, #0x20]
+10007c31c:	34 01 00 f0	adrp	x20, 39 ; 0x1000a3000
+10007c320:	94 c2 25 91	add	x20, x20, #0x970
+10007c324:	93 d2 41 39	ldrb	w19, [x20, #0x74]
+10007c328:	d3 00 00 37	tbnz	w19, #0x0, 0x10007c340
+10007c32c:	40 01 00 90	adrp	x0, 40 ; 0x1000a4000
+10007c330:	00 00 02 91	add	x0, x0, #0x80
+10007c334:	c1 ad fe 97	bl	0x100027a38
+10007c338:	a8 5e 40 39	ldrb	w8, [x21, #0x17]
+10007c33c:	a9 02 40 f9	ldr	x9, [x21]
+10007c340:	08 1d 00 13	sxtb	w8, w8
+10007c344:	1f 01 00 71	cmp	w8, #0x0
+10007c348:	21 b1 95 9a	csel	x1, x9, x21, lt
+10007c34c:	e8 00 00 90	adrp	x8, 28 ; 0x100098000
+10007c350:	08 e5 40 f9	ldr	x8, [x8, #0x1c8] ; literal pool symbol address: _environ
+10007c354:	05 01 40 f9	ldr	x5, [x8]
+10007c358:	e0 c3 00 91	add	x0, sp, #0x30
+10007c35c:	e4 43 00 91	add	x4, sp, #0x10
+10007c360:	02 00 80 d2	mov	x2, #0x0
+10007c364:	03 00 80 d2	mov	x3, #0x0
+10007c368:	c4 0d 00 94	bl	0x10007fa78 ; symbol stub for: _posix_spawn
+10007c36c:	e0 33 40 b9	ldr	w0, [sp, #0x30]
+10007c370:	e1 33 00 91	add	x1, sp, #0xc
+10007c374:	02 00 80 52	mov	w2, #0x0
+10007c378:	23 0e 00 94	bl	0x10007fc04 ; symbol stub for: _waitpid
+10007c37c:	00 48 88 52	mov	w0, #0x4240
+10007c380:	e0 01 a0 72	movk	w0, #0xf, lsl #16
+10007c384:	1a 0e 00 94	bl	0x10007fbec ; symbol stub for: _usleep
+10007c388:	88 c2 5b 39	ldrb	w8, [x20, #0x6f0]
+10007c38c:	1f 05 00 71	cmp	w8, #0x1
+10007c390:	21 01 00 54	b.ne	0x10007c3b4
+
+10007c41c:	20 01 00 f0	adrp	x0, 39 ; 0x1000a3000
+10007c420:	00 40 06 91	add	x0, x0, #0x190
+10007c424:	87 0c 00 94	bl	0x10007f640 ; symbol stub for: ___cxa_guard_acquire
+10007c428:	20 f4 ff 34	cbz	w0, 0x10007c2ac
+10007c42c:	28 00 00 b0	adrp	x8, 5 ; 0x100081000
+10007c430:	00 f9 c3 3d	ldr	q0, [x8, #0xfe0]
+10007c434:	e0 0f 80 3d	str	q0, [sp, #0x30]
+10007c438:	e0 43 00 91	add	x0, sp, #0x10
+10007c43c:	e1 c3 00 91	add	x1, sp, #0x30
+10007c440:	02 02 80 52	mov	w2, #0x10
+10007c444:	43 e4 ff 97	bl	0x100075550
+10007c448:	20 01 00 f0	adrp	x0, 39 ; 0x1000a3000
+10007c44c:	00 e0 05 91	add	x0, x0, #0x178
+10007c450:	e1 43 00 91	add	x1, sp, #0x10
+10007c454:	62 e4 ff 97	bl	0x1000755dc
+10007c458:	e0 0b 40 f9	ldr	x0, [sp, #0x10]
+10007c45c:	60 00 00 b4	cbz	x0, 0x10007c468
+10007c460:	e0 0f 00 f9	str	x0, [sp, #0x18]
+10007c464:	5c 0c 00 94	bl	0x10007f5d4 ; symbol stub for: __ZdlPv
+10007c468:	c0 ff ff b0	adrp	x0, -7 ; 0x100075000
+10007c46c:	00 b0 19 91	add	x0, x0, #0x66c
+10007c470:	21 01 00 f0	adrp	x1, 39 ; 0x1000a3000
+10007c474:	21 e0 05 91	add	x1, x1, #0x178
+10007c478:	22 fc ff 90	adrp	x2, -124 ; 0x100000000
+10007c47c:	42 00 00 91	add	x2, x2, #0x0
+10007c480:	61 0c 00 94	bl	0x10007f604 ; symbol stub for: ___cxa_atexit
+10007c484:	20 01 00 f0	adrp	x0, 39 ; 0x1000a3000
+10007c488:	00 40 06 91	add	x0, x0, #0x190
+10007c48c:	70 0c 00 94	bl	0x10007f64c ; symbol stub for: ___cxa_guard_release
+10007c490:	87 ff ff 17	b	0x10007c2ac
+10007c494:	20 01 00 f0	adrp	x0, 39 ; 0x1000a3000
+10007c498:	00 c0 06 91	add	x0, x0, #0x1b0
+10007c49c:	69 0c 00 94	bl	0x10007f640 ; symbol stub for: ___cxa_guard_acquire
+10007c4a0:	e0 f0 ff 34	cbz	w0, 0x10007c2bc
+10007c4a4:	28 00 00 b0	adrp	x8, 5 ; 0x100081000
+10007c4a8:	00 d9 47 fd	ldr	d0, [x8, #0xfb0]
+10007c4ac:	e0 33 00 bd	str	s0, [sp, #0x30]
+10007c4b0:	e0 43 00 91	add	x0, sp, #0x10
+10007c4b4:	e1 c3 00 91	add	x1, sp, #0x30
+10007c4b8:	82 00 80 52	mov	w2, #0x4
+10007c4bc:	25 e4 ff 97	bl	0x100075550
+10007c4c0:	20 01 00 f0	adrp	x0, 39 ; 0x1000a3000
+10007c4c4:	00 60 06 91	add	x0, x0, #0x198
+10007c4c8:	e1 43 00 91	add	x1, sp, #0x10
+10007c4cc:	44 e4 ff 97	bl	0x1000755dc
+10007c4d0:	e0 0b 40 f9	ldr	x0, [sp, #0x10]
+10007c4d4:	60 00 00 b4	cbz	x0, 0x10007c4e0
+10007c4d8:	e0 0f 00 f9	str	x0, [sp, #0x18]
+10007c4dc:	3e 0c 00 94	bl	0x10007f5d4 ; symbol stub for: __ZdlPv
+10007c4e0:	c0 ff ff b0	adrp	x0, -7 ; 0x100075000
+10007c4e4:	00 b0 19 91	add	x0, x0, #0x66c
+10007c4e8:	21 01 00 f0	adrp	x1, 39 ; 0x1000a3000
+10007c4ec:	21 60 06 91	add	x1, x1, #0x198
+10007c4f0:	22 fc ff 90	adrp	x2, -124 ; 0x100000000
+10007c4f4:	42 00 00 91	add	x2, x2, #0x0
+10007c4f8:	43 0c 00 94	bl	0x10007f604 ; symbol stub for: ___cxa_atexit
+10007c4fc:	20 01 00 f0	adrp	x0, 39 ; 0x1000a3000
+10007c500:	00 c0 06 91	add	x0, x0, #0x1b0
+10007c504:	52 0c 00 94	bl	0x10007f64c ; symbol stub for: ___cxa_guard_release
+10007c508:	6d ff ff 17	b	0x10007c2bc
+10007c50c:	20 01 00 f0	adrp	x0, 39 ; 0x1000a3000
+10007c510:	00 40 07 91	add	x0, x0, #0x1d0
+10007c514:	4b 0c 00 94	bl	0x10007f640 ; symbol stub for: ___cxa_guard_acquire
+10007c518:	a0 ed ff 34	cbz	w0, 0x10007c2cc
+10007c51c:	28 00 00 b0	adrp	x8, 5 ; 0x100081000
+10007c520:	00 dd 47 fd	ldr	d0, [x8, #0xfb8]
+10007c524:	e0 33 00 bd	str	s0, [sp, #0x30]
+10007c528:	08 c5 87 52	mov	w8, #0x3e28
+10007c52c:	e8 6b 00 79	strh	w8, [sp, #0x34]
+10007c530:	e0 43 00 91	add	x0, sp, #0x10
+10007c534:	e1 c3 00 91	add	x1, sp, #0x30
+10007c538:	c2 00 80 52	mov	w2, #0x6
+10007c53c:	05 e4 ff 97	bl	0x100075550
+10007c540:	20 01 00 f0	adrp	x0, 39 ; 0x1000a3000
+10007c544:	00 e0 06 91	add	x0, x0, #0x1b8
+10007c548:	e1 43 00 91	add	x1, sp, #0x10
+10007c54c:	24 e4 ff 97	bl	0x1000755dc
+10007c550:	e0 0b 40 f9	ldr	x0, [sp, #0x10]
+10007c554:	60 00 00 b4	cbz	x0, 0x10007c560
+10007c558:	e0 0f 00 f9	str	x0, [sp, #0x18]
+10007c55c:	1e 0c 00 94	bl	0x10007f5d4 ; symbol stub for: __ZdlPv
+10007c560:	c0 ff ff b0	adrp	x0, -7 ; 0x100075000
+10007c564:	00 b0 19 91	add	x0, x0, #0x66c
+10007c568:	21 01 00 f0	adrp	x1, 39 ; 0x1000a3000
+10007c56c:	21 e0 06 91	add	x1, x1, #0x1b8
+10007c570:	22 fc ff 90	adrp	x2, -124 ; 0x100000000
+10007c574:	42 00 00 91	add	x2, x2, #0x0
+10007c578:	23 0c 00 94	bl	0x10007f604 ; symbol stub for: ___cxa_atexit
+10007c57c:	20 01 00 f0	adrp	x0, 39 ; 0x1000a3000
+
