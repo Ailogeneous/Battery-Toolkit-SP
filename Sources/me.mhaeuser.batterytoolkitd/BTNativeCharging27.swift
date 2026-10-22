@@ -111,8 +111,8 @@ internal enum BTNativeCharging27 {
         CFPreferencesCopyMultiple(nil, domain, kCFPreferencesAnyUser, kCFPreferencesCurrentHost) as? [String: Any] ?? [:]
     }
 
-    private static func policies() throws -> [BTArchivedChargePolicy27] {
-        guard let data = preferences()["policies"] as? Data else { return [] }
+    private static func policies(data: Data? = nil) throws -> [BTArchivedChargePolicy27] {
+        guard let data = data ?? (preferences()["policies"] as? Data) else { return [] }
         let decoder = try NSKeyedUnarchiver(forReadingFrom: data)
         decoder.requiresSecureCoding = true
         decoder.decodingFailurePolicy = .setErrorAndReturn
@@ -220,7 +220,8 @@ internal enum BTNativeCharging27 {
             for key in topoffKeys { CFPreferencesSetValue(key as CFString, topoff[key] as CFPropertyList?, topoffDomain, kCFPreferencesCurrentUser, kCFPreferencesCurrentHost) }
             guard CFPreferencesSynchronize(topoffDomain, kCFPreferencesCurrentUser, kCFPreferencesCurrentHost) else { return false }
             CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFNotificationName("com.apple.smartcharging.defaultschanged" as CFString), nil, nil, true)
-            let entries = try policies().filter { $0.reason != "BatteryToolkit.macOS27" }
+            let restoredSystemEntries = try (original["policies"] as? Data).map { try policies(data: $0).filter { $0.reason == "manualChargeLimit" } } ?? []
+            let entries = try policies().filter { $0.reason != "BatteryToolkit.macOS27" && $0.reason != "manualChargeLimit" } + restoredSystemEntries
             if entries.isEmpty, record["boot"] as? String == boot {
                 let keys = ["bootSessionUUID", "policies"]
                 for key in keys { CFPreferencesSetValue(key as CFString, original[key] as CFPropertyList?, domain, kCFPreferencesAnyUser, kCFPreferencesCurrentHost) }
