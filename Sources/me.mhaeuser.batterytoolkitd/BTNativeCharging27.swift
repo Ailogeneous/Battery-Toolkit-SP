@@ -137,13 +137,25 @@ internal enum BTNativeCharging27 {
         return submissionSucceeded
     }
 
+    private static func releaseSystemLimit() -> Bool {
+        guard dlopen("/System/Library/PrivateFrameworks/PowerUI.framework/PowerUI", RTLD_NOW) != nil,
+              let type = NSClassFromString("PowerUISmartChargeClient") as? NSObject.Type,
+              let allocated = type.perform(NSSelectorFromString("alloc"))?.takeRetainedValue() as? NSObject,
+              let client = allocated.perform(NSSelectorFromString("initWithClientName:"), with: "BatteryToolkit.macOS27")?.takeUnretainedValue() as? NSObject else { return false }
+        let selector = NSSelectorFromString("setMCLLimit:error:")
+        guard client.responds(to: selector), let method = class_getInstanceMethod(type, selector) else { return false }
+        typealias Setter = @convention(c) (AnyObject, Selector, UInt8, AutoreleasingUnsafeMutablePointer<NSError?>?) -> Bool
+        let setter = unsafeBitCast(method_getImplementation(method), to: Setter.self)
+        var error: NSError?
+        let accepted = setter(client, selector, 100, &error)
+        journal("system-policy-released", extra: ["accepted": accepted, "error": error?.localizedDescription ?? "none"])
+        return accepted && error == nil
+    }
+
     private static func writePolicy() -> Bool {
         guard let requested, let boot else { return false }
         do {
-            CFPreferencesSetValue("mclLimitValue" as CFString, requested as CFNumber, topoffDomain, kCFPreferencesCurrentUser, kCFPreferencesCurrentHost)
-            CFPreferencesSetValue("MCLFeatureState" as CFString, 1 as CFNumber, topoffDomain, kCFPreferencesCurrentUser, kCFPreferencesCurrentHost)
-            guard CFPreferencesSynchronize(topoffDomain, kCFPreferencesCurrentUser, kCFPreferencesCurrentHost) else { throw NSError(domain: "BTNativeCharging27", code: 3) }
-            CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFNotificationName("com.apple.smartcharging.defaultschanged" as CFString), nil, nil, true)
+            guard releaseSystemLimit() else { throw NSError(domain: "BTNativeCharging27", code: 3, userInfo: [NSLocalizedDescriptionKey: "PowerUI could not release its ordinary policy"]) }
             let current = preferences()
             let sameBoot = (current["bootSessionUUID"] as? String) == boot
             var entries = sameBoot ? try policies() : []
