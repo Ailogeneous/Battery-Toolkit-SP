@@ -67,7 +67,9 @@ public extension SMCComm {
 
         static func disableCharging() -> Bool {
             if BTNativeCharging27.active {
-                return BTNativeCharging27.request(limit: Int(BTSettings.minCharge), suppressCalibration: BTSettings.maxCharge < 80)
+                let current = Int(BTPowerState.getPercentRemaining().0)
+                let limit = min(Int(BTSettings.minCharge), current)
+                return BTNativeCharging27.request(limit: limit, suppressCalibration: BTSettings.maxCharge < 80)
             }
             return SMCComm.writeKey(
                 key: self.chargeKeys[self.chargeKey].keyInfo.key,
