@@ -1,0 +1,180 @@
+uid=501 supported=YES original_limit=100 getter_error=none
+stage=baseline time=2026-10-22 00:31:12 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	99%; finishing charge; 0:00 remaining present: true
+No battery level limits set
+set limit=80 accepted=YES error=none
+stage=80-immediate time=2026-10-22 00:31:12 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	99%; finishing charge; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 80;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 80;
+    }
+)
+stage=80-observation time=2026-10-22 00:31:17 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	99%; finishing charge; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 80;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 80;
+    }
+)
+stage=80-observation time=2026-10-22 00:31:22 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	99%; finishing charge; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 80;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 80;
+    }
+)
+stage=80-observation time=2026-10-22 00:31:27 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	99%; finishing charge; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 80;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 80;
+    }
+)
+stage=80-observation time=2026-10-22 00:31:32 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	99%; finishing charge; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 80;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 80;
+    }
+)
+stage=80-observation time=2026-10-22 00:31:37 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	99%; finishing charge; 0:00 remaining present: true
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 80;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 80;
+    }
+)
+set limit=100 accepted=YES error=none
+restore original=100 getter=100 verified=YES error=none
+stage=restored-immediate time=2026-10-22 00:31:37 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	99%; finishing charge; 0:00 remaining present: true
+No battery level limits set
+stage=restored-observation time=2026-10-22 00:31:42 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	99%; finishing charge; 0:00 remaining present: true
+No battery level limits set
+stage=restored-observation time=2026-10-22 00:31:47 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	99%; finishing charge; 0:00 remaining present: true
+No battery level limits set
+stage=restored-observation time=2026-10-22 00:31:52 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	99%; finishing charge; 0:00 remaining present: true
+No battery level limits set
+stage=restored-observation time=2026-10-22 00:31:57 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	99%; finishing charge; 0:00 remaining present: true
+No battery level limits set
+stage=restored-observation time=2026-10-22 00:32:02 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	99%; finishing charge; 0:00 remaining present: true
+No battery level limits set
+stage=restored-observation time=2026-10-22 00:32:07 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	99%; finishing charge; 0:00 remaining present: true
+No battery level limits set

@@ -1,0 +1,5 @@
+uid=501 supported=YES original_limit=100 getter_error=none
+stage=baseline time=2026-10-22 00:32:10 +0000
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=38404195)	99%; finishing charge; 0:00 remaining present: true
+No battery level limits set
