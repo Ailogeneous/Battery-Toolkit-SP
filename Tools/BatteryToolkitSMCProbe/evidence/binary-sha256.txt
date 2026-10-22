@@ -1,0 +1,2 @@
+115c9f37dfec4e8d47b8d0efb2f0ecd6576243dc835037386070c56b78b13542  /System/Library/CoreServices/powerd.bundle/powerd
+1e95b8667e1afb3e52ef45fb7e66e67f89b2da084a65f46c49d3d0eb7db84d11  /tmp/tethered-kernelcache.decoded
