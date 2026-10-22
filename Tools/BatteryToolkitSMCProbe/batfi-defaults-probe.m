@@ -10,7 +10,7 @@ int main(int argc, const char **argv) {
     setbuf(stdout, NULL);
     @autoreleasepool {
         if (argc != 2 || strcmp(argv[1], "--test-75-and-restore")) return 1;
-        if (!onAC() || getuid() == 0) return 2;
+        if (!onAC()) return 2;
         if (!dlopen("/System/Library/PrivateFrameworks/PowerUI.framework/PowerUI", RTLD_NOW)) return 3;
         id client = [[NSClassFromString(@"PowerUISmartChargeClient") alloc] initWithClientName:@"TetheredDefaultsDiagnostic"];
         NSError *error = nil;
