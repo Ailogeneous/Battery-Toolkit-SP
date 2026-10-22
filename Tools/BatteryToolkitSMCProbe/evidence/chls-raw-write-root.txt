@@ -1,0 +1,10 @@
+User-supplied root probe result, 2026-10-21.
+uid=0 open=0x0
+client_open=0x0
+read key=CHLT io=0x0 smc=0 bytes=000000
+read key=bfG0 io=0x0 smc=0 bytes=000000
+Submitting one raw CHLS operation=6 size=2 payload=0000; metadata lookup bypassed
+raw_write key=CHLS io=0xe00002c1 smc=0 returned_struct_size=80
+read key=CHLT io=0x0 smc=0 bytes=000000
+read key=bfG0 io=0x0 smc=0 bytes=000000
+State reads are indirect observations, not direct CHLS readback or proof of charging control
