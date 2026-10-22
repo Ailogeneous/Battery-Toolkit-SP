@@ -59,6 +59,8 @@ internal enum BTNativeCharging27 {
     private static var snapshotURL: URL { directory.appendingPathComponent("original.plist") }
     private static var journalURL: URL { directory.appendingPathComponent("charging.jsonl") }
     private static var timer: DispatchSourceTimer?
+    private static var logProcess: Process?
+    private static var logPipe: Pipe?
     private static var requested: Int?
     private static var suppress = false
     private static var attempts = 0
@@ -88,6 +90,7 @@ internal enum BTNativeCharging27 {
             source.resume()
             timer = source
             journal("start", extra: ["boot": boot!])
+            startSystemLog()
             return true
         } catch {
             os_log("macOS27 native startup failed %{public}@", error.localizedDescription)
@@ -176,6 +179,10 @@ internal enum BTNativeCharging27 {
         guard active, let boot else { return false }
         timer?.cancel()
         timer = nil
+        logPipe?.fileHandleForReading.readabilityHandler = nil
+        if logProcess?.isRunning == true { logProcess?.terminate() }
+        logProcess = nil
+        logPipe = nil
         do {
             let data = try Data(contentsOf: snapshotURL)
             guard let record = try PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any], let original = record["preferences"] as? [String: Any] else { return false }
@@ -218,6 +225,31 @@ internal enum BTNativeCharging27 {
         if let requested { result["requestedLimit"] = requested }
         result["noChargeToFull"] = suppress
         return result
+    }
+
+    private static func startSystemLog() {
+        let process = Process()
+        let pipe = Pipe()
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/log")
+        process.arguments = ["stream", "--style", "ndjson", "--level", "info", "--predicate", "(process == 'powerd' OR process == 'PowerUIAgent') AND (eventMessage CONTAINS[c] 'gauging' OR eventMessage CONTAINS[c] 'mitigation' OR eventMessage CONTAINS[c] 'MCL' OR eventMessage CONTAINS[c] 'SOC limit' OR eventMessage CONTAINS[c] 'chargingtofulloverride')"]
+        process.standardOutput = pipe
+        process.standardError = FileHandle.nullDevice
+        pipe.fileHandleForReading.readabilityHandler = { handle in
+            let data = handle.availableData
+            guard !data.isEmpty else { return }
+            let text = String(decoding: data, as: UTF8.self)
+            DispatchQueue.main.async {
+                journal("system-log", extra: ["text": text])
+            }
+        }
+        do {
+            try process.run()
+            logProcess = process
+            logPipe = pipe
+        } catch {
+            pipe.fileHandleForReading.readabilityHandler = nil
+            journal("system-log-unavailable", extra: ["error": error.localizedDescription])
+        }
     }
 
     private static func journal(_ event: String, extra: [String: Any] = [:]) {
