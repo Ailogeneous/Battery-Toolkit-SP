@@ -3,6 +3,7 @@ import IOKit
 import ObjectiveC
 import os.log
 
+@objc(BTArchivedChargePolicy27)
 private final class BTArchivedChargePolicy27: NSObject, NSSecureCoding {
     static var supportsSecureCoding: Bool { true }
     var limit: Int
@@ -178,7 +179,7 @@ internal enum BTNativeCharging27 {
         do {
             let data = try Data(contentsOf: snapshotURL)
             guard let record = try PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any], let original = record["preferences"] as? [String: Any] else { return false }
-            var entries = try policies().filter { $0.reason != "BatteryToolkit.macOS27" }
+            let entries = try policies().filter { $0.reason != "BatteryToolkit.macOS27" }
             if entries.isEmpty, record["boot"] as? String == boot {
                 let keys = ["bootSessionUUID", "policies"]
                 for key in keys { CFPreferencesSetValue(key as CFString, original[key] as CFPropertyList?, domain, kCFPreferencesAnyUser, kCFPreferencesCurrentHost) }
