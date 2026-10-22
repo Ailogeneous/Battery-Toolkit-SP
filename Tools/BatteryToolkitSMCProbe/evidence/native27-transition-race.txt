@@ -1,0 +1,251 @@
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 80;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 80;
+    }
+)
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 80;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 80;
+    }
+)
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 80;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 80;
+    }
+)
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 100;
+    }
+)
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 100;
+    }
+)
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 100;
+    }
+)
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 694;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 1;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = manualChargeLimit;
+        chargeSocLimitSoc = 75;
+    }
+)
+pid=72771 limit=75 submitted=true
+pid=72771 limit=80 submitted=true
+pid=72771 limit=100 submitted=true
+pid=72771 limit=75 submitted=true
+restored=true

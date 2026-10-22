@@ -1,0 +1,198 @@
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 0;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 1;
+        chargeSocLimitOwner = 73851;
+        chargeSocLimitReason = "BatteryToolkit.macOS27";
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 0;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 1;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = "BatteryToolkit.macOS27";
+        chargeSocLimitSoc = 75;
+    }
+)
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 0;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 1;
+        chargeSocLimitOwner = 73851;
+        chargeSocLimitReason = "BatteryToolkit.macOS27";
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 0;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 1;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = "BatteryToolkit.macOS27";
+        chargeSocLimitSoc = 75;
+    }
+)
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 0;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 1;
+        chargeSocLimitOwner = 73851;
+        chargeSocLimitReason = "BatteryToolkit.macOS27";
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 0;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 1;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = "BatteryToolkit.macOS27";
+        chargeSocLimitSoc = 75;
+    }
+)
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 0;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 73851;
+        chargeSocLimitReason = "BatteryToolkit.macOS27";
+        chargeSocLimitSoc = 80;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 0;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = "BatteryToolkit.macOS27";
+        chargeSocLimitSoc = 80;
+    }
+)
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 0;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 73851;
+        chargeSocLimitReason = "BatteryToolkit.macOS27";
+        chargeSocLimitSoc = 80;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 0;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = "BatteryToolkit.macOS27";
+        chargeSocLimitSoc = 80;
+    }
+)
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 0;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 73851;
+        chargeSocLimitReason = "BatteryToolkit.macOS27";
+        chargeSocLimitSoc = 80;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 0;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 0;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = "BatteryToolkit.macOS27";
+        chargeSocLimitSoc = 80;
+    }
+)
+No battery level limits set
+No battery level limits set
+No battery level limits set
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 0;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 1;
+        chargeSocLimitOwner = 73851;
+        chargeSocLimitReason = "BatteryToolkit.macOS27";
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 0;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 1;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = "BatteryToolkit.macOS27";
+        chargeSocLimitSoc = 75;
+    }
+)
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 0;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 1;
+        chargeSocLimitOwner = 73851;
+        chargeSocLimitReason = "BatteryToolkit.macOS27";
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 0;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 1;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = "BatteryToolkit.macOS27";
+        chargeSocLimitSoc = 75;
+    }
+)
+Battery level limits:
+(
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 0;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 1;
+        chargeSocLimitOwner = 73851;
+        chargeSocLimitReason = "BatteryToolkit.macOS27";
+        chargeSocLimitSoc = 75;
+    },
+        {
+        Terminated = 0;
+        chargeSocLimitDrain = 0;
+        chargeSocLimitIsEOC = 1;
+        chargeSocLimitNoChargeToFull = 1;
+        chargeSocLimitOwner = 0;
+        chargeSocLimitReason = "BatteryToolkit.macOS27";
+        chargeSocLimitSoc = 75;
+    }
+)
+No battery level limits set
+pid=73851 limit=75 submitted=true
+pid=73851 limit=80 submitted=true
+pid=73851 limit=100 submitted=true
+pid=73851 limit=75 submitted=true
+restored=true
