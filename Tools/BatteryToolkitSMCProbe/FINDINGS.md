@@ -42,4 +42,4 @@ access-probe.c performs only raw reads, supplying CHLS size 2 and readback keys 
 
 ## Additional raw-read result
 
-The access probe compiled cleanly and ran as UID 501. CHLS raw read with supplied size 2 returned IOKit 0xe00002c1; CHLT, bfG0 and CHIE reads succeeded with zero values. Root execution of this exact raw-read probe remains pending because sudo requires interactive authentication.
+The access probe compiled cleanly and ran as UID 501. CHLS raw read with supplied size 2 returned IOKit 0xe00002c1; CHLT, bfG0 and CHIE reads succeeded with zero values. The user subsequently ran this exact probe as root: CHLS again returned 0xe00002c1; all four control/state reads succeeded. See evidence/chls-raw-read-root.txt. This rules out a metadata-only failure and ordinary user privilege as explanations for CHLS read denial. A raw write remains untested.

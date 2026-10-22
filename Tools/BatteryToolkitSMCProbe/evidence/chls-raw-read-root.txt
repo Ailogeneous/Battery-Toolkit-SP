@@ -1,0 +1,8 @@
+User-supplied root probe result, 2026-10-21. AC state was not included in this output.
+uid=0 struct_size=80 open=0x0
+client_open=0x0
+raw_read key=#KEY requested_size=4 io=0x0 smc=0 returned_struct_size=80 bytes=00000976
+raw_read key=CHLS requested_size=2 io=0xe00002c1 smc=0 returned_struct_size=80
+raw_read key=CHLT requested_size=3 io=0x0 smc=0 returned_struct_size=80 bytes=000000
+raw_read key=bfG0 requested_size=3 io=0x0 smc=0 returned_struct_size=80 bytes=000000
+raw_read key=CHIE requested_size=1 io=0x0 smc=0 returned_struct_size=80 bytes=00
