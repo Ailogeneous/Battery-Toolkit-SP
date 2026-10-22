@@ -43,3 +43,7 @@ access-probe.c performs only raw reads, supplying CHLS size 2 and readback keys 
 ## Additional raw-read result
 
 The access probe compiled cleanly and ran as UID 501. CHLS raw read with supplied size 2 returned IOKit 0xe00002c1; CHLT, bfG0 and CHIE reads succeeded with zero values. The user subsequently ran this exact probe as root: CHLS again returned 0xe00002c1; all four control/state reads succeeded. See evidence/chls-raw-read-root.txt. This rules out a metadata-only failure and ordinary user privilege as explanations for CHLS read denial. A raw write remains untested.
+
+## Raw-write access probe prepared
+
+chls-write-access.c performs exactly one operation-6 raw write to CHLS with data size 2 and payload 0000. It requires root, an explicit command-line flag, and successful CHLT/bfG0 reads that both equal 000000. This reasserts the inferred native unrestricted payload; it does not request a different percentage. CHLS is unreadable, so its exact original bytes cannot be independently saved. The existing state correlation is an indirect precondition, not direct CHLS readback. Do not change native charging settings concurrently. No entitlement, SIP, signature, or driver changes are performed. Even a successful call would establish only acceptance of this payload, not proof of useful charging control. Execution requires the user's authenticated Terminal; no raw CHLS write has been executed by the agent.
