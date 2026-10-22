@@ -28,7 +28,7 @@ IOKit IOPSLimitBatteryLevel, Register and Cancel are XPC clients of com.apple.io
 
 powerd's policy application at 0x100058388 builds a two-byte CHLS payload and invokes its SMC writer at 0x10005f708. Payload byte 0 is socLimit. Byte 1 = drain | (noChargeToFull ? 2 : 0) | (isEOC ? 4 : 0). The native observed 80% policy therefore corresponds to 50 05. The SMC helper first queries metadata (operation 9), then writes (operation 6), through AppleSMC user client type 1 and external selector 2, 80-byte structures. No direct CHLS write has been attempted by our probe.
 
-The active kernelcache was read from Preboot boot/active (9C7ABC5A...E959715818D8), IMG4 LZFSE payload decompressed to /tmp/tethered-kernelcache.decoded. Symbols identify AppleSMCClient::initWithTask, smcYPCEventCheck, and check_specific_entitlements. Driver init requests com.apple.private.applesmc.user-access and stores a Boolean for unrestricted access; it also loads com.apple.smc.keys_entitlement as per-key authorization. smcYPCEventCheck consults the per-key collection and contains a 56-entry wildcard table including bfD*, bfE*, bfF*, CHLS and other patterns (see evidence/kernel-key-patterns.txt for the actual table). Exact branch semantics and the precise check responsible for CHLS denial remain under analysis. Do not equate the powerd SOC entitlement gate with the driver's per-key gate without completing that trace.
+The active kernelcache was read from Preboot boot/active (9C7ABC5A...E959715818D8), IMG4 LZFSE payload decompressed to /tmp/tethered-kernelcache.decoded. Symbols identify AppleSMCClient::initWithTask, smcYPCEventCheck, and check_specific_entitlements. Driver init requests com.apple.private.applesmc.user-access and stores a Boolean for unrestricted access; it also loads com.apple.smc.keys_entitlement as per-key authorization. smcYPCEventCheck consults the per-key collection and contains a 56-entry wildcard table including bfD*, bfE*, bfF* and other patterns; CHLS is not in that table (see evidence/kernel-key-patterns.txt for the actual table). Exact branch semantics and the precise check responsible for CHLS denial remain under analysis. Do not equate the powerd SOC entitlement gate with the driver's per-key gate without completing that trace.
 
 ## Evidence and limitations
 
@@ -39,3 +39,7 @@ Community references: https://github.com/charlie0129/batt/issues/152 ; https://g
 ## Next experiment
 
 access-probe.c performs only raw reads, supplying CHLS size 2 and readback keys CHLT/bfG0 size 3 without metadata lookup. Run as root with AC connected to distinguish metadata denial from value-read denial. No write operation is implemented. Build with the same SMCParamStruct include path and IOKit/CoreFoundation linkage as probe.c. A raw write test is still outstanding, not proven denied by read failures. Any future write test must be narrowly scoped with known native payload and an explicit restoration procedure; do not modify Toolkit behavior while investigating.
+
+## Additional raw-read result
+
+The access probe compiled cleanly and ran as UID 501. CHLS raw read with supplied size 2 returned IOKit 0xe00002c1; CHLT, bfG0 and CHIE reads succeeded with zero values. Root execution of this exact raw-read probe remains pending because sudo requires interactive authentication.
