@@ -98,7 +98,7 @@ internal enum BTNativeCharging27 {
             source.setEventHandler { MainActor.assumeIsolated { sampleAndReconcile() } }
             source.resume()
             timer = source
-            journal("start", extra: ["boot": boot!])
+            journal("start", extra: ["boot": boot!, "os": ProcessInfo.processInfo.operatingSystemVersionString, "pid": Int(getpid())])
             startSystemLog()
             return true
         } catch {
@@ -260,6 +260,10 @@ internal enum BTNativeCharging27 {
             }
         }
         if let state = SMCComm.readKey(key: SMCComm.Key("C", "H", "L", "T"), dataSize: 3) { result["CHLT"] = state.map { String(format: "%02x", $0) }.joined() }
+        if let mirror = SMCComm.readKey(key: SMCComm.Key("b", "f", "G", "0"), dataSize: 3) { result["bfG0"] = mirror.map { String(format: "%02x", $0) }.joined() }
+        if let entries = try? policies() {
+            result["persistedPolicies"] = entries.map { ["owner": $0.owner, "limit": $0.limit, "reason": $0.reason as String, "drain": $0.drain, "noChargeToFull": $0.inhibitFull, "terminated": $0.terminated] as [String: Any] }
+        }
         if let requested { result["requestedLimit"] = requested }
         result["noChargeToFull"] = suppress
         return result
