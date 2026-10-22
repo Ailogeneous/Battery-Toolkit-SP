@@ -79,6 +79,8 @@ internal enum BTPowerEvents {
         if !self.updating {
             if BTNativeCharging27.active { _ = BTNativeCharging27.restore() }
             self.restoreDefaults()
+        } else if BTNativeCharging27.active {
+            BTNativeCharging27.suspend()
         }
 
         GlobalSleep.forceRestore()
@@ -159,6 +161,7 @@ internal enum BTPowerEvents {
 
     static func chargeToFull() -> Bool {
         self.chargingMode = .toFull
+        if BTNativeCharging27.active { return BTPowerState.enableCharging(percent: BTPowerState.getPercentRemaining().0) }
         return self.enableBelowLimitMode(limit: 100)
     }
 

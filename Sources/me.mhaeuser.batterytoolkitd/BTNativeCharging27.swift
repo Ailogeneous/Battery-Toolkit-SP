@@ -54,6 +54,9 @@ private final class BTArchivedChargePolicy27: NSObject, NSSecureCoding {
 @MainActor
 internal enum BTNativeCharging27 {
     static var active: Bool { ProcessInfo.processInfo.operatingSystemVersion.majorVersion == 27 }
+    private static let topoffDomain = "com.apple.smartcharging.topoffprotection" as CFString
+    private static let topoffKeys = ["mclLimitValue", "MCLFeatureState"]
+    private static var submissionSucceeded = false
     private static let domain = "com.apple.powerd.charging" as CFString
     private static let directory = URL(fileURLWithPath: "/Library/Application Support/BatteryToolkit/macOS27", isDirectory: true)
     private static var snapshotURL: URL { directory.appendingPathComponent("original.plist") }
@@ -69,6 +72,7 @@ internal enum BTNativeCharging27 {
 
     static func start() -> Bool {
         guard active, geteuid() == 0 else { return false }
+        if timer != nil { return true }
         var size = 0
         guard sysctlbyname("kern.bootsessionuuid", nil, &size, nil, 0) == 0 else { return false }
         var bytes = [CChar](repeating: 0, count: size)
@@ -78,7 +82,11 @@ internal enum BTNativeCharging27 {
             try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true, attributes: [.posixPermissions: 0o700])
             if !FileManager.default.fileExists(atPath: snapshotURL.path) {
                 let original = preferences()
-                let record: [String: Any] = ["boot": boot!, "preferences": original]
+                var topoff: [String: Any] = [:]
+                for key in topoffKeys {
+                    if let value = CFPreferencesCopyValue(key as CFString, topoffDomain, kCFPreferencesCurrentUser, kCFPreferencesCurrentHost) { topoff[key] = value }
+                }
+                let record: [String: Any] = ["boot": boot!, "preferences": original, "topoff": topoff]
                 let data = try PropertyListSerialization.data(fromPropertyList: record, format: .binary, options: 0)
                 try data.write(to: snapshotURL, options: .atomic)
                 try FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: snapshotURL.path)
@@ -119,17 +127,22 @@ internal enum BTNativeCharging27 {
     static func request(limit: Int, suppressCalibration: Bool) -> Bool {
         guard active, boot != nil, (20...100).contains(limit) else { return false }
         let inhibit = suppressCalibration && limit < 80
-        if requested == limit && suppress == inhibit { return true }
+        if requested == limit && suppress == inhibit { return submissionSucceeded }
         requested = limit
         suppress = inhibit
         attempts = 0
         journal("request", extra: ["limit": limit, "noChargeToFull": inhibit])
-        return writePolicy()
+        submissionSucceeded = writePolicy()
+        return submissionSucceeded
     }
 
     private static func writePolicy() -> Bool {
         guard let requested, let boot else { return false }
         do {
+            CFPreferencesSetValue("mclLimitValue" as CFString, requested as CFNumber, topoffDomain, kCFPreferencesCurrentUser, kCFPreferencesCurrentHost)
+            CFPreferencesSetValue("MCLFeatureState" as CFString, 1 as CFNumber, topoffDomain, kCFPreferencesCurrentUser, kCFPreferencesCurrentHost)
+            guard CFPreferencesSynchronize(topoffDomain, kCFPreferencesCurrentUser, kCFPreferencesCurrentHost) else { throw NSError(domain: "BTNativeCharging27", code: 3) }
+            CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFNotificationName("com.apple.smartcharging.defaultschanged" as CFString), nil, nil, true)
             let current = preferences()
             let sameBoot = (current["bootSessionUUID"] as? String) == boot
             var entries = sameBoot ? try policies() : []
@@ -171,21 +184,29 @@ internal enum BTNativeCharging27 {
             attempts = 0
         } else if attempts < 3 {
             journal("policy-drift", extra: ["observedSMC": state?.map { String(format: "%02x", $0) }.joined() ?? "unavailable"])
-            _ = writePolicy()
+            submissionSucceeded = writePolicy()
         }
     }
 
-    static func restore() -> Bool {
-        guard active, let boot else { return false }
+    static func suspend() {
         timer?.cancel()
         timer = nil
         logPipe?.fileHandleForReading.readabilityHandler = nil
         if logProcess?.isRunning == true { logProcess?.terminate() }
         logProcess = nil
         logPipe = nil
+    }
+
+    static func restore() -> Bool {
+        guard active, let boot else { return false }
+        suspend()
         do {
             let data = try Data(contentsOf: snapshotURL)
             guard let record = try PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any], let original = record["preferences"] as? [String: Any] else { return false }
+            guard let topoff = record["topoff"] as? [String: Any] else { journal("restore-failed", extra: ["error": "snapshot missing topoff values"]); return false }
+            for key in topoffKeys { CFPreferencesSetValue(key as CFString, topoff[key] as CFPropertyList?, topoffDomain, kCFPreferencesCurrentUser, kCFPreferencesCurrentHost) }
+            guard CFPreferencesSynchronize(topoffDomain, kCFPreferencesCurrentUser, kCFPreferencesCurrentHost) else { return false }
+            CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFNotificationName("com.apple.smartcharging.defaultschanged" as CFString), nil, nil, true)
             let entries = try policies().filter { $0.reason != "BatteryToolkit.macOS27" }
             if entries.isEmpty, record["boot"] as? String == boot {
                 let keys = ["bootSessionUUID", "policies"]
