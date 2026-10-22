@@ -1,0 +1,370 @@
+Static follow-up; no system changes or live mitigation test.
+BattOpt block 0x100099dc8 invoke=0x10007c614; block0x100099de8 invoke=0x10007d794.
+XOR0x5a decode of x_p6 coder key: bytes at ARM64 0x81f48 length8 +0x81f50 length4 +literal3636 = noChargeToFull.
+
+100075838:	e0 03 13 aa	mov	x0, x19
+10007583c:	e2 03 15 aa	mov	x2, x21
+100075840:	e0 2c 00 94	bl	0x100080bc0
+100075844:	e0 03 14 aa	mov	x0, x20
+100075848:	36 2e 00 94	bl	0x100081120
+10007584c:	f5 03 00 aa	mov	x21, x0
+100075850:	c0 d2 46 f9	ldr	x0, [x22, #0xda0]
+100075854:	68 01 00 b0	adrp	x8, 45 ; 0x1000a2000
+100075858:	08 e1 31 91	add	x8, x8, #0xc78
+10007585c:	09 5d c0 39	ldrsb	w9, [x8, #0x17]
+100075860:	0a 01 40 f9	ldr	x10, [x8]
+100075864:	3f 01 00 71	cmp	w9, #0x0
+100075868:	42 b1 88 9a	csel	x2, x10, x8, lt
+10007586c:	ed 2d 00 94	bl	0x100081020
+100075870:	e3 03 00 aa	mov	x3, x0
+100075874:	e0 03 13 aa	mov	x0, x19
+100075878:	e2 03 15 aa	mov	x2, x21
+10007587c:	d1 2c 00 94	bl	0x100080bc0
+100075880:	e0 03 14 aa	mov	x0, x20
+100075884:	2f 2e 00 94	bl	0x100081140
+100075888:	f5 03 00 aa	mov	x21, x0
+10007588c:	c0 d2 46 f9	ldr	x0, [x22, #0xda0]
+100075890:	68 01 00 b0	adrp	x8, 45 ; 0x1000a2000
+100075894:	08 61 32 91	add	x8, x8, #0xc98
+100075898:	09 5d c0 39	ldrsb	w9, [x8, #0x17]
+10007589c:	0a 01 40 f9	ldr	x10, [x8]
+1000758a0:	3f 01 00 71	cmp	w9, #0x0
+1000758a4:	42 b1 88 9a	csel	x2, x10, x8, lt
+1000758a8:	de 2d 00 94	bl	0x100081020
+1000758ac:	e3 03 00 aa	mov	x3, x0
+1000758b0:	e0 03 13 aa	mov	x0, x19
+1000758b4:	e2 03 15 aa	mov	x2, x21
+1000758b8:	c2 2c 00 94	bl	0x100080bc0
+1000758bc:	e0 03 14 aa	mov	x0, x20
+1000758c0:	30 2e 00 94	bl	0x100081180
+1000758c4:	f5 03 00 aa	mov	x21, x0
+1000758c8:	c0 d2 46 f9	ldr	x0, [x22, #0xda0]
+1000758cc:	68 01 00 b0	adrp	x8, 45 ; 0x1000a2000
+1000758d0:	08 e1 32 91	add	x8, x8, #0xcb8
+1000758d4:	09 5d c0 39	ldrsb	w9, [x8, #0x17]
+1000758d8:	0a 01 40 f9	ldr	x10, [x8]
+1000758dc:	3f 01 00 71	cmp	w9, #0x0
+1000758e0:	42 b1 88 9a	csel	x2, x10, x8, lt
+1000758e4:	cf 2d 00 94	bl	0x100081020
+1000758e8:	e3 03 00 aa	mov	x3, x0
+1000758ec:	e0 03 13 aa	mov	x0, x19
+1000758f0:	e2 03 15 aa	mov	x2, x21
+1000758f4:	b3 2c 00 94	bl	0x100080bc0
+1000758f8:	e0 03 14 aa	mov	x0, x20
+1000758fc:	19 2e 00 94	bl	0x100081160
+100075900:	f4 03 00 aa	mov	x20, x0
+
+100075bd8:	60 01 00 b0	adrp	x0, 45 ; 0x1000a2000
+100075bdc:	00 c0 32 91	add	x0, x0, #0xcb0
+100075be0:	98 26 00 94	bl	0x10007f640 ; symbol stub for: ___cxa_guard_acquire
+100075be4:	60 da ff 34	cbz	w0, 0x100075730
+100075be8:	68 00 00 90	adrp	x8, 12 ; 0x100081000
+100075bec:	00 a5 47 fd	ldr	d0, [x8, #0xf48]
+100075bf0:	e0 0f 00 fd	str	d0, [sp, #0x18]
+100075bf4:	68 00 00 90	adrp	x8, 12 ; 0x100081000
+100075bf8:	00 a9 47 fd	ldr	d0, [x8, #0xf50]
+100075bfc:	e0 23 00 bd	str	s0, [sp, #0x20]
+100075c00:	c8 c6 86 52	mov	w8, #0x3636
+100075c04:	e8 4b 00 79	strh	w8, [sp, #0x24]
+100075c08:	e0 03 00 91	mov	x0, sp
+100075c0c:	e1 63 00 91	add	x1, sp, #0x18
+100075c10:	c2 01 80 52	mov	w2, #0xe
+100075c14:	4f fe ff 97	bl	0x100075550
+100075c18:	60 01 00 b0	adrp	x0, 45 ; 0x1000a2000
+100075c1c:	00 60 32 91	add	x0, x0, #0xc98
+100075c20:	e1 03 00 91	mov	x1, sp
+100075c24:	6e fe ff 97	bl	0x1000755dc
+100075c28:	e0 03 40 f9	ldr	x0, [sp]
+100075c2c:	60 00 00 b4	cbz	x0, 0x100075c38
+100075c30:	e0 07 00 f9	str	x0, [sp, #0x8]
+100075c34:	68 26 00 94	bl	0x10007f5d4 ; symbol stub for: __ZdlPv
+100075c38:	00 00 00 90	adrp	x0, 0 ; 0x100075000
+100075c3c:	00 b0 19 91	add	x0, x0, #0x66c
+100075c40:	61 01 00 b0	adrp	x1, 45 ; 0x1000a2000
+100075c44:	21 60 32 91	add	x1, x1, #0xc98
+100075c48:	42 fc ff f0	adrp	x2, -117 ; 0x100000000
+100075c4c:	42 00 00 91	add	x2, x2, #0x0
+100075c50:	6d 26 00 94	bl	0x10007f604 ; symbol stub for: ___cxa_atexit
+100075c54:	60 01 00 b0	adrp	x0, 45 ; 0x1000a2000
+100075c58:	00 c0 32 91	add	x0, x0, #0xcb0
+100075c5c:	7c 26 00 94	bl	0x10007f64c ; symbol stub for: ___cxa_guard_release
+100075c60:	b4 fe ff 17	b	0x100075730
+100075c64:	60 01 00 b0	adrp	x0, 45 ; 0x1000a2000
+100075c68:	00 40 33 91	add	x0, x0, #0xcd0
+100075c6c:	75 26 00 94	bl	0x10007f640 ; symbol stub for: ___cxa_guard_acquire
+100075c70:	80 d6 ff 34	cbz	w0, 0x100075740
+
+100077218:	68 00 f8 36	tbz	w8, #0x1f, 0x100077224
+10007721c:	e0 03 40 f9	ldr	x0, [sp]
+100077220:	ed 20 00 94	bl	0x10007f5d4 ; symbol stub for: __ZdlPv
+100077224:	39 01 00 b0	adrp	x25, 37 ; 0x10009c000
+100077228:	20 d3 46 f9	ldr	x0, [x25, #0xda0] ; Objc class ref: _OBJC_CLASS_$_NSString
+10007722c:	48 01 00 f0	adrp	x8, 43 ; 0x1000a2000
+100077230:	08 e1 33 91	add	x8, x8, #0xcf8
+100077234:	09 5d c0 39	ldrsb	w9, [x8, #0x17]
+100077238:	0a 01 40 f9	ldr	x10, [x8]
+10007723c:	3f 01 00 71	cmp	w9, #0x0
+100077240:	42 b1 88 9a	csel	x2, x10, x8, lt
+100077244:	77 27 00 94	bl	0x100081020
+100077248:	e2 03 00 aa	mov	x2, x0
+10007724c:	e0 03 13 aa	mov	x0, x19
+100077250:	34 27 00 94	bl	0x100080f20
+100077254:	e0 03 13 aa	mov	x0, x19
+100077258:	e2 03 17 aa	mov	x2, x23
+10007725c:	39 27 00 94	bl	0x100080f40
+100077260:	e0 03 13 aa	mov	x0, x19
+100077264:	e2 03 16 aa	mov	x2, x22
+100077268:	3e 27 00 94	bl	0x100080f60
+10007726c:	e0 03 13 aa	mov	x0, x19
+100077270:	02 00 80 52	mov	w2, #0x0
+100077274:	43 27 00 94	bl	0x100080f80
+100077278:	e0 03 13 aa	mov	x0, x19
+10007727c:	e2 03 15 aa	mov	x2, x21
+100077280:	48 27 00 94	bl	0x100080fa0
+100077284:	e0 03 13 aa	mov	x0, x19
+100077288:	e2 03 14 aa	mov	x2, x20
+10007728c:	55 27 00 94	bl	0x100080fe0
+100077290:	28 01 00 b0	adrp	x8, 37 ; 0x10009c000
+100077294:	00 d5 46 f9	ldr	x0, [x8, #0xda8] ; Objc class ref: _OBJC_CLASS_$_NSUUID
+100077298:	c2 25 00 94	bl	0x1000809a0
+10007729c:	e2 03 00 aa	mov	x2, x0
+1000772a0:	e0 03 13 aa	mov	x0, x19
+1000772a4:	47 27 00 94	bl	0x100080fc0
+1000772a8:	28 01 00 b0	adrp	x8, 37 ; 0x10009c000
+1000772ac:	00 e5 46 f9	ldr	x0, [x8, #0xdc8] ; Objc class ref: _OBJC_CLASS_$_NSMutableArray
+1000772b0:	e2 03 13 aa	mov	x2, x19
+1000772b4:	cb 25 00 94	bl	0x1000809e0
+1000772b8:	28 01 00 b0	adrp	x8, 37 ; 0x10009c000
+
+10007a31c:	fc 6f ba a9	stp	x28, x27, [sp, #-0x60]!
+10007a320:	fa 67 01 a9	stp	x26, x25, [sp, #0x10]
+10007a324:	f8 5f 02 a9	stp	x24, x23, [sp, #0x20]
+10007a328:	f6 57 03 a9	stp	x22, x21, [sp, #0x30]
+10007a32c:	f4 4f 04 a9	stp	x20, x19, [sp, #0x40]
+10007a330:	fd 7b 05 a9	stp	x29, x30, [sp, #0x50]
+10007a334:	fd 43 01 91	add	x29, sp, #0x50
+10007a338:	ff 43 07 d1	sub	sp, sp, #0x1d0
+10007a33c:	f3 03 03 aa	mov	x19, x3
+10007a340:	fa 03 02 aa	mov	x26, x2
+10007a344:	f6 03 01 aa	mov	x22, x1
+10007a348:	f4 03 00 aa	mov	x20, x0
+10007a34c:	e8 00 00 d0	adrp	x8, 30 ; 0x100098000
+10007a350:	08 d1 40 f9	ldr	x8, [x8, #0x1a0] ; literal pool symbol address: ___stack_chk_guard
+10007a354:	08 01 40 f9	ldr	x8, [x8]
+10007a358:	a8 83 19 f8	stur	x8, [x29, #-0x68]
+10007a35c:	9a 15 00 94	bl	0x10007f9c4 ; symbol stub for: _objc_autoreleasePoolPush
+10007a360:	f5 03 00 aa	mov	x21, x0
+10007a364:	49 01 00 b0	adrp	x9, 41 ; 0x1000a3000
+10007a368:	29 c1 25 91	add	x9, x9, #0x970
+10007a36c:	28 d5 5b 39	ldrb	w8, [x9, #0x6f5]
+10007a370:	1f 05 00 71	cmp	w8, #0x1
+10007a374:	81 00 00 54	b.ne	0x10007a384
+10007a378:	28 d9 5b 39	ldrb	w8, [x9, #0x6f6]
+10007a37c:	1f 05 00 71	cmp	w8, #0x1
+10007a380:	61 06 00 54	b.ne	0x10007a44c
+10007a384:	80 0c 80 52	mov	w0, #0x64
+10007a388:	6b ff ff 97	bl	0x10007a134
+10007a38c:	00 06 00 34	cbz	w0, 0x10007a44c
+10007a390:	f6 67 00 b9	str	w22, [sp, #0x64]
+10007a394:	f3 3f 00 b9	str	w19, [sp, #0x3c]
+10007a398:	b6 83 02 d1	sub	x22, x29, #0xa0
+10007a39c:	28 00 80 52	mov	w8, #0x1
+
+10007b0ac:	80 0c 80 52	mov	w0, #0x64
+10007b0b0:	21 fc ff 97	bl	0x10007a134
+10007b0b4:	d8 06 00 b5	cbnz	x24, 0x10007b18c
+10007b0b8:	08 01 00 b0	adrp	x8, 33 ; 0x10009c000
+10007b0bc:	08 01 7e 39	ldrb	w8, [x8, #0xf80]
+10007b0c0:	1f 05 00 71	cmp	w8, #0x1
+10007b0c4:	21 06 00 54	b.ne	0x10007b188
+10007b0c8:	e0 03 14 aa	mov	x0, x20
+10007b0cc:	e1 67 40 b9	ldr	w1, [sp, #0x64]
+10007b0d0:	e2 03 1a aa	mov	x2, x26
+10007b0d4:	e3 3f 40 b9	ldr	w3, [sp, #0x3c]
+10007b0d8:	29 f0 ff 97	bl	0x10007717c
+10007b0dc:	f9 03 00 aa	mov	x25, x0
+10007b0e0:	c0 04 00 b4	cbz	x0, 0x10007b178
+10007b0e4:	08 01 00 b0	adrp	x8, 33 ; 0x10009c000
+10007b0e8:	00 01 47 f9	ldr	x0, [x8, #0xe00] ; Objc class ref: _OBJC_CLASS_$_NSMutableDictionary
+10007b0ec:	30 12 00 94	bl	0x10007f9ac ; symbol stub for: _objc_alloc_init
+10007b0f0:	f8 03 00 aa	mov	x24, x0
+10007b0f4:	48 01 00 90	adrp	x8, 40 ; 0x1000a3000
+
+10007c618:	fc 6f ba a9	stp	x28, x27, [sp, #-0x60]!
+10007c61c:	fa 67 01 a9	stp	x26, x25, [sp, #0x10]
+10007c620:	f8 5f 02 a9	stp	x24, x23, [sp, #0x20]
+10007c624:	f6 57 03 a9	stp	x22, x21, [sp, #0x30]
+10007c628:	f4 4f 04 a9	stp	x20, x19, [sp, #0x40]
+10007c62c:	fd 7b 05 a9	stp	x29, x30, [sp, #0x50]
+10007c630:	fd 43 01 91	add	x29, sp, #0x50
+10007c634:	ff 43 0e d1	sub	sp, sp, #0x390
+10007c638:	e8 00 00 90	adrp	x8, 28 ; 0x100098000
+10007c63c:	08 d1 40 f9	ldr	x8, [x8, #0x1a0] ; literal pool symbol address: ___stack_chk_guard
+10007c640:	08 01 40 f9	ldr	x8, [x8]
+10007c644:	a8 83 19 f8	stur	x8, [x29, #-0x68]
+10007c648:	48 01 00 90	adrp	x8, 40 ; 0x1000a4000
+10007c64c:	08 9d 4a 39	ldrb	w8, [x8, #0x2a7]
+10007c650:	a8 72 00 37	tbnz	w8, #0x0, 0x10007d4a4
+10007c654:	5b 01 00 90	adrp	x27, 40 ; 0x1000a4000
+10007c658:	68 ab 42 b9	ldr	w8, [x27, #0x2a8]
+10007c65c:	08 05 00 11	add	w8, w8, #0x1
+10007c660:	68 ab 02 b9	str	w8, [x27, #0x2a8]
+10007c664:	80 00 00 d0	adrp	x0, 18 ; 0x10008e000
+10007c668:	00 a0 14 91	add	x0, x0, #0x528 ; literal pool for: "pmset -g battlimit"
+10007c66c:	a8 23 03 d1	sub	x8, x29, #0xc8
+10007c670:	77 c2 ff 97	bl	0x10006d04c
+10007c674:	81 00 00 d0	adrp	x1, 18 ; 0x10008e000
+10007c678:	21 ec 14 91	add	x1, x1, #0x53b ; literal pool for: "\\{[^{]*(chargeSocLimitOwner|Owner)\\s*=\\s*0;[^}]*\\}"
+10007c67c:	e0 63 0b 91	add	x0, sp, #0x2d8
+10007c680:	02 00 80 52	mov	w2, #0x0
+10007c684:	60 71 fe 97	bl	0x100018c04
+10007c688:	f6 83 06 91	add	x22, sp, #0x1a0
+
+10007d0ec:	e8 7f c9 39	ldrsb	w8, [sp, #0x25f]
+10007d0f0:	68 00 f8 36	tbz	w8, #0x1f, 0x10007d0fc
+10007d0f4:	e0 27 41 f9	ldr	x0, [sp, #0x248]
+10007d0f8:	37 09 00 94	bl	0x10007f5d4 ; symbol stub for: __ZdlPv
+10007d0fc:	28 01 00 f0	adrp	x8, 39 ; 0x1000a4000
+10007d100:	08 ad 42 b9	ldr	w8, [x8, #0x2ac]
+10007d104:	9f 02 08 6b	cmp	w20, w8
+10007d108:	41 0e 00 54	b.ne	0x10007d2d0
+10007d10c:	28 01 00 f0	adrp	x8, 39 ; 0x1000a4000
+10007d110:	08 c9 4a 39	ldrb	w8, [x8, #0x2b2]
+10007d114:	1f 01 15 6b	cmp	w8, w21
+10007d118:	c1 0d 00 54	b.ne	0x10007d2d0
+10007d11c:	33 01 00 d0	adrp	x19, 38 ; 0x1000a3000
+10007d120:	73 c2 25 91	add	x19, x19, #0x970
+
+10007d2d0:	68 ab 42 b9	ldr	w8, [x27, #0x2a8]
+10007d2d4:	1f 15 00 71	cmp	w8, #0x5
+10007d2d8:	a1 0b 00 54	b.ne	0x10007d44c
+10007d2dc:	35 01 00 d0	adrp	x21, 38 ; 0x1000a3000
+10007d2e0:	b5 c2 25 91	add	x21, x21, #0x970
+10007d2e4:	28 00 80 52	mov	w8, #0x1
+10007d2e8:	a8 d6 1b 39	strb	w8, [x21, #0x6f5]
+10007d2ec:	f3 83 06 91	add	x19, sp, #0x1a0
+10007d2f0:	e8 83 06 91	add	x8, sp, #0x1a0
+10007d2f4:	7c c1 ff 97	bl	0x10006d8e4
+10007d2f8:	e8 df 46 39	ldrb	w8, [sp, #0x1b7]
+10007d2fc:	09 1d 00 13	sxtb	w9, w8
+10007d300:	ea 2f 5a a9	ldp	x10, x11, [sp, #0x1a0]
+10007d304:	3f 01 00 71	cmp	w9, #0x0
+10007d308:	41 b1 93 9a	csel	x1, x10, x19, lt
+10007d30c:	62 b1 88 9a	csel	x2, x11, x8, lt
+10007d310:	c0 00 00 f0	adrp	x0, 27 ; 0x100098000
+10007d314:	00 94 40 f9	ldr	x0, [x0, #0x128] ; literal pool symbol address: __ZNSt3__14coutE
+10007d318:	1d 69 fe 97	bl	0x10001778c
+10007d31c:	a1 00 00 b0	adrp	x1, 21 ; 0x100092000
+10007d320:	21 80 1a 91	add	x1, x1, #0x6a0 ; literal pool for: " - "
+10007d324:	62 00 80 52	mov	w2, #0x3
+10007d328:	19 69 fe 97	bl	0x10001778c
+10007d32c:	a1 00 00 b0	adrp	x1, 21 ; 0x100092000
+10007d330:	21 18 2d 91	add	x1, x1, #0xb46 ; literal pool for: "Self Test failed!"
+10007d334:	22 02 80 52	mov	w2, #0x11
+
+10007d790:	8c 06 00 94	bl	0x10007f1c0 ; symbol stub for: __Unwind_Resume
+10007d794:	ff 03 01 d1	sub	sp, sp, #0x40
+10007d798:	f4 4f 02 a9	stp	x20, x19, [sp, #0x20]
+10007d79c:	fd 7b 03 a9	stp	x29, x30, [sp, #0x30]
+10007d7a0:	fd c3 00 91	add	x29, sp, #0x30
+10007d7a4:	bf c3 1e b8	stur	wzr, [x29, #-0x14]
+10007d7a8:	bf b3 1e 38	sturb	wzr, [x29, #-0x15]
+10007d7ac:	bf 93 1e 38	sturb	wzr, [x29, #-0x17]
+10007d7b0:	ff 5f 00 39	strb	wzr, [sp, #0x17]
+10007d7b4:	ff 03 00 39	strb	wzr, [sp]
+10007d7b8:	a0 53 00 d1	sub	x0, x29, #0x14
+10007d7bc:	a1 57 00 d1	sub	x1, x29, #0x15
+10007d7c0:	a2 5b 00 d1	sub	x2, x29, #0x16
+10007d7c4:	e3 03 00 91	mov	x3, sp
+10007d7c8:	a4 5f 00 d1	sub	x4, x29, #0x17
+10007d7cc:	24 ec ff 97	bl	0x10007885c
+10007d7d0:	e8 5f c0 39	ldrsb	w8, [sp, #0x17]
+10007d7d4:	68 00 f8 36	tbz	w8, #0x1f, 0x10007d7e0
+10007d7d8:	e0 03 40 f9	ldr	x0, [sp]
+10007d7dc:	7e 07 00 94	bl	0x10007f5d4 ; symbol stub for: __ZdlPv
+10007d7e0:	fd 7b 43 a9	ldp	x29, x30, [sp, #0x30]
+10007d7e4:	f4 4f 42 a9	ldp	x20, x19, [sp, #0x20]
+10007d7e8:	ff 03 01 91	add	sp, sp, #0x40
+10007d7ec:	c0 03 5f d6	ret
+10007d7f0:	f3 03 00 aa	mov	x19, x0
+10007d7f4:	e8 5f c0 39	ldrsb	w8, [sp, #0x17]
+10007d7f8:	68 00 f8 36	tbz	w8, #0x1f, 0x10007d804
+10007d7fc:	e0 03 40 f9	ldr	x0, [sp]
+
+1000583d8:	08 61 74 39	ldrb	w8, [x8, #0xd18]
+1000583dc:	79 02 00 d0	adrp	x25, 78 ; 0x1000a6000
+1000583e0:	20 9f 46 f9	ldr	x0, [x25, #0xd38]
+1000583e4:	98 02 00 90	adrp	x24, 80 ; 0x1000a8000
+1000583e8:	1f 05 00 71	cmp	w8, #0x1
+1000583ec:	21 03 00 54	b.ne	0x100058450
+1000583f0:	34 6d 00 94	bl	0x1000738c0
+1000583f4:	e8 03 00 aa	mov	x8, x0
+1000583f8:	20 9f 46 f9	ldr	x0, [x25, #0xd38]
+1000583fc:	a0 07 00 b4	cbz	x0, 0x1000584f0
+100058400:	a8 02 00 37	tbnz	w8, #0x0, 0x100058454
+100058404:	15 9b 40 f9	ldr	x21, [x24, #0x130]
+100058408:	e0 03 15 aa	mov	x0, x21
+10005840c:	01 00 80 52	mov	w1, #0x0
+100058410:	a8 63 00 94	bl	0x1000712b0 ; symbol stub for: _os_log_type_enabled
+100058414:	c0 08 00 34	cbz	w0, 0x10005852c
+100058418:	e8 00 00 f0	adrp	x8, 31 ; 0x100077000
+10005841c:	00 11 45 fd	ldr	d0, [x8, #0xa20]
+100058420:	e0 03 00 bd	str	s0, [sp]
+100058424:	28 00 80 52	mov	w8, #0x1
+100058428:	e8 07 00 b9	str	w8, [sp, #0x4]
+10005842c:	40 fd ff 90	adrp	x0, -88 ; 0x100000000
+100058430:	00 00 00 91	add	x0, x0, #0x0
+100058434:	c3 01 00 90	adrp	x3, 56 ; 0x100090000
+100058438:	63 c4 2a 91	add	x3, x3, #0xab1 ; literal pool for: "SOC limit policy suspend due to mitigation active:%d\n"
+10005843c:	e4 03 00 91	mov	x4, sp
+100058440:	e1 03 15 aa	mov	x1, x21
+100058444:	02 00 80 52	mov	w2, #0x0
+100058448:	05 01 80 52	mov	w5, #0x8
+10005844c:	37 00 00 14	b	0x100058528
+100058450:	00 05 00 b4	cbz	x0, 0x1000584f0
+100058454:	c3 73 00 94	bl	0x100075360
+100058458:	f5 03 00 aa	mov	x21, x0
+10005845c:	20 9f 46 f9	ldr	x0, [x25, #0xd38]
+100058460:	a0 68 00 94	bl	0x1000726e0
+100058464:	f6 03 00 aa	mov	x22, x0
+100058468:	20 9f 46 f9	ldr	x0, [x25, #0xd38]
+10005846c:	15 6d 00 94	bl	0x1000738c0
+100058470:	f7 03 00 aa	mov	x23, x0
+100058474:	20 9f 46 f9	ldr	x0, [x25, #0xd38]
+100058478:	22 6c 00 94	bl	0x100073500
+10005847c:	48 00 80 52	mov	w8, #0x2
+100058480:	ff 02 00 71	cmp	w23, #0x0
+100058484:	08 11 9f 1a	csel	w8, w8, wzr, ne
+100058488:	f5 3b 00 39	strb	w21, [sp, #0xe]
+10005848c:	89 00 80 52	mov	w9, #0x4
+100058490:	1f 00 00 71	cmp	w0, #0x0
+100058494:	29 11 9f 1a	csel	w9, w9, wzr, ne
+100058498:	08 01 16 2a	orr	w8, w8, w22
+10005849c:	08 01 09 2a	orr	w8, w8, w9
+1000584a0:	e8 3f 00 39	strb	w8, [sp, #0xf]
+1000584a4:	15 9b 40 f9	ldr	x21, [x24, #0x130]
+1000584a8:	e0 03 15 aa	mov	x0, x21
+1000584ac:	01 00 80 52	mov	w1, #0x0
+1000584b0:	80 63 00 94	bl	0x1000712b0 ; symbol stub for: _os_log_type_enabled
+1000584b4:	c0 03 00 34	cbz	w0, 0x10005852c
+1000584b8:	28 9f 46 f9	ldr	x8, [x25, #0xd38]
+1000584bc:	e9 00 00 f0	adrp	x9, 31 ; 0x100077000
+1000584c0:	20 15 45 fd	ldr	d0, [x9, #0xa28]
+1000584c4:	e0 03 00 bd	str	s0, [sp]
+1000584c8:	e8 43 00 f8	stur	x8, [sp, #0x4]
+1000584cc:	40 fd ff 90	adrp	x0, -88 ; 0x100000000
+1000584d0:	00 00 00 91	add	x0, x0, #0x0
+1000584d4:	c3 01 00 90	adrp	x3, 56 ; 0x100090000
+1000584d8:	63 9c 2b 91	add	x3, x3, #0xae7 ; literal pool for: "SOC limit policy:%@\n"
+1000584dc:	e4 03 00 91	mov	x4, sp
+1000584e0:	e1 03 15 aa	mov	x1, x21
+1000584e4:	02 00 80 52	mov	w2, #0x0
+1000584e8:	85 01 80 52	mov	w5, #0xc
+1000584ec:	0f 00 00 14	b	0x100058528
+1000584f0:	15 9b 40 f9	ldr	x21, [x24, #0x130]
+1000584f4:	e0 03 15 aa	mov	x0, x21
+1000584f8:	01 00 80 52	mov	w1, #0x0
+1000584fc:	6d 63 00 94	bl	0x1000712b0 ; symbol stub for: _os_log_type_enabled
+100058500:	60 01 00 34	cbz	w0, 0x10005852c
+100058504:	ff 03 00 79	strh	wzr, [sp]
+100058508:	40 fd ff 90	adrp	x0, -88 ; 0x100000000
