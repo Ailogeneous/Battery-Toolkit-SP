@@ -198,6 +198,12 @@ enum BTFanControl {
                 : fail(.fanModeWriteFailed, "set_mode mode_write_manual fanId=\(fanId) key=\(key)")
         }
 
+        if ProcessInfo.processInfo.operatingSystemVersion.majorVersion == 27,
+           bytes[0] == 3,
+           readNumericValue("F\(fanId)Tg") == 0 {
+            return .success
+        }
+
         bytes[0] = 0
         let ok = writeBytesWithRetry(key, bytes: bytes, attempts: 10, delayMicros: 50_000)
         guard ok else {
@@ -505,6 +511,11 @@ enum BTFanControl {
                 continue
             }
             if bytes[0] == 0 { continue }
+            if ProcessInfo.processInfo.operatingSystemVersion.majorVersion == 27,
+               bytes[0] == 3,
+               readNumericValue("F\(id)Tg") == 0 {
+                continue
+            }
             bytes[0] = 0
             if !writeBytesWithRetry(key, bytes: bytes, attempts: 10, delayMicros: 50_000), firstError == nil {
                 firstError = fail(.fanModeWriteFailed, "reset mode_write_failed fanId=\(id) key=\(key)")
