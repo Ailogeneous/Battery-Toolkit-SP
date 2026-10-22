@@ -34,7 +34,7 @@ struct NativeChargingIntegrationProbe {
             print("pid=\(getpid()) limit=\(limit) submitted=\(submitted)")
             accepted = accepted && submitted
             guard submitted else { break }
-            for _ in 0..<(transitions ? 3 : 12) {
+            for _ in 0..<(transitions ? 3 : 24) {
                 try? await Task.sleep(nanoseconds: 5_000_000_000)
                 let process = Process()
                 process.executableURL = URL(fileURLWithPath: "/usr/bin/pmset")
