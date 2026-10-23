@@ -25,7 +25,7 @@ internal enum BTSettings {
         let defaults = UserDefaults.standard
         let storedLowerBound = defaults.object(forKey: BTSettingsInfo.Keys.chargeLowerBound) as? NSNumber
         let lowerBound = storedLowerBound?.intValue ?? Int(BTSettingsInfo.Defaults.chargeLowerBound)
-        self.chargeLowerBound = (1...100).contains(lowerBound) ? UInt8(lowerBound) : BTSettingsInfo.Defaults.chargeLowerBound
+        let restoredLowerBound = (1...100).contains(lowerBound) ? UInt8(lowerBound) : BTSettingsInfo.Defaults.chargeLowerBound
         if let displayModeValue = defaults.object(forKey: BTSettingsInfo.Keys.displayMode) {
             //
             // Handle both boolean and integer display mode values.
@@ -70,7 +70,7 @@ internal enum BTSettings {
             BTSettingsInfo.chargeLimitsValid(
                 minCharge: minCharge,
                 maxCharge: maxCharge,
-                chargeLowerBound: Int(self.chargeLowerBound)
+                chargeLowerBound: Int(restoredLowerBound)
             )
         else {
             os_log("Charge limits malformed, restore current values")
@@ -78,6 +78,7 @@ internal enum BTSettings {
             return
         }
 
+        self.chargeLowerBound = restoredLowerBound
         self.minCharge = UInt8(minCharge)
         self.maxCharge = UInt8(maxCharge)
     }
