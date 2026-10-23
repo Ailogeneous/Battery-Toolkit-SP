@@ -34,7 +34,12 @@
 - MagSafe indicator control modes
 - Battery temperature included in daemon state
 
-## macOS 27
+---
+
+## macOS 27 — Charging Backend & Diagnostics
+
+> [!IMPORTANT]
+> **macOS 27 uses a separate charging backend.** Review the policy behavior and diagnostics settings below when integrating or upgrading.
 
 On macOS 27, the daemon uses a separate native charging-policy backend instead of the legacy direct SMC charging keys. The public charging actions remain the same. This backend is selected only when the reported macOS major version is 27; earlier versions retain the legacy backend. Newer major versions are not automatically opted into this path.
 
@@ -67,6 +72,8 @@ Policy submission is not confirmation that charging has stopped. Applications sh
 Coalesce slider changes before calling `setSettings`; avoid submitting every intermediate drag value. The current backend performs synchronous PowerUI calls, preference synchronization, and a process wait on the daemon's main actor, so frequent changes can delay subsequent requests.
 
 `BTActions.getDiagnostics()` exposes `nativeCharging27`, `nativePolicySubmitted`, `nativeRequestedLimit`, `nativeNoChargeToFull`, `nativeRetryCount`, and `nativeSMCState` when available. `nativePolicySubmitted` reports submission success, not observed enforcement. Diagnostic journals and the original-policy snapshot are stored under `/Library/Application Support/BatteryToolkit/macOS27/` and require appropriate permissions to read.
+
+---
 
 ## Setup
 
