@@ -52,7 +52,17 @@ The charge-limit backend does not cut adapter power to enforce its ceiling. Expl
 
 ### Timing and Diagnostics
 
-Policy submission is not confirmation that charging has stopped. Applications should observe battery state and actual current after applying a limit. The daemon samples every 15 seconds and checks for policy drift once at least 45 seconds have elapsed since the last write, with up to three write attempts before it stops retrying that request.
+Verbose macOS 27 charging diagnostics are **off by default**. Enable or disable them at runtime using the persisted `nativeChargingDiagnosticsEnabled` setting:
+
+```swift
+var settings = try await BTActions.getSettings()
+settings[BTSettingsInfo.Keys.nativeChargingDiagnosticsEnabled] = NSNumber(value: false)
+try await BTActions.setSettings(settings: settings)
+```
+
+Use `true` to enable diagnostic recording. Omitting the key preserves the current setting. Disabling it stops the continuous system-log subprocess, periodic battery/policy samples, and native charging journal writes (including their unified-log copies). Existing journal files are retained. Charge enforcement, policy reconciliation, original-policy snapshots/restoration, and on-demand `getDiagnostics()` remain active. Startup and write failures still report through their existing error paths; this setting does not disable unrelated toolkit logs. The setting is stored on all versions but controls this verbose backend only on macOS 27.
+
+Policy submission is not confirmation that charging has stopped. Applications should observe battery state and actual current after applying a limit. With verbose diagnostics enabled, the daemon records a battery sample every 15 seconds. Policy reconciliation runs every 15 seconds regardless of the diagnostics setting and checks for policy drift once at least 45 seconds have elapsed since the last write, with up to three write attempts before it stops retrying that request.
 
 Coalesce slider changes before calling `setSettings`; avoid submitting every intermediate drag value. The current backend performs synchronous PowerUI calls, preference synchronization, and a process wait on the daemon's main actor, so frequent changes can delay subsequent requests.
 

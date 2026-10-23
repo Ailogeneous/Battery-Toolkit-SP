@@ -8,6 +8,7 @@ import os.log
 
 @MainActor
 internal enum BTSettings {
+    private(set) static var nativeChargingDiagnosticsEnabled = BTSettingsInfo.Defaults.nativeChargingDiagnosticsEnabled
     private(set) static var chargeLowerBound = BTSettingsInfo.Defaults.chargeLowerBound
     private(set) static var minCharge = BTSettingsInfo.Defaults.minCharge
     private(set) static var maxCharge = BTSettingsInfo.Defaults.maxCharge
@@ -23,6 +24,8 @@ internal enum BTSettings {
             forKey: BTSettingsInfo.Keys.adapterSleep
         )
         let defaults = UserDefaults.standard
+        self.nativeChargingDiagnosticsEnabled = (defaults.object(forKey: BTSettingsInfo.Keys.nativeChargingDiagnosticsEnabled) as? NSNumber)?.boolValue ?? BTSettingsInfo.Defaults.nativeChargingDiagnosticsEnabled
+        BTNativeCharging27.updateDiagnostics()
         let storedLowerBound = defaults.object(forKey: BTSettingsInfo.Keys.chargeLowerBound) as? NSNumber
         let lowerBound = storedLowerBound?.intValue ?? Int(BTSettingsInfo.Defaults.chargeLowerBound)
         let restoredLowerBound = (1...100).contains(lowerBound) ? UInt8(lowerBound) : BTSettingsInfo.Defaults.chargeLowerBound
@@ -84,6 +87,7 @@ internal enum BTSettings {
     }
 
     static func removeDefaults() {
+        UserDefaults.standard.removeObject(forKey: BTSettingsInfo.Keys.nativeChargingDiagnosticsEnabled)
         UserDefaults.standard.removeObject(forKey: BTSettingsInfo.Keys.chargeLowerBound)
         UserDefaults.standard.removeObject(
             forKey: BTSettingsInfo.Keys.adapterSleep
@@ -119,6 +123,7 @@ internal enum BTSettings {
         let magSafeInvertedIndicator = NSNumber(value: self.magSafeInvertedIndicator)
         let criticalTemperature = NSNumber(value: self.criticalTemperatureC)
         var settings: [String: NSObject & Sendable] = [
+            BTSettingsInfo.Keys.nativeChargingDiagnosticsEnabled: NSNumber(value: self.nativeChargingDiagnosticsEnabled),
             BTSettingsInfo.Keys.chargeLowerBound: NSNumber(value: self.chargeLowerBound),
             BTSettingsInfo.Keys.minCharge: minCharge,
             BTSettingsInfo.Keys.maxCharge: maxCharge,
@@ -211,6 +216,10 @@ internal enum BTSettings {
         self.setCriticalTemperatureC(criticalTemp)
         BTPowerState.reconcileGlobalSleepAssertion()
 
+        if let enabled = settings[BTSettingsInfo.Keys.nativeChargingDiagnosticsEnabled] as? NSNumber {
+            self.nativeChargingDiagnosticsEnabled = enabled.boolValue
+            BTNativeCharging27.updateDiagnostics()
+        }
         self.writeDefaults()
 
         reply(BTError.success.rawValue)
@@ -297,6 +306,7 @@ internal enum BTSettings {
     }
 
     private static func writeDefaults() {
+        UserDefaults.standard.set(self.nativeChargingDiagnosticsEnabled, forKey: BTSettingsInfo.Keys.nativeChargingDiagnosticsEnabled)
         UserDefaults.standard.set(self.chargeLowerBound, forKey: BTSettingsInfo.Keys.chargeLowerBound)
         assert(
             BTSettingsInfo.chargeLimitsValid(

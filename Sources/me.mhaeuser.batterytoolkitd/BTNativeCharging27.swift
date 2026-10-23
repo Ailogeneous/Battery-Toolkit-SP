@@ -99,7 +99,7 @@ internal enum BTNativeCharging27 {
             source.resume()
             timer = source
             journal("start", extra: ["boot": boot!, "os": ProcessInfo.processInfo.operatingSystemVersionString, "pid": Int(getpid())])
-            startSystemLog()
+            updateDiagnostics()
             return true
         } catch {
             os_log("macOS27 native startup failed %{public}@", error.localizedDescription)
@@ -187,8 +187,9 @@ internal enum BTNativeCharging27 {
     }
 
     static func sampleAndReconcile() {
-        let observation = batteryObservation()
-        journal("sample", extra: observation)
+        if BTSettings.nativeChargingDiagnosticsEnabled {
+            journal("sample", extra: batteryObservation())
+        }
         guard let requested, Date().timeIntervalSince(lastWrite) >= 45 else { return }
         let expected = requested == 100 ? 0 : requested
         let state = SMCComm.readKey(key: SMCComm.Key("C", "H", "L", "T"), dataSize: 3)
@@ -204,10 +205,7 @@ internal enum BTNativeCharging27 {
     static func suspend() {
         timer?.cancel()
         timer = nil
-        logPipe?.fileHandleForReading.readabilityHandler = nil
-        if logProcess?.isRunning == true { logProcess?.terminate() }
-        logProcess = nil
-        logPipe = nil
+        stopSystemLog()
     }
 
     static func restore() -> Bool {
@@ -284,6 +282,22 @@ internal enum BTNativeCharging27 {
         return values
     }
 
+    static func updateDiagnostics() {
+        guard active, timer != nil, BTSettings.nativeChargingDiagnosticsEnabled else {
+            stopSystemLog()
+            return
+        }
+        guard logProcess?.isRunning != true else { return }
+        startSystemLog()
+    }
+
+    private static func stopSystemLog() {
+        logPipe?.fileHandleForReading.readabilityHandler = nil
+        if logProcess?.isRunning == true { logProcess?.terminate() }
+        logProcess = nil
+        logPipe = nil
+    }
+
     private static func startSystemLog() {
         let process = Process()
         let pipe = Pipe()
@@ -310,6 +324,7 @@ internal enum BTNativeCharging27 {
     }
 
     private static func journal(_ event: String, extra: [String: Any] = [:]) {
+        guard BTSettings.nativeChargingDiagnosticsEnabled else { return }
         var record = extra
         record["event"] = event
         record["time"] = ISO8601DateFormatter().string(from: Date())

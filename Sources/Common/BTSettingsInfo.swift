@@ -13,6 +13,7 @@ public enum BTSettingsInfo {
     }
     
     public enum Defaults {
+        public static let nativeChargingDiagnosticsEnabled = false
         public static let chargeLowerBound: UInt8 = 20
         public static let minCharge: UInt8 = 75
         public static let maxCharge: UInt8 = 80
@@ -32,6 +33,7 @@ public enum BTSettingsInfo {
     }
 
     public enum Keys {
+        public static let nativeChargingDiagnosticsEnabled = "NativeChargingDiagnosticsEnabled"
         public static let chargeLowerBound = "ChargeLowerBound"
         public static let minCharge = "MinCharge"
         public static let maxCharge = "MaxCharge"
