@@ -25,7 +25,7 @@ public enum BTSettingsInfo {
 
     public enum Bounds {
         public static let minChargeMin: UInt8 = 20
-        public static let maxChargeMin: UInt8 = 50
+        public static let maxChargeMin: UInt8 = 20
         public static let criticalTemperatureMin: Double = 35.0
         public static let criticalTemperatureMax: Double = 50.0
     }
