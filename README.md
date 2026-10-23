@@ -24,6 +24,7 @@
 ## Capabilities
 
 - Charge limit window management (`minCharge`, `maxCharge`)
+- [Configurable charge lower bound](#configurable-charge-lower-bound) (`chargeLowerBound`, default 20%, configurable from 1–100%)
 - Explicit charging actions (`chargeToLimit`, `chargeToFull`, `disableCharging`)
 - Adapter control (`disablePowerAdapter`, `enablePowerAdapter`)
 - Pause/resume daemon activity
