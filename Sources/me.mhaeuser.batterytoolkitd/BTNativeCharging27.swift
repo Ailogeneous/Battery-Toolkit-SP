@@ -324,7 +324,12 @@ internal enum BTNativeCharging27 {
     }
 
     private static func journal(_ event: String, extra: [String: Any] = [:]) {
-        guard BTSettings.nativeChargingDiagnosticsEnabled else { return }
+        guard BTSettings.nativeChargingDiagnosticsEnabled else {
+            if event == "write-failed" || event == "restore-failed" {
+                os_log("macOS27 charging %{public}@ %{public}@", event, extra["error"] as? String ?? "unknown error")
+            }
+            return
+        }
         var record = extra
         record["event"] = event
         record["time"] = ISO8601DateFormatter().string(from: Date())
