@@ -126,7 +126,7 @@ internal enum BTNativeCharging27 {
 
     @discardableResult
     static func request(limit: Int, suppressCalibration: Bool) -> Bool {
-        guard active, boot != nil, (20...100).contains(limit) else { return false }
+        guard active, boot != nil, (1...100).contains(limit) else { return false }
         let inhibit = suppressCalibration && limit < 80
         if requested == limit && suppress == inhibit { return submissionSucceeded }
         requested = limit

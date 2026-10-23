@@ -13,6 +13,7 @@ public enum BTSettingsInfo {
     }
     
     public enum Defaults {
+        public static let chargeLowerBound: UInt8 = 20
         public static let minCharge: UInt8 = 75
         public static let maxCharge: UInt8 = 80
         public static let adapterSleep = false
@@ -31,6 +32,7 @@ public enum BTSettingsInfo {
     }
 
     public enum Keys {
+        public static let chargeLowerBound = "ChargeLowerBound"
         public static let minCharge = "MinCharge"
         public static let maxCharge = "MaxCharge"
         public static let adapterSleep = "AdapterSleep"
@@ -42,11 +44,13 @@ public enum BTSettingsInfo {
 
     public static func chargeLimitsValid(
         minCharge: Int,
-        maxCharge: Int
+        maxCharge: Int,
+        chargeLowerBound: Int = Int(Defaults.chargeLowerBound)
     ) -> Bool {
-        return self.Bounds.minChargeMin <= minCharge &&
+        return (1...100).contains(chargeLowerBound) &&
+            chargeLowerBound <= minCharge &&
             minCharge <= maxCharge &&
             maxCharge <= 100 &&
-            self.Bounds.maxChargeMin <= maxCharge
+            chargeLowerBound <= maxCharge
     }
 }

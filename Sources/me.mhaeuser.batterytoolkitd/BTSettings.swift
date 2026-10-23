@@ -8,6 +8,7 @@ import os.log
 
 @MainActor
 internal enum BTSettings {
+    private(set) static var chargeLowerBound = BTSettingsInfo.Defaults.chargeLowerBound
     private(set) static var minCharge = BTSettingsInfo.Defaults.minCharge
     private(set) static var maxCharge = BTSettingsInfo.Defaults.maxCharge
     private(set) static var adapterSleep = BTSettingsInfo.Defaults.adapterSleep
@@ -22,6 +23,9 @@ internal enum BTSettings {
             forKey: BTSettingsInfo.Keys.adapterSleep
         )
         let defaults = UserDefaults.standard
+        let storedLowerBound = defaults.object(forKey: BTSettingsInfo.Keys.chargeLowerBound) as? NSNumber
+        let lowerBound = storedLowerBound?.intValue ?? Int(BTSettingsInfo.Defaults.chargeLowerBound)
+        self.chargeLowerBound = (1...100).contains(lowerBound) ? UInt8(lowerBound) : BTSettingsInfo.Defaults.chargeLowerBound
         if let displayModeValue = defaults.object(forKey: BTSettingsInfo.Keys.displayMode) {
             //
             // Handle both boolean and integer display mode values.
@@ -65,7 +69,8 @@ internal enum BTSettings {
         guard
             BTSettingsInfo.chargeLimitsValid(
                 minCharge: minCharge,
-                maxCharge: maxCharge
+                maxCharge: maxCharge,
+                chargeLowerBound: Int(self.chargeLowerBound)
             )
         else {
             os_log("Charge limits malformed, restore current values")
@@ -78,6 +83,7 @@ internal enum BTSettings {
     }
 
     static func removeDefaults() {
+        UserDefaults.standard.removeObject(forKey: BTSettingsInfo.Keys.chargeLowerBound)
         UserDefaults.standard.removeObject(
             forKey: BTSettingsInfo.Keys.adapterSleep
         )
@@ -112,6 +118,7 @@ internal enum BTSettings {
         let magSafeInvertedIndicator = NSNumber(value: self.magSafeInvertedIndicator)
         let criticalTemperature = NSNumber(value: self.criticalTemperatureC)
         var settings: [String: NSObject & Sendable] = [
+            BTSettingsInfo.Keys.chargeLowerBound: NSNumber(value: self.chargeLowerBound),
             BTSettingsInfo.Keys.minCharge: minCharge,
             BTSettingsInfo.Keys.maxCharge: maxCharge,
             BTSettingsInfo.Keys.adapterSleep: adapterSleep,
@@ -141,9 +148,16 @@ internal enum BTSettings {
         let maxCharge = maxChargeNum?.intValue ??
             Int(BTSettingsInfo.Defaults.maxCharge)
 
+        let lowerBoundNumber = settings[BTSettingsInfo.Keys.chargeLowerBound] as? NSNumber
+        let lowerBound = lowerBoundNumber?.doubleValue ?? Double(self.chargeLowerBound)
+        guard lowerBound.isFinite, (1...100).contains(lowerBound), lowerBound.rounded() == lowerBound else {
+            reply(BTError.malformedData.rawValue)
+            return
+        }
         let success = self.setChargeLimits(
             minCharge: minCharge,
-            maxCharge: maxCharge
+            maxCharge: maxCharge,
+            chargeLowerBound: Int(lowerBound)
         )
         guard success else {
             reply(BTError.malformedData.rawValue)
@@ -203,18 +217,21 @@ internal enum BTSettings {
 
     private static func setChargeLimits(
         minCharge: Int,
-        maxCharge: Int
+        maxCharge: Int,
+        chargeLowerBound: Int
     ) -> Bool {
         guard
             BTSettingsInfo.chargeLimitsValid(
                 minCharge: minCharge,
-                maxCharge: maxCharge
+                maxCharge: maxCharge,
+                chargeLowerBound: chargeLowerBound
             )
         else {
             os_log("Client charge limits malformed, preserve current values")
             return false
         }
 
+        self.chargeLowerBound = UInt8(chargeLowerBound)
         self.minCharge = UInt8(minCharge)
         self.maxCharge = UInt8(maxCharge)
 
@@ -279,10 +296,12 @@ internal enum BTSettings {
     }
 
     private static func writeDefaults() {
+        UserDefaults.standard.set(self.chargeLowerBound, forKey: BTSettingsInfo.Keys.chargeLowerBound)
         assert(
             BTSettingsInfo.chargeLimitsValid(
                 minCharge: Int(self.minCharge),
-                maxCharge: Int(self.maxCharge)
+                maxCharge: Int(self.maxCharge),
+                chargeLowerBound: Int(self.chargeLowerBound)
             )
         )
 

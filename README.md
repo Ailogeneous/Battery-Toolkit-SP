@@ -155,6 +155,20 @@ try await BTActions.setSettings(settings: [
 ])
 ```
 
+### Configurable Charge Lower Bound
+
+The daemon defaults to a 20% lower bound for both charge thresholds on all backends. Configure `BTSettingsInfo.Keys.chargeLowerBound` through `BTActions.setSettings` to allow thresholds as low as 1%. The bound is persisted, returned by `getSettings`, and preserved when omitted from a settings update.
+
+```swift
+var settings = try await BTActions.getSettings()
+settings[BTSettingsInfo.Keys.chargeLowerBound] = NSNumber(value: 10)
+settings[BTSettingsInfo.Keys.minCharge] = NSNumber(value: 10)
+settings[BTSettingsInfo.Keys.maxCharge] = NSNumber(value: 15)
+try await BTActions.setSettings(settings: settings)
+```
+
+Updates must satisfy `1 <= chargeLowerBound <= minCharge <= maxCharge <= 100`. Invalid updates are rejected without changing the charging thresholds or bound. When raising the bound, submit thresholds at or above it in the same update. Hardware enforcement still depends on the available backend. Host apps must use the returned setting when applying their own threshold clamps; the `Bounds` constants describe the default range.
+
 ### Charging Control
 
 ```swift
