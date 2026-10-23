@@ -34,6 +34,30 @@
 - MagSafe indicator control modes
 - Battery temperature included in daemon state
 
+## macOS 27
+
+On macOS 27, the daemon uses a separate native charging-policy backend instead of the legacy direct SMC charging keys. The public charging actions remain the same. This backend is selected only when the reported macOS major version is 27; earlier versions retain the legacy backend. Newer major versions are not automatically opted into this path.
+
+### Charging Policy
+
+The root daemon releases the ordinary PowerUI charge limit, writes its own archived policy to `com.apple.powerd.charging`, and signals `powerd` with `SIGHUP` to reload it. It reads `CHLT` and `bfG0` to observe the resulting limit. This is an undocumented integration with private system interfaces, not a public Apple API or an entitlement bypass for direct SMC writes. Compatibility must be checked on the target OS build and hardware.
+
+- `chargeToLimit()` submits the configured maximum charge threshold.
+- `chargeToFull()` removes the toolkit's limiting policy and requests unrestricted charging.
+- `disableCharging()` submits a ceiling at the lower of the configured minimum threshold and the current battery percentage. It does not use the legacy immediate charge-inhibit key.
+- For configured maximums below 80%, limited charging requests also set the policy's `noChargeToFull` flag. Full-charge requests do not set it.
+- The configurable `chargeLowerBound` defaults to 20%, just as on earlier versions. Lower thresholds require the host app to configure the bound and remove any separate UI or policy clamps.
+
+The charge-limit backend does not cut adapter power to enforce its ceiling. Explicit adapter-control actions remain separate. Lowering a limit below the current battery percentage does not request forced discharge.
+
+### Timing and Diagnostics
+
+Policy submission is not confirmation that charging has stopped. Applications should observe battery state and actual current after applying a limit. The daemon samples every 15 seconds and checks for policy drift once at least 45 seconds have elapsed since the last write, with up to three write attempts before it stops retrying that request.
+
+Coalesce slider changes before calling `setSettings`; avoid submitting every intermediate drag value. The current backend performs synchronous PowerUI calls, preference synchronization, and a process wait on the daemon's main actor, so frequent changes can delay subsequent requests.
+
+`BTActions.getDiagnostics()` exposes `nativeCharging27`, `nativePolicySubmitted`, `nativeRequestedLimit`, `nativeNoChargeToFull`, `nativeRetryCount`, and `nativeSMCState` when available. `nativePolicySubmitted` reports submission success, not observed enforcement. Diagnostic journals and the original-policy snapshot are stored under `/Library/Application Support/BatteryToolkit/macOS27/` and require appropriate permissions to read.
+
 ## Setup
 
 ### 1. Add Package
